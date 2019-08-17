@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        // Per inserire il simbolo '+' nel pulsante della home
+        fab.setImageDrawable(android.graphics.drawable.Icon)
     }
 
     @Override
@@ -52,5 +55,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //Parte mia
+    public class HelloAndroidActivity extends Activity {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.list);
+            String[] data = {"First", "Second", "Third"};
+            ListView lv = (ListView)findViewById(R.id.list);
+            lv.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data));
+        }
     }
 }
