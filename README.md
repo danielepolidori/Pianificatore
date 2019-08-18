@@ -1,4 +1,4 @@
-### progetto_LAM
+# progetto_LAM
 
 
 
@@ -13,6 +13,8 @@
 ### IDEE:
 
 - ListView per i giorni, CardView per i task all'interno dei giorni.
+
+- Scheduler = Pianificatore d'attività
 
 - Non calendario dell'app, ma possibile sincronizzazione dei task nel CALENDARIO DI SISTEMA (così che compaiano lì nella visualizzazione a griglia, mentre nell'app solo in lista).
 
