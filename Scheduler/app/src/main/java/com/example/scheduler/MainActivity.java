@@ -27,6 +27,14 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        // (creato da me)
+        String[] myDataset = new String[5];
+        myDataset[0] = "zero_elem";
+        myDataset[1] = "uno_elem";
+        myDataset[2] = "due_elem";
+        myDataset[3] = "tre_elem";
+        myDataset[4] = "quattro_elem";
+
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myDataset);
         recyclerView.setAdapter(mAdapter);
@@ -34,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     // ...
 }
 
-// TO DO:
 // "The views in the list are represented by view holder objects. These objects are instances of a class you define by extending RecyclerView.ViewHolder"
 // "The view holder objects are managed by an adapter, which you create by extending RecyclerView.Adapter"
 
