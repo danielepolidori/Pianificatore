@@ -28,12 +28,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // (creato da me)
-        String[] myDataset = new String[5];
-        myDataset[0] = "zero_elem";
-        myDataset[1] = "uno_elem";
-        myDataset[2] = "due_elem";
-        myDataset[3] = "tre_elem";
-        myDataset[4] = "quattro_elem";
+        String[] myDataset = new String[7];
+        myDataset[0] = getResources().getString(R.string.lun);
+        myDataset[1] = getResources().getString(R.string.mar);
+        myDataset[2] = getResources().getString(R.string.mer);
+        myDataset[3] = getResources().getString(R.string.gio);
+        myDataset[4] = getResources().getString(R.string.ven);
+        myDataset[5] = getResources().getString(R.string.sab);
+        myDataset[6] = getResources().getString(R.string.dom);
 
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myDataset);

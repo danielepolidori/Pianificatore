@@ -4,15 +4,17 @@
 
 ### TODO:
 
-- Parte in XML
+- Aumentare la grandezza del testo coi nomi dei giorni.
 
-- Parte in Java
+- Provare ad inserire più giorni di quelli contenuti nell'altezza dello schermo (per vedere se si ottiene la scrollbar e funziona tutto bene).
+
+- Ottenere a runtime la data corrente e da quello settare il nome dei giorni mostrati (partendo dal giorno corrente, quindi oltre al nome anche il numero).
 
 
 
 ### IDEE:
 
-- ListView per i giorni, CardView per i task all'interno dei giorni.
+- RecyclerView per i giorni, CardView per i task all'interno dei giorni.
 
 - Scheduler = Pianificatore d'attività
 

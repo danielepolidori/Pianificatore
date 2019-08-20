@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Scheduler</string>
+    <string name="lun">Lunedì</string>
+    <string name="mar">Martedì</string>
+    <string name="mer">Mercoledì</string>
+    <string name="gio">Giovedì</string>
+    <string name="ven">Venerdì</string>
+    <string name="sab">Sabato</string>
+    <string name="dom">Domenica</string>
+    <string name="saluto_prova">Ciao a tutti</string>
 </resources>
