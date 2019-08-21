@@ -3,10 +3,8 @@ package com.example.scheduler;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-//import RecyclerView.Adapter;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
@@ -17,10 +15,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     // you provide access to all the views for a data item in a view holder
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
+        /*
         public TextView textView;
         public MyViewHolder(TextView v) {
             super(v);
             textView = v;
+        }
+        */
+        public CardView cardView;
+        public MyViewHolder(CardView v) {
+            super(v);
+            cardView = v;
         }
     }
 
@@ -34,8 +39,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                      int viewType) {
         // create a new view
-        TextView v = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.my_text_view, parent, false);
+        //TextView v = (TextView) LayoutInflater.from(parent.getContext())
+        //        .inflate(R.layout.my_text_view, parent, false);
+        CardView v = (CardView) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.my_card_view, parent, false);
+
         // ...
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
@@ -46,7 +54,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.textView.setText(mDataset[position]);
+        //holder.textView.setText(mDataset[position]);
+        holder.cardView.setTooltipText(mDataset[position]);
 
     }
 
