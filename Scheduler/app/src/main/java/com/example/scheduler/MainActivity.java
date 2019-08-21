@@ -36,6 +36,28 @@ public class MainActivity extends AppCompatActivity {
         myDataset[4] = getResources().getString(R.string.ven);
         myDataset[5] = getResources().getString(R.string.sab);
         myDataset[6] = getResources().getString(R.string.dom);
+        /*
+        myDataset[7] = getResources().getString(R.string.lun);
+        myDataset[8] = getResources().getString(R.string.mar);
+        myDataset[9] = getResources().getString(R.string.mer);
+        myDataset[10] = getResources().getString(R.string.gio);
+        myDataset[11] = getResources().getString(R.string.ven);
+        myDataset[12] = getResources().getString(R.string.sab);
+        myDataset[13] = getResources().getString(R.string.dom);
+        myDataset[14] = getResources().getString(R.string.lun);
+        myDataset[15] = getResources().getString(R.string.mar);
+        myDataset[16] = getResources().getString(R.string.mer);
+        myDataset[17] = getResources().getString(R.string.gio);
+        myDataset[18] = getResources().getString(R.string.ven);
+        myDataset[19] = getResources().getString(R.string.sab);
+        myDataset[20] = getResources().getString(R.string.dom);
+        myDataset[21] = getResources().getString(R.string.lun);
+        myDataset[22] = getResources().getString(R.string.mar);
+        myDataset[23] = getResources().getString(R.string.mer);
+        myDataset[24] = getResources().getString(R.string.gio);
+        myDataset[25] = getResources().getString(R.string.ven);
+        myDataset[26] = getResources().getString(R.string.sab);
+        */
 
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myDataset);

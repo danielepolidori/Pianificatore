@@ -4,9 +4,9 @@
 
 ### TODO:
 
-- Aumentare la grandezza del testo coi nomi dei giorni.
+- Inserire le CardView al posto delle TextView.
 
-- Provare ad inserire più giorni di quelli contenuti nell'altezza dello schermo (per vedere se si ottiene la scrollbar e funziona tutto bene).
+- Inserire le attività all'interno delle varie giornate.
 
 - Ottenere a runtime la data corrente e da quello settare il nome dei giorni mostrati (partendo dal giorno corrente, quindi oltre al nome anche il numero).
 
