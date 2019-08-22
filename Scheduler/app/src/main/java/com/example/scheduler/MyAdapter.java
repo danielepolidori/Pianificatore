@@ -26,9 +26,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
         */
         public CardView cardView;
+        //public TextView textView;
         public MyViewHolder(CardView v) {
             super(v);
             cardView = v;
+            //textView = getResources().getString(R.string.testo_prova);
         }
     }
 
@@ -53,13 +55,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     // Replace the contents of a view (invoked by the layout manager)
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         //holder.textView.setText(mDataset[position]);
-        holder.cardView.setTooltipText(mDataset[position]);
 
     }
 
@@ -70,3 +70,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
 }
+
+
+/*
+// Set the text on a TextView object using a resource ID
+TextView msgTextView = (TextView) findViewById(R.id.label1);
+msgTextView.setText(R.string.labelText);
+*/
