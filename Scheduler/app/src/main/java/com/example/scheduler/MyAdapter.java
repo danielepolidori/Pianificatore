@@ -1,8 +1,11 @@
 package com.example.scheduler;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
