@@ -28,36 +28,39 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // (creato da me)
-        String[] myDataset = new String[7];
-        myDataset[0] = getResources().getString(R.string.lun);
-        myDataset[1] = getResources().getString(R.string.mar);
-        myDataset[2] = getResources().getString(R.string.mer);
-        myDataset[3] = getResources().getString(R.string.gio);
-        myDataset[4] = getResources().getString(R.string.ven);
-        myDataset[5] = getResources().getString(R.string.sab);
-        myDataset[6] = getResources().getString(R.string.dom);
-        /*
-        myDataset[7] = getResources().getString(R.string.lun);
-        myDataset[8] = getResources().getString(R.string.mar);
+        String[] myDataset = new String[31];
+
+        myDataset[0] = getResources().getString(R.string.anno2019);
+        myDataset[1] = getResources().getString(R.string.gen);
+        myDataset[2] = getResources().getString(R.string.lun);
+        myDataset[3] = getResources().getString(R.string.att);
+        myDataset[4] = getResources().getString(R.string.att);
+        myDataset[5] = getResources().getString(R.string.att);
+        myDataset[6] = getResources().getString(R.string.mart);
+        myDataset[7] = getResources().getString(R.string.att);
+        myDataset[8] = getResources().getString(R.string.att);
         myDataset[9] = getResources().getString(R.string.mer);
-        myDataset[10] = getResources().getString(R.string.gio);
+        myDataset[10] = getResources().getString(R.string.att);
         myDataset[11] = getResources().getString(R.string.ven);
-        myDataset[12] = getResources().getString(R.string.sab);
-        myDataset[13] = getResources().getString(R.string.dom);
-        myDataset[14] = getResources().getString(R.string.lun);
-        myDataset[15] = getResources().getString(R.string.mar);
-        myDataset[16] = getResources().getString(R.string.mer);
-        myDataset[17] = getResources().getString(R.string.gio);
-        myDataset[18] = getResources().getString(R.string.ven);
-        myDataset[19] = getResources().getString(R.string.sab);
-        myDataset[20] = getResources().getString(R.string.dom);
-        myDataset[21] = getResources().getString(R.string.lun);
-        myDataset[22] = getResources().getString(R.string.mar);
-        myDataset[23] = getResources().getString(R.string.mer);
-        myDataset[24] = getResources().getString(R.string.gio);
-        myDataset[25] = getResources().getString(R.string.ven);
-        myDataset[26] = getResources().getString(R.string.sab);
-        */
+        myDataset[12] = getResources().getString(R.string.att);
+        myDataset[13] = getResources().getString(R.string.vuota);
+        myDataset[14] = getResources().getString(R.string.feb);
+        myDataset[15] = getResources().getString(R.string.lun);
+        myDataset[16] = getResources().getString(R.string.att);
+        myDataset[17] = getResources().getString(R.string.mer);
+        myDataset[18] = getResources().getString(R.string.att);
+        myDataset[19] = getResources().getString(R.string.att);
+        myDataset[20] = getResources().getString(R.string.att);
+        myDataset[21] = getResources().getString(R.string.dom);
+        myDataset[22] = getResources().getString(R.string.att);
+        myDataset[23] = getResources().getString(R.string.vuota);
+        myDataset[24] = getResources().getString(R.string.mar);
+        myDataset[25] = getResources().getString(R.string.mart);
+        myDataset[26] = getResources().getString(R.string.att);
+        myDataset[27] = getResources().getString(R.string.vuota);
+        myDataset[28] = getResources().getString(R.string.anno2020);
+        myDataset[29] = getResources().getString(R.string.apr);
+        myDataset[30] = getResources().getString(R.string.att);
 
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myDataset);
