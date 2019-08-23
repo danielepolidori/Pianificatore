@@ -4,8 +4,6 @@
 
 ### TODO:
 
-- Inserire le CardView al posto delle TextView.
-
 - Inserire le attività all'interno delle varie giornate.
 
 - Ottenere a runtime la data corrente e da quello settare il nome dei giorni mostrati (partendo dal giorno corrente, quindi oltre al nome anche il numero).
