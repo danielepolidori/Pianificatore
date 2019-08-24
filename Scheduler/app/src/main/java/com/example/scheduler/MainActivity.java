@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
+        //
+        // [html.it]
+        // "È responsabile della creazione e del posizionamento delle view all’interno del RecyclerView."
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
