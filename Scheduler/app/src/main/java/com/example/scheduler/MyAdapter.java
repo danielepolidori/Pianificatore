@@ -2,7 +2,9 @@ package com.example.scheduler;
 
 import android.os.Build;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -31,6 +33,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             super(v);
             textView = v;
         }
+
+        /*
+        // Dal codice di RecyclerViewHTMLit
+        @BindView(R.id.tv_item_number)
+		TextView mListItemNumberTV;
+		@BindView(R.id.tv_view_holder_index)
+		TextView mVHIndexTV;
+		@BindView(R.id.iv_logo)
+        ImageView mIVLogp;
+		public ItemViewHolder(View itemView) {
+			super(itemView);
+			ButterKnife.bind(this, itemView);
+		}
+		void bind(int listIndex) {
+			mListItemNumberTV.setText(String.valueOf(listIndex));
+		}
+        */
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
