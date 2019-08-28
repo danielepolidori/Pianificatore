@@ -4,9 +4,13 @@
 
 ### TODO:
 
-- Segui guida Butterknife
+- Prova a far funzionare l'esempio RecyclerViewHTMLit
 
-- Ottenere un maggior controllo sui singoli elementi del RecyclerView.
+- Torna al dataset di stringhe (non sarà bello, ma l'importante è che funzioni)
+
+- Rendere gli elementi della home cliccabili
+
+- Sostituire il dataset di stringhe con uno di liste
 
 - Ottenere a runtime la data corrente e da quello settare il nome dei giorni mostrati (partendo dal giorno corrente, quindi oltre al nome anche il numero).
 
@@ -29,3 +33,15 @@
 ### ESEMPI UTILI:
 
 - FragmentExample: bottone che ti porta in una nuova activity (per mostrare i dettagli di un task)
+
+
+
+### VERSIONE MINIMA DEL PROGETTO:
+
+- Home con sole stringhe (le singole voci non sono cliccabili, è una home di sola lettura)
+
+- Possibile inserimento di nuove voci
+
+- Possibile rimozione dei task completati
+
+- Grafico

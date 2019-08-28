@@ -13,7 +13,7 @@
         android:layout_gravity="center_vertical|start"
         android:textSize="25sp"
         android:layout_margin="8dp"
-        tools:text="@string/number_placeholder" />
+        tools:text="@string/testo_prova" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,6 +31,6 @@
         style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        tools:text="@string/subtitle_placeholder" />
+        tools:text="@string/testo_prova" />
     </LinearLayout>
 </FrameLayout>

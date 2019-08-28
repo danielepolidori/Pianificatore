@@ -1,11 +1,12 @@
 package com.example.scheduler;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 

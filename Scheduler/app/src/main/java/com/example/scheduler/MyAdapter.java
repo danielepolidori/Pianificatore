@@ -1,15 +1,19 @@
 package com.example.scheduler;
 
+import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 // [html.it]
 // "È responsabile di estrarre i dati dal Data Source e di usare questi dati per creare e popolare i ViewHolder.
@@ -91,7 +95,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         int layoutIdForListItem = R.layout.list_item;
         LayoutInflater inflater = LayoutInflater.from(parentContex);
         View view = inflater.inflate(layoutIdForListItem, parent, false);
-        ItemViewHolder holder = new ItemViewHolder(view);   // come parametro prende in ingresso un oggetto di tipo View, ossia il layout list_item
+        MyViewHolder holder = new MyViewHolder(view);   // come parametro prende in ingresso un oggetto di tipo View, ossia il layout list_item
         holder.mVHIndexTV.setText("ViewHolder index: " + viewHolderCount);
         viewHolderCount++;
         return holder;
