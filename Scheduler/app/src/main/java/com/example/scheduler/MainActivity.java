@@ -4,14 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+/*
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+*/
 
 public class MainActivity extends AppCompatActivity {
 
     // Dal codice di RecyclerViewHTMLit
-    private static final int NUM_LIST_ITEMS = 100;      // numero di elementi nella lista
+    //private static final int NUM_LIST_ITEMS = 100;      // numero di elementi nella lista
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -69,12 +71,14 @@ public class MainActivity extends AppCompatActivity {
         myDataset[29] = getResources().getString(R.string.apr);
         myDataset[30] = getResources().getString(R.string.att);
 
+        /*
         // Dal codice di RecyclerViewHTMLit
         ButterKnife.bind(this);
         mAdapter = new MyAdapter(NUM_LIST_ITEMS);
+        */
 
         // specify an adapter (see also next example)
-        //mAdapter = new MyAdapter(myDataset);
+        mAdapter = new MyAdapter(myDataset);
         recyclerView.setAdapter(mAdapter);
     }
     // ...

@@ -4,10 +4,6 @@
 
 ### TODO:
 
-- Prova a far funzionare l'esempio RecyclerViewHTMLit
-
-- Torna al dataset di stringhe (non sarà bello, ma l'importante è che funzioni)
-
 - Rendere gli elementi della home cliccabili
 
 - Sostituire il dataset di stringhe con uno di liste
