@@ -4,8 +4,6 @@
 
 ### TODO:
 
-- Rendere gli elementi della home cliccabili
-
 - Sostituire il dataset di stringhe con uno di liste
 
 - Ottenere a runtime la data corrente e da quello settare il nome dei giorni mostrati (partendo dal giorno corrente, quindi oltre al nome anche il numero).
