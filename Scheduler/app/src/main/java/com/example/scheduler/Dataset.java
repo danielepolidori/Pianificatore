@@ -5,25 +5,35 @@ import java.util.List;
 
 public class Dataset {
 
-    protected List<ElemDataset> products;
+    protected List<Task> elements;
 
     public Dataset() {
-        products = new ArrayList<ElemDataset>();
+
+        elements = new ArrayList<Task>();
     }
 
-    public void add(ElemDataset product){
-        products.add(product);
+    public void add(Task element){
+
+        elements.add(element);
     }
 
-    public void delete(ElemDataset product){
-        products.remove(product);
+    public void delete(Task element){
+
+        elements.remove(element);
     }
 
-    public int getNumberOfProducts(){
-        return products.size();
+    public int getNumberOfElements(){
+
+        return elements.size();
     }
 
-    public List<ElemDataset> getProducts() {
-        return products;
+    public List<Task> getElements() {
+
+        return elements;
+    }
+
+    public Task getElement(int index) {
+
+        return elements.get(index);
     }
 }

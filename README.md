@@ -4,11 +4,9 @@
 
 ### TODO:
 
-- Sostituire il dataset di stringhe con uno di liste
-
-- Per listaDataset, no classe astratta e poi implementata ma direttamente classe implementata
-
 - Ottenere a runtime la data corrente e da quello settare il nome dei giorni mostrati (partendo dal giorno corrente, quindi oltre al nome anche il numero)
+
+- Estrapolare dal dataset la visualizzazione della home
 
 
 
