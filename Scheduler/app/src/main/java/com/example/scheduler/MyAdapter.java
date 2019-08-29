@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 /*
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,7 +82,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(String[] myDataset, ItemClickListener listener) {
+    //public MyAdapter(String[] myDataset, ItemClickListener listener) {
+    public MyAdapter(List<ElemDataset> myDataset, ItemClickListener listener) {
 
         mDataset = myDataset;
 

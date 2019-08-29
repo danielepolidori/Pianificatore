@@ -6,7 +6,39 @@
 
 - Sostituire il dataset di stringhe con uno di liste
 
-- Ottenere a runtime la data corrente e da quello settare il nome dei giorni mostrati (partendo dal giorno corrente, quindi oltre al nome anche il numero).
+- Per listaDataset, no classe astratta e poi implementata ma direttamente classe implementata
+
+- Ottenere a runtime la data corrente e da quello settare il nome dei giorni mostrati (partendo dal giorno corrente, quindi oltre al nome anche il numero)
+
+
+
+### MANCA:
+
+- Aggiunta di nuovi task
+
+- Modifica di un task
+
+- Inviare notifiche
+
+- Posporre un task
+
+- Task ongoing
+
+- Rimozione di task svolti
+
+- Priorità dei task
+
+- Classi di task
+
+- Visualizzare la home con filtri
+
+- Grafici
+
+- Relazione (+ slides ?)
+
+- (Mostrare dettagli di un task)
+
+- (Credits del progetto)
 
 
 
@@ -39,3 +71,5 @@
 - Possibile rimozione dei task completati
 
 - Grafico
+
+- Relazione (+ slides ?)

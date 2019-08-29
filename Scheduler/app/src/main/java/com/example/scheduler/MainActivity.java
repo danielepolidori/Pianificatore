@@ -3,9 +3,9 @@ package com.example.scheduler;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 /*
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,8 +24,13 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     // per prova
     private Toast mToast;
 
+    // (creato da me)
+    //String[] myDataset = new String[31];
+    // c'è da definire un myDataset di List<Elem>
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -41,9 +46,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        // (creato da me)
-        String[] myDataset = new String[31];
-
+        /*
         myDataset[0] = getResources().getString(R.string.anno2019);
         myDataset[1] = getResources().getString(R.string.gen);
         myDataset[2] = getResources().getString(R.string.lun);
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         myDataset[28] = getResources().getString(R.string.anno2020);
         myDataset[29] = getResources().getString(R.string.apr);
         myDataset[30] = getResources().getString(R.string.att);
+        */
 
         /*
         // Dal codice di RecyclerViewHTMLit
@@ -83,7 +87,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         */
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset, this);
+        //mAdapter = new MyAdapter(myDataset, this);
+        mAdapter = new MyAdapter(myDataset.getProducts(), this);
         recyclerView.setAdapter(mAdapter);
     }
 
