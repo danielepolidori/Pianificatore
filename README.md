@@ -4,7 +4,9 @@
 
 ### TODO:
 
-- Ottenere a runtime la data corrente e da quello settare il nome dei giorni mostrati (partendo dal giorno corrente, quindi oltre al nome anche il numero)
+- Prima lettera maiuscola per giorno
+
+- "Nessuna attività ancora in programma." quando non è stato ancora creato nessun task
 
 - Estrapolare dal dataset la visualizzazione della home
 

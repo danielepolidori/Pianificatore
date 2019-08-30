@@ -6,6 +6,13 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.time.LocalDate;
+import java.util.Locale;
+
+import static android.icu.lang.UCharacter.toUpperCase;
+
 public class MainActivity extends AppCompatActivity implements MyAdapter.ItemClickListener {
 
     private RecyclerView recyclerView;
@@ -16,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private Toast mToast;
 
     Dataset myDataset = new Dataset();
+
+    Date dataCorrente = new Date();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +43,17 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        Task t1 = new Task(getResources().getString(R.string.att), "A", 0);
-        Task t2 = new Task(getResources().getString(R.string.att), "B", 1);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM yyyy", Locale.ITALIAN);
+        String strData = sdf.format(dataCorrente);  // es: "venerdì 30 agosto 2019"
+
+        String[] tokens = strData.split(" ");
+        String textGiorno = tokens[0].toUpperCase();
+        String numGiorno = tokens[1];
+        String mese = WordUtils.capitalize(tokens[2]);
+        String anno = tokens[3];
+
+        Task t1 = new Task(mese + " " + anno, "A", 0);
+        Task t2 = new Task(textGiorno + " " + numGiorno, "B", 1);
         Task t3 = new Task(getResources().getString(R.string.att), "C", 0);
         Task t4 = new Task(getResources().getString(R.string.att), "D", 2);
         Task t5 = new Task(getResources().getString(R.string.att), "E", 1);
