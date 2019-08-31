@@ -4,11 +4,13 @@
 
 ### TODO:
 
-- Prima lettera maiuscola per giorno
-
-- "Nessuna attività ancora in programma." quando non è stato ancora creato nessun task
+- Sostituisci 'Dataset' con 'TaskSet' in giro per il codice (variabili, commenti, ...)
 
 - Estrapolare dal dataset la visualizzazione della home
+
+- All'aggiunta di un nuovo task: controllare se c'è da eliminare il msg_no_task, inserirlo in ordine cronologico
+
+- Quando il datset si SVUOTA aggiungere il msg_no_task nella home
 
 
 

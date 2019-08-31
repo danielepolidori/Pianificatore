@@ -14,7 +14,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     // [html.it]
     // "È l’insieme di dati utilizzato per popolare la lista tramite l’Adapter."
-    private Dataset mDataset;   // deve essere inizializzato con 'new...' ?
+    private TaskSet mDataset;   // deve essere inizializzato con 'new...' ?
 
     // An on-click handler that we've defined to make it easy for an Activity to interface with our RecyclerView
     final private ItemClickListener mOnClickListener;
@@ -48,7 +48,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(Dataset myDataset, ItemClickListener listener) {
+    public MyAdapter(TaskSet myDataset, ItemClickListener listener) {
 
         mDataset = myDataset;
 

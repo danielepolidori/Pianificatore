@@ -1,40 +1,9 @@
 <resources>
     <string name="app_name">Pianificatore d\'attività</string>
 
-    <string name="lun">Lunedì 1</string>
-    <string name="mart">Martedì 2</string>
-    <string name="mer">Mercoledì 3</string>
-    <string name="gio">Giovedì 4</string>
-    <string name="ven">Venerdì 5</string>
-    <string name="sab">Sabato 6</string>
-    <string name="dom">Domenica 7</string>
-
-    <string name="anno2019">2019</string>
-    <string name="anno2020">2020</string>
-    <string name="anno2021">2021</string>
-    <string name="anno2022">2022</string>
-    <string name="anno2023">2023</string>
-
-    <string name="gen">Gennaio</string>
-    <string name="feb">Febbraio</string>
-    <string name="mar">Marzo</string>
-    <string name="apr">Aprile</string>
-    <string name="mag">Maggio</string>
-    <string name="giu">Giugno</string>
-    <string name="lug">Luglio</string>
-    <string name="ago">Agosto</string>
-    <string name="set">Settembre</string>
-    <string name="ott">Ottobre</string>
-    <string name="nov">Novembre</string>
-    <string name="dic">Dicembre</string>
-
+    <string name="msg_no_task">Nessuna attività ancora in programma.</string>
 
     <string name="att">- Attività</string>
-
     <string name="testo_prova">Ciao a tutti!</string>
     <string name="vuota"></string>
 </resources>
-
-
-
-<!-- Meglio mettere i giorni della settimana come "string-array" -->

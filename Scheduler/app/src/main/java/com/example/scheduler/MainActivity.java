@@ -5,13 +5,9 @@ import android.os.Bundle;
 import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.time.LocalDate;
 import java.util.Locale;
-
-import static android.icu.lang.UCharacter.toUpperCase;
 
 public class MainActivity extends AppCompatActivity implements MyAdapter.ItemClickListener {
 
@@ -22,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     // per prova
     private Toast mToast;
 
-    Dataset myDataset = new Dataset();
+    TaskSet myDataset = new TaskSet();
 
     Date dataCorrente = new Date();
 
@@ -46,10 +42,14 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM yyyy", Locale.ITALIAN);
         String strData = sdf.format(dataCorrente);  // es: "venerdì 30 agosto 2019"
 
+        Task init = new Task(getResources().getString(R.string.msg_no_task));
+        myDataset.add(init);
+
+        /*
         String[] tokens = strData.split(" ");
-        String textGiorno = tokens[0].toUpperCase();
+        String textGiorno = tokens[0].substring(0,1).toUpperCase() + tokens[0].substring(1);
         String numGiorno = tokens[1];
-        String mese = WordUtils.capitalize(tokens[2]);
+        String mese = tokens[2].toUpperCase();
         String anno = tokens[3];
 
         Task t1 = new Task(mese + " " + anno, "A", 0);
@@ -57,12 +57,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         Task t3 = new Task(getResources().getString(R.string.att), "C", 0);
         Task t4 = new Task(getResources().getString(R.string.att), "D", 2);
         Task t5 = new Task(getResources().getString(R.string.att), "E", 1);
-
         myDataset.add(t1);
         myDataset.add(t2);
         myDataset.add(t3);
         myDataset.add(t4);
         myDataset.add(t5);
+        */
 
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myDataset, this);
