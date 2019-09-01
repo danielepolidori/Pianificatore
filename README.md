@@ -4,11 +4,11 @@
 
 ### TODO:
 
-- Sostituisci 'Dataset' con 'TaskSet' in giro per il codice (variabili, commenti, ...)
+- Formato data ottenuta dall'utente con il FORM
 
-- Estrapolare dal dataset la visualizzazione della home
+- ESTRAPOLARE dal TaskSet la visualizzazione della home (il VisSet)
 
-- All'aggiunta di un nuovo task: controllare se c'è da eliminare il msg_no_task, inserirlo in ordine cronologico
+- All'aggiunta di un NUOVO TASK: controllare se c'è da eliminare il msg_no_task, inserirlo in ordine cronologico
 
 - Quando il datset si SVUOTA aggiungere il msg_no_task nella home
 

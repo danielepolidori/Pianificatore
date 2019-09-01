@@ -12,15 +12,20 @@ public abstract class DataSet<T> {
         elements = new ArrayList<T>();
     }
 
-    // sarà abstract: task in ordine cronologico e vis in ordine si stampa
+    // sarà abstract: task in ordine cronologico e vis in ordine di stampa
     public void add(T element) {
 
-        elements.add(element);
+        //elements.add(element);
     }
 
     public void delete(T element) {
 
         elements.remove(element);
+    }
+
+    public void deleteAll() {
+
+        elements.clear();
     }
 
     public int getNumberOfElements() {

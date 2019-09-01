@@ -15,12 +15,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    // per prova
-    private Toast mToast;
-
-    TaskSet myDataset = new TaskSet();
+    TaskSet myTaskSet = new TaskSet();
+    VisualizeSet myVisSet = new VisualizeSet();
 
     Date dataCorrente = new Date();
+
+    private Toast mToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         String strData = sdf.format(dataCorrente);  // es: "venerdì 30 agosto 2019"
 
         Task init = new Task(getResources().getString(R.string.msg_no_task));
-        myDataset.add(init);
+        myTaskSet.add(init);
 
         /*
         String[] tokens = strData.split(" ");
@@ -57,15 +57,15 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         Task t3 = new Task(getResources().getString(R.string.att), "C", 0);
         Task t4 = new Task(getResources().getString(R.string.att), "D", 2);
         Task t5 = new Task(getResources().getString(R.string.att), "E", 1);
-        myDataset.add(t1);
-        myDataset.add(t2);
-        myDataset.add(t3);
-        myDataset.add(t4);
-        myDataset.add(t5);
+        myTaskSet.add(t1);
+        myTaskSet.add(t2);
+        myTaskSet.add(t3);
+        myTaskSet.add(t4);
+        myTaskSet.add(t5);
         */
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset, this);
+        mAdapter = new MyAdapter(myTaskSet, this);
         recyclerView.setAdapter(mAdapter);
     }
 
