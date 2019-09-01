@@ -6,19 +6,20 @@ public class Task {
     protected String descrizione;
     //protected ? data;
     //protected ? ora;
-    protected String luogo;
-    protected int stato;
+    //protected String luogo;
+    protected int stato;    // 0: ..., 1: ..., 2: ...
     // ...
 
-    public Task(String d, String l, int s){
+    public Task(String d, String l){
 
         this.is_task = true;
         this.descrizione = d;
-        this.luogo = l;
-        this.stato = s;
+        //this.luogo = l;
+        this.stato = 0;
         // ...
     }
 
+    /*
     public Task(String msg){
 
         this.is_task = false;
@@ -27,6 +28,7 @@ public class Task {
         this.stato = -1;
         // ...
     }
+    */
 
     //.... get e set
 

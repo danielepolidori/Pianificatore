@@ -14,7 +14,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     // [html.it]
     // "È l’insieme di dati utilizzato per popolare la lista tramite l’Adapter."
-    private TaskSet mDataset;   // deve essere inizializzato con 'new...' ?
+    private VisualizeSet mDataset;   // deve essere inizializzato con 'new...' ?
 
     // An on-click handler that we've defined to make it easy for an Activity to interface with our RecyclerView
     final private ItemClickListener mOnClickListener;
@@ -48,7 +48,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(TaskSet myDataset, ItemClickListener listener) {
+    public MyAdapter(VisualizeSet myDataset, ItemClickListener listener) {
 
         mDataset = myDataset;
 
@@ -75,7 +75,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        Task element = mDataset.getElement(position);
+        String element = mDataset.getElement(position);
 
         holder.textView.setText(element.getDescription());
     }

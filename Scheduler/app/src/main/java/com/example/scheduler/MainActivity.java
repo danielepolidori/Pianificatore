@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM yyyy", Locale.ITALIAN);
         String strData = sdf.format(dataCorrente);  // es: "venerdì 30 agosto 2019"
 
-        Task init = new Task(getResources().getString(R.string.msg_no_task));
-        myTaskSet.add(init);
+        String init = getResources().getString(R.string.msg_no_task);
+        myVisSet.add(init);
 
         /*
         String[] tokens = strData.split(" ");
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         */
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myTaskSet, this);
+        mAdapter = new MyAdapter(myVisSet, this);
         recyclerView.setAdapter(mAdapter);
     }
 

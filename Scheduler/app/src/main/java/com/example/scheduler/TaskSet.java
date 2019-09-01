@@ -19,20 +19,23 @@ public class TaskSet extends DataSet <Task> {
         return ret;
     }
 
-    public void toVisualize(VisualizeSet v) {
+    public void toVisualize(Task t, VisualizeSet v) {
 
-        if (elements.size() > 0){
+        if (v.getNumberOfElements() < 2){   // c'è solo il msg_no_task
 
-            if (!elements.get(0).is_task){
+            String MeseAnno = t.getMonth() + " " + t.getYear();
+            String GiornoNum = t.getDay() + " " + t.getNumDay();
+            String att = "- " + t.getDescription();
 
-                v.deleteAll();
-                v.add(Resources.getSystem().getString(R.string.msg_no_task));
-            }
-            else{
-
-                // dai task ottieni le stringhe da mostrare
-            }
+            v.deleteAll();
+            v.add(MeseAnno);
+            v.add(GiornoNum);
+            v.add(att);
         }
+        else{   // c'è già almeno un task mostrato
 
+            // cerca il punto in cui metterlo cronologicamente
+            // ...
+        }
     }
 }
