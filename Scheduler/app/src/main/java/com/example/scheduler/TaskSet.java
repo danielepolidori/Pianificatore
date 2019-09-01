@@ -1,6 +1,6 @@
 package com.example.scheduler;
 
-import android.content.res.Resources;
+import java.util.Iterator;
 
 public class TaskSet extends DataSet <Task> {
 
@@ -9,33 +9,52 @@ public class TaskSet extends DataSet <Task> {
         super();
     }
 
-    public boolean isMsg() {
+    public void toVisualize(Task t, VisualizeSet vs) {
 
-        boolean ret = false;
-
-        if (elements.size() == 1 && !elements.get(0).isTask())
-            ret = true;
-
-        return ret;
-    }
-
-    public void toVisualize(Task t, VisualizeSet v) {
-
-        if (v.getNumberOfElements() < 2){   // c'è solo il msg_no_task
+        if (vs.getNumberOfElements() < 2){   // c'è solo il msg_no_task
 
             String MeseAnno = t.getMonth() + " " + t.getYear();
             String GiornoNum = t.getDay() + " " + t.getNumDay();
             String att = "- " + t.getDescription();
 
-            v.deleteAll();
-            v.add(MeseAnno);
-            v.add(GiornoNum);
-            v.add(att);
+            Vis m_a = new Vis(MeseAnno, 0);
+            Vis g_n = new Vis(GiornoNum, 1);
+            Vis a = new Vis(att, 2);
+
+            vs.deleteAll();
+            vs.add(m_a);
+            vs.add(g_n);
+            vs.add(a);
         }
         else{   // c'è già almeno un task mostrato
 
-            // cerca il punto in cui metterlo cronologicamente
-            // ...
+            /*
+            int i;
+            for (i = 0; i < vs.getNumberOfElements(); i++){
+
+                if (vs.getElement(0).getType() == 0){
+
+                    if (vs.getElement(0).getYear() == t.getYear())
+                }
+
+            }
+            */
+
+            /*
+            // e il primo elemento della lista?
+            Iterator<Vis> iterator = vs.getElements().iterator();
+            while(iterator.hasNext()){
+
+                Vis v = iterator.next();
+
+                // ...
+            }
+            */
+
+            for(Vis v : vs) {
+
+            	// ...
+			}
         }
     }
 }

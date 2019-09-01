@@ -2,33 +2,22 @@ package com.example.scheduler;
 
 public class Task {
 
-    protected boolean is_task;  // 1: task, 0: messaggio da mostrare nella home
     protected String descrizione;
     //protected ? data;
     //protected ? ora;
-    //protected String luogo;
-    protected int stato;    // 0: ..., 1: ..., 2: ...
+    protected int priorita;
+    protected String classe;
+    protected int stato;    // 0: pending, 1: ongoing, 2: completed
     // ...
 
-    public Task(String d, String l){
+    public Task(String d, int p, String c){
 
-        this.is_task = true;
         this.descrizione = d;
-        //this.luogo = l;
+        this.priorita = p;
+        this.classe = c;
         this.stato = 0;
         // ...
     }
-
-    /*
-    public Task(String msg){
-
-        this.is_task = false;
-        this.descrizione = msg;
-        this.luogo = "";
-        this.stato = -1;
-        // ...
-    }
-    */
 
     //.... get e set
 
@@ -37,8 +26,23 @@ public class Task {
         return descrizione;
     }
 
-    public boolean isTask() {
+    public int getYear() {
 
-        return is_task;
+        // ...
+    }
+
+    public String getMonth() {
+
+        // ...
+    }
+
+    public String getDay() {
+
+        // ...
+    }
+
+    public int getNumDay() {
+
+        // ...
     }
 }
