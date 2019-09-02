@@ -4,9 +4,7 @@
 
 ### TODO:
 
-- ESTRAPOLARE dal TaskSet la visualizzazione della home (il VisSet)
-
-- All'aggiunta di un NUOVO TASK: controllare se c'è da eliminare il msg_no_task, inserirlo in ordine cronologico, aggiorni il VisSet
+- Con due task uguali mi salta tutto (soluzione: IDtask?)
 
 - Alla RIMOZIONE di un task: se era l'unico presente aggiungere il msg_no_task nella home
 

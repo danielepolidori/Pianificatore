@@ -1,24 +1,31 @@
 package com.example.scheduler;
 
-import android.provider.ContactsContract;
-
 import java.util.Date;
 
 public class Task {
 
-    protected String descrizione;
-    protected Date data_ora;
-    protected int priorita;
-    protected String classe;
-    protected int stato;    // 0: pending, 1: ongoing, 2: completed
+    public enum statoTask {
+        PENDING,
+        ONGOING,
+        COMPLETED
+    }
+
+    private String descrizione;
+    private Date data_ora;
+    String[] dateTokens;
+    private int priorita;
+    private String classe;
+    private statoTask stato;
     // ...
 
-    public Task(String d, int p, String c){
+    public Task(String des, Date dat, int p, String c){
 
-        this.descrizione = d;
+        this.descrizione = des;
+        this.data_ora = dat;
+        this.dateTokens = data_ora.toString().split(" ");
         this.priorita = p;
         this.classe = c;
-        this.stato = 0;
+        this.stato = statoTask.PENDING;
         // ...
     }
 
@@ -34,25 +41,29 @@ public class Task {
         return data_ora;
     }
 
-    /*
     public int getYear() {
 
-        // ...
+        return Integer.parseInt(dateTokens[3]);
     }
 
     public String getMonth() {
 
-        // ...
+        return dateTokens[2].toUpperCase();
     }
 
     public String getDay() {
 
-        // ...
+        return (dateTokens[0].substring(0,1).toUpperCase() + dateTokens[0].substring(1));
     }
 
     public int getNumDay() {
 
-        // ...
+        return Integer.parseInt(dateTokens[1]);
     }
-    */
 }
+
+
+
+
+
+

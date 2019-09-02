@@ -4,25 +4,44 @@ import java.util.Date;
 
 public class Vis {
 
-    protected String testo;
-    protected Date data_ora;
-    protected int tipo;     // 0: riga vuota, 1: data, 2: singola attività
-    private String[] tokens;
+    public enum tipoVis {
+        DATA,
+        ATTIVITA,
+        RIGA_VUOTA,
+        MSG_NO_TASK
+    }
 
-    public Vis(String text, int type) {
+    private String testo;
+    private Date data_ora;
+    private tipoVis tipo;
+    private String[] textTokens;    // DATA -> textTokens[0]: giorno, textTokens[1]: numGiorno, textTokens[2]: trattino, textTokens[3]: mese, textTokens[4]: anno
+
+    public Vis(String text, tipoVis type) {
 
         this.testo = text;
         this.tipo = type;
-        this.tokens = testo.split(" ");
+        this.textTokens = testo.split(" ");
         // ...
     }
+
+    //.... get e set
 
     public String getText() {
 
         return testo;
     }
 
-    public int getType() {
+    public String getTextAtt() {
+
+        String ret = "[errore]";
+
+        if (tipo == tipoVis.ATTIVITA)
+            ret = textTokens[1];
+
+        return ret;
+    }
+
+    public tipoVis getType() {
 
         return tipo;
     }
@@ -36,8 +55,8 @@ public class Vis {
 
         int ret = -1;
 
-        if (tipo == 1)
-            ret = Integer.parseInt(tokens[1]);
+        if (tipo == tipoVis.DATA)
+            ret = Integer.parseInt(textTokens[4]);
 
         return ret;
     }
@@ -46,8 +65,8 @@ public class Vis {
 
         String ret = "[errore]";
 
-        if (tipo == 0)
-            ret = tokens[0];
+        if (tipo == tipoVis.DATA)
+            ret = textTokens[3];
 
         return ret;
     }
@@ -56,8 +75,8 @@ public class Vis {
 
         int ret = -1;
 
-        if (tipo == 1)
-            ret = Integer.parseInt(tokens[1]);
+        if (tipo == tipoVis.DATA)
+            ret = Integer.parseInt(textTokens[1]);
 
         return ret;
     }

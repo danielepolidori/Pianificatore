@@ -42,20 +42,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMM yyyy", Locale.ITALIAN);
         String strData = sdf.format(dataCorrente);  // es: "venerdì 30 ago 2019"
 
-        String init = getResources().getString(R.string.msg_no_task);
-        Vis vi = new Vis(init, 2);
-        Vis vv = new Vis(getResources().getString(R.string.vuota), -1);
-        myVisSet.add(vv);
-        myVisSet.add(vi);
-        myVisSet.add(vv);
-
-        String[] tokens = strData.split(" ");
-        String textGiorno = tokens[0].substring(0,1).toUpperCase() + tokens[0].substring(1);
-        String numGiorno = tokens[1];
-        String mese = tokens[2].toUpperCase();
-        String anno = tokens[3];
-
         /*
+
+
         Task t1 = new Task(textGiorno + " " + numGiorno + " - " + mese + " " + anno, 0, "A");
         Task t2 = new Task(getResources().getString(R.string.att), 0, "A");
         Task t3 = new Task(getResources().getString(R.string.att), 0, "A");
@@ -66,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         myTaskSet.add(t3);
         myTaskSet.add(t4);
         myTaskSet.add(t5);
-        */
 
         Vis v1 = new Vis(textGiorno + " " + numGiorno + " - " + mese + " " + anno, 0);
         Vis v2 = new Vis(getResources().getString(R.string.att), 0);
@@ -74,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         myVisSet.add(v1);
         myVisSet.add(v2);
         myVisSet.add(v3);
+        */
 
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myVisSet, this);
