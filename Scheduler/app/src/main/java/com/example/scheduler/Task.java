@@ -1,10 +1,13 @@
 package com.example.scheduler;
 
+import android.provider.ContactsContract;
+
+import java.util.Date;
+
 public class Task {
 
     protected String descrizione;
-    //protected ? data;
-    //protected ? ora;
+    protected Date data_ora;
     protected int priorita;
     protected String classe;
     protected int stato;    // 0: pending, 1: ongoing, 2: completed
@@ -26,6 +29,12 @@ public class Task {
         return descrizione;
     }
 
+    public Date getDate() {
+
+        return data_ora;
+    }
+
+    /*
     public int getYear() {
 
         // ...
@@ -45,4 +54,5 @@ public class Task {
 
         // ...
     }
+    */
 }

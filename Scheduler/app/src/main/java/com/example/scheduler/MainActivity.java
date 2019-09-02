@@ -39,30 +39,41 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM yyyy", Locale.ITALIAN);
-        String strData = sdf.format(dataCorrente);  // es: "venerdì 30 agosto 2019"
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMM yyyy", Locale.ITALIAN);
+        String strData = sdf.format(dataCorrente);  // es: "venerdì 30 ago 2019"
 
         String init = getResources().getString(R.string.msg_no_task);
-        myVisSet.add(init);
+        Vis vi = new Vis(init, 2);
+        Vis vv = new Vis(getResources().getString(R.string.vuota), -1);
+        myVisSet.add(vv);
+        myVisSet.add(vi);
+        myVisSet.add(vv);
 
-        /*
         String[] tokens = strData.split(" ");
         String textGiorno = tokens[0].substring(0,1).toUpperCase() + tokens[0].substring(1);
         String numGiorno = tokens[1];
         String mese = tokens[2].toUpperCase();
         String anno = tokens[3];
 
-        Task t1 = new Task(mese + " " + anno, "A", 0);
-        Task t2 = new Task(textGiorno + " " + numGiorno, "B", 1);
-        Task t3 = new Task(getResources().getString(R.string.att), "C", 0);
-        Task t4 = new Task(getResources().getString(R.string.att), "D", 2);
-        Task t5 = new Task(getResources().getString(R.string.att), "E", 1);
+        /*
+        Task t1 = new Task(textGiorno + " " + numGiorno + " - " + mese + " " + anno, 0, "A");
+        Task t2 = new Task(getResources().getString(R.string.att), 0, "A");
+        Task t3 = new Task(getResources().getString(R.string.att), 0, "A");
+        Task t4 = new Task(getResources().getString(R.string.att), 0, "A");
+        Task t5 = new Task(getResources().getString(R.string.att), 0, "A");
         myTaskSet.add(t1);
         myTaskSet.add(t2);
         myTaskSet.add(t3);
         myTaskSet.add(t4);
         myTaskSet.add(t5);
         */
+
+        Vis v1 = new Vis(textGiorno + " " + numGiorno + " - " + mese + " " + anno, 0);
+        Vis v2 = new Vis(getResources().getString(R.string.att), 0);
+        Vis v3 = new Vis(getResources().getString(R.string.att), 0);
+        myVisSet.add(v1);
+        myVisSet.add(v2);
+        myVisSet.add(v3);
 
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myVisSet, this);

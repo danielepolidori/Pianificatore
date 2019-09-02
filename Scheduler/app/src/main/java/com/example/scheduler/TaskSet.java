@@ -1,6 +1,6 @@
 package com.example.scheduler;
 
-import java.util.Iterator;
+import android.content.res.Resources;
 
 public class TaskSet extends DataSet <Task> {
 
@@ -9,51 +9,70 @@ public class TaskSet extends DataSet <Task> {
         super();
     }
 
-    public void toVisualize(Task t, VisualizeSet vs) {
+    public void toVisualizeAdd(Task t, VisualizeSet vs) {
 
-        if (vs.getNumberOfElements() < 2){   // c'è solo il msg_no_task
+        String data = t.getDay() + " " + t.getNumDay() + " - " + t.getMonth() + " " + t.getYear();
+        String att = "- " + t.getDescription();
 
-            String MeseAnno = t.getMonth() + " " + t.getYear();
-            String GiornoNum = t.getDay() + " " + t.getNumDay();
-            String att = "- " + t.getDescription();
+        Vis d = new Vis(data, 1);
+        Vis a = new Vis(att, 2);
+        Vis vv = new Vis(Resources.getSystem().getString(R.string.vuota), 0);
 
-            Vis m_a = new Vis(MeseAnno, 0);
-            Vis g_n = new Vis(GiornoNum, 1);
-            Vis a = new Vis(att, 2);
+        if (vs.isMsgNoTask()){   // c'è solo il msg_no_task
 
             vs.deleteAll();
-            vs.add(m_a);
-            vs.add(g_n);
+            vs.add(vv);
+            vs.add(d);
+            vs.add(vv);
             vs.add(a);
+            vs.add(vv);
+            vs.add(vv);
+            vs.add(vv);
         }
-        else{   // c'è già almeno un task mostrato
+        else{   // c'è già almeno un task mostrato, allora cerca il punto in cui inserirlo cronologicamente
 
-            /*
-            int i;
-            for (i = 0; i < vs.getNumberOfElements(); i++){
+            int i, j;
+            boolean stop_i, stop_j;
 
-                if (vs.getElement(0).getType() == 0){
+            stop_i = false;
+            stop_j = false;
 
-                    if (vs.getElement(0).getYear() == t.getYear())
+            for(i = 0; i < vs.getNumberOfElements() && !stop_i; i++) {
+
+                Vis curr_i = vs.getElement(i);
+
+                if (curr_i.getType() == 1){      // se l'elemento è una data
+
+                    if (t.getDate().equals(curr_i.getDate())){        // allora inserisci il task, fra gli altri già presenti, nel punto giusto secondo l'ora
+
+                        for(j = i+1; j < vs.getNumberOfElements() && !stop_j; j++){
+
+                            Vis curr_j = vs.getElement(j);
+
+                            if(curr_j.getType() == 2){
+
+                                if(t.getDate().equals(curr_j.getDate()) || t.getDate().before(curr_j.getDate())){
+
+                                    vs.addIn(a, j);
+
+                                    stop_j = true;
+                                    stop_i = true;
+                                }
+                            }
+                        }
+                    }
+                    else if (t.getDate().before(curr_i.getDate())){   // allora crea un nuovo giorno con l'attività
+
+                        vs.addIn(d, i++);
+                        vs.addIn(vv, i++);
+                        vs.addIn(a, i++);
+                        vs.addIn(vv, i++);
+                        vs.addIn(vv, i++);
+                        vs.addIn(vv, i);
+
+                        stop_i = true;
+                    }
                 }
-
-            }
-            */
-
-            /*
-            // e il primo elemento della lista?
-            Iterator<Vis> iterator = vs.getElements().iterator();
-            while(iterator.hasNext()){
-
-                Vis v = iterator.next();
-
-                // ...
-            }
-            */
-
-            for(Vis v : vs) {
-
-            	// ...
 			}
         }
     }

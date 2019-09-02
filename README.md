@@ -4,8 +4,6 @@
 
 ### TODO:
 
-- Formato data ottenuta dall'utente con il FORM
-
 - ESTRAPOLARE dal TaskSet la visualizzazione della home (il VisSet)
 
 - All'aggiunta di un NUOVO TASK: controllare se c'è da eliminare il msg_no_task, inserirlo in ordine cronologico, aggiorni il VisSet
@@ -28,10 +26,6 @@
 
 - Rimozione di task svolti
 
-- Priorità dei task
-
-- Classi di task
-
 - Visualizzare la home con filtri
 
 - Grafici
@@ -45,6 +39,8 @@
 
 
 ### IDEE:
+
+- Grafico a TORTA per visualizzare le varie classi di task (famiglia, lavoro, ...)
 
 - Variabile universale, incrementata ad ogni creazione di un nuovo elemento del RecyclerView, per tenere traccia di quale elemento stiamo creando e così possiamo impostare l'elemento come serve (es: mesi in grassetto, giorni con il quadratino, font diversi, ...)
 

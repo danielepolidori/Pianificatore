@@ -1,9 +1,12 @@
 package com.example.scheduler;
 
+import java.util.Date;
+
 public class Vis {
 
     protected String testo;
-    protected int tipo;     // 0: mese&anno, 1: giorno&num, 2: singola attività
+    protected Date data_ora;
+    protected int tipo;     // 0: riga vuota, 1: data, 2: singola attività
     private String[] tokens;
 
     public Vis(String text, int type) {
@@ -24,11 +27,16 @@ public class Vis {
         return tipo;
     }
 
+    public Date getDate() {
+
+        return data_ora;
+    }
+
     public int getYear() {
 
         int ret = -1;
 
-        if (tipo == 0)
+        if (tipo == 1)
             ret = Integer.parseInt(tokens[1]);
 
         return ret;

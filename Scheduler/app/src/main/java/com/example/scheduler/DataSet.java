@@ -12,10 +12,16 @@ public abstract class DataSet<T> {
         elements = new ArrayList<T>();
     }
 
-    // sarà abstract: task in ordine cronologico e vis in ordine di stampa
+    // Aggiunge elemento in coda
     public void add(T element) {
 
-        //elements.add(element);
+        elements.add(element);
+    }
+
+    // Inserisce 'element' nella posizione 'index' e sposta tutti gli elementi, da 'index' in poi, di una posizione
+    public void addIn(T element, int index) {
+
+        elements.add(index, element);
     }
 
     public void delete(T element) {
