@@ -6,7 +6,9 @@
 
 - Con due task uguali mi salta tutto (soluzione: IDtask?)
 
-- Alla RIMOZIONE di un task: se era l'unico presente aggiungere il msg_no_task nella home
+- Fai una prova di aggiunta e rimozione di task
+
+- Rimane lo spazio vuoto (una riga bianca) quando si rimuove un task dalla visualizzazione della home?
 
 
 
