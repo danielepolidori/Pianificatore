@@ -12,18 +12,22 @@ public class Task {
         COMPLETED
     }
 
+    private int id;
     private String descrizione;
     private Date data_ora;
-    private SimpleDateFormat sdf;
-    private String strData;
-    private String[] dateTokens;
     private int priorita;
     private String classe;
     private statoTask stato;
+
+    private SimpleDateFormat sdf;
+    private String strData;
+    private String[] dateTokens;
+
     // ...
 
-    public Task(String des, Date dat, int p, String c){
+    public Task(String des, Date dat, int p, String c, int nIdentificativo){
 
+        this.id = nIdentificativo;
         this.descrizione = des;
         this.data_ora = dat;
         this.sdf = new SimpleDateFormat("EEEE d MMM yyyy", Locale.ITALIAN);
@@ -36,6 +40,11 @@ public class Task {
     }
 
     //.... get e set
+
+    public int getId() {
+
+        return id;
+    }
 
     public String getDescription() {
 

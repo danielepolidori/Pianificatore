@@ -2,6 +2,5 @@
 <resources>
     <dimen name="textView_height">25dp</dimen>
     <dimen name="textView_width">150dp</dimen>
-    <dimen name="fontGiorni_size">25sp</dimen>
-    <dimen name="fontAtt_size">15sp</dimen>
+    <dimen name="myfont">20sp</dimen>
 </resources>

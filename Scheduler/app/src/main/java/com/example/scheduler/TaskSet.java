@@ -44,7 +44,7 @@ public class TaskSet extends DataSet <Task> {
             vs.toVisualizeAdd(t);
     }
 
-    public void delTask(Task t, VisualizeSet vs) {
+    public void delTask(int id_t, VisualizeSet vs) {
 
         int i;
         boolean eliminato = false;
@@ -53,7 +53,7 @@ public class TaskSet extends DataSet <Task> {
 
             Task currEl = elements.get(i);
 
-            if(currEl.getDescription().equals(t.getDescription())){
+            if(currEl.getId() == id_t){
 
                 elements.remove(i);
 
@@ -62,6 +62,6 @@ public class TaskSet extends DataSet <Task> {
         }
 
         if (eliminato)
-            vs.toVisualizeDel(t, elements.size());
+            vs.toVisualizeDel(id_t, elements.size());
     }
 }

@@ -24,9 +24,9 @@ public abstract class DataSet<T> {
         elements.add(index, element);
     }
 
-    public void delete(T element) {
+    public void delete(int index) {
 
-        elements.remove(element);
+        elements.remove(index);
     }
 
     public void deleteAll() {

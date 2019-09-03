@@ -1,7 +1,5 @@
 package com.example.scheduler;
 
-import android.content.res.Resources;
-
 public class VisualizeSet extends DataSet <Vis> {
 
     private boolean is_msgNoTask;
@@ -65,10 +63,11 @@ public class VisualizeSet extends DataSet <Vis> {
 
         String dat = t.getDay() + " " + t.getNumDay() + " - " + t.getMonth() + " " + t.getYear();
         String att = "- " + t.getDescription();
+        String vuota = "~";
 
-        Vis d = new Vis(dat, Vis.tipoVis.DATA, t.getDate());
-        Vis a = new Vis(att, Vis.tipoVis.ATTIVITA, t.getDate());
-        Vis vv = new Vis("", Vis.tipoVis.RIGA_VUOTA);
+        Vis d = new Vis(dat, t.getDate());
+        Vis a = new Vis(att, t.getDate(), t.getId());
+        Vis vv = new Vis(vuota, Vis.tipoVis.RIGA_VUOTA);
 
         if (is_msgNoTask) {                 // c'è solo il msg_no_task
 
@@ -119,15 +118,17 @@ public class VisualizeSet extends DataSet <Vis> {
     // Cancella l'intero giorno con il task dalla visualizzazione
     private void delDaySingleTask(int ind) {
 
-        elements.remove(elements.get(ind-2));       // prec_prec		DATA		j-2
-        elements.remove(elements.get(ind-1));       // prec			    VUOTA		j-1
-        elements.remove(elements.get(ind));         // curr			    ATT		    j
-        elements.remove(elements.get(ind+1));       // suc			    VUOTA		j+1
-        elements.remove(elements.get(ind+2));       // suc_suc			VUOTA		j+2
-        elements.remove(elements.get(ind+3));       // suc_suc_suc		VUOTA		j+3
+        // stesso indice, perché dopo la rimozione di un elemento il successivo occupa il suo posto
+
+        elements.remove(ind-2);       // prec_prec		DATA		j-2
+        elements.remove(ind-2);       // curr		    ATT		    j
+        elements.remove(ind-2);       // prec	        VUOTA		j-1
+        elements.remove(ind-2);       // suc			    VUOTA		j+1
+        elements.remove(ind-2);       // suc_suc			VUOTA		j+2
+        elements.remove(ind-2);       // suc_suc_suc		VUOTA		j+3
     }
 
-    protected void toVisualizeDel(Task t, int sizeTaskSet) {
+    protected void toVisualizeDel(int id_t, int sizeTaskSet) {
 
         if (sizeTaskSet < 1){
 
@@ -138,32 +139,31 @@ public class VisualizeSet extends DataSet <Vis> {
         }
         else{
 
-            int i, j;
-            boolean stop = false;
+            int i;
+            boolean cancellato = false;
 
-            for(i = 0; i < elements.size() && !stop; i++) {
+            for(i = 0; i < elements.size() && !cancellato; i++) {
 
                 Vis curr_i = elements.get(i);
 
-                if (curr_i.getType() == Vis.tipoVis.DATA && t.getDate().equals(curr_i.getDate())){        // allora cerca il task, secondo l'ora, fra gli altri già presenti ed eliminalo
+                if (curr_i.getType() == Vis.tipoVis.ATTIVITA && curr_i.getIdTask() == id_t){
 
-                    for(j = i+1; j < elements.size() && !stop; j++){
+                    Vis prec = elements.get(i-2);
+                    Vis succ = elements.get(i+2);
 
-                        Vis curr_j = elements.get(j);
+                    if (prec.getType() == Vis.tipoVis.ATTIVITA || succ.getType() == Vis.tipoVis.ATTIVITA) {
 
-                        if(curr_j.getType() == Vis.tipoVis.ATTIVITA && t.getDescription().equals(curr_j.getTextAtt())){
+                        // caso base: cancella il task e una riga vuota seguente
 
-                            Vis prec = elements.get(j-2);
-                            Vis succ = elements.get(j+2);
-
-                            if (prec.getType() == Vis.tipoVis.ATTIVITA || succ.getType() == Vis.tipoVis.ATTIVITA)
-                                elements.remove(curr_j);          // caso base: cancella il task
-                            else
-                                delDaySingleTask(j);     // caso speciale: cancella l'intero giorno con un singolo task
-
-                            stop = true;
-                        }
+                        elements.remove(i);                // per cancellare il task
+                        elements.remove(i);       // per cancellare la riga vuota (stesso indice, perché dopo la rimozione del task la riga vuota ha occupato il suo posto)
                     }
+                    else {
+
+                        delDaySingleTask(i);     // caso speciale: cancella l'intero giorno contenente un singolo task
+                    }
+
+                    cancellato = true;
                 }
             }
         }
