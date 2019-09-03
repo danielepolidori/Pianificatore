@@ -5,22 +5,20 @@ import android.content.res.Resources;
 public class VisualizeSet extends DataSet <Vis> {
 
     private boolean is_msgNoTask;
+    private String msgNoTask;
 
     public VisualizeSet(){
 
         super();
 
-        init();
-
         this.is_msgNoTask = true;
+        this.msgNoTask = "Nessuna attività ancora in programma.";
     }
 
-    protected void init() {
+    public void init() {
 
-        String i = Resources.getSystem().getString(R.string.msg_no_task);
-
-        Vis vi = new Vis(i, Vis.tipoVis.MSG_NO_TASK);
-        Vis vv = new Vis(Resources.getSystem().getString(R.string.vuota), Vis.tipoVis.RIGA_VUOTA);
+        Vis vi = new Vis(msgNoTask, Vis.tipoVis.MSG_NO_TASK);
+        Vis vv = new Vis("", Vis.tipoVis.RIGA_VUOTA);
 
         elements.add(vv);
         elements.add(vi);
@@ -68,15 +66,17 @@ public class VisualizeSet extends DataSet <Vis> {
         String dat = t.getDay() + " " + t.getNumDay() + " - " + t.getMonth() + " " + t.getYear();
         String att = "- " + t.getDescription();
 
-        Vis d = new Vis(dat, Vis.tipoVis.DATA);
-        Vis a = new Vis(att, Vis.tipoVis.ATTIVITA);
-        Vis vv = new Vis(Resources.getSystem().getString(R.string.vuota), Vis.tipoVis.RIGA_VUOTA);
+        Vis d = new Vis(dat, Vis.tipoVis.DATA, t.getDate());
+        Vis a = new Vis(att, Vis.tipoVis.ATTIVITA, t.getDate());
+        Vis vv = new Vis("", Vis.tipoVis.RIGA_VUOTA);
 
-        if (is_msgNoTask) {   // c'è solo il msg_no_task
+        if (is_msgNoTask) {                 // c'è solo il msg_no_task
 
             addFirstTaskToVis(d, a, vv);
+
+            is_msgNoTask = false;
         }
-        else{   // c'è già almeno un task mostrato, allora cerca il punto in cui inserirlo cronologicamente
+        else{                               // c'è già almeno un task mostrato, allora cerca il punto in cui inserirlo cronologicamente
 
             int i, j;
             boolean stop = false;
@@ -85,25 +85,29 @@ public class VisualizeSet extends DataSet <Vis> {
 
                 Vis curr_i = elements.get(i);
 
-                if (curr_i.getType() == Vis.tipoVis.DATA && t.getDate().equals(curr_i.getDate())){        // allora inserisci il task, fra gli altri già presenti, nel punto giusto secondo l'ora
+                if (curr_i.getType() == Vis.tipoVis.DATA){        // allora inserisci il task, fra gli altri già presenti, nel punto giusto secondo l'ora
 
-                    for(j = i+1; j < elements.size() && !stop; j++){
+                    if (t.getDate().equals(curr_i.getDate())) {
 
-                        Vis curr_j = elements.get(j);
+                        for (j = i + 1; j < elements.size() && !stop; j++) {
 
-                        if(curr_j.getType() == Vis.tipoVis.ATTIVITA && (t.getDate().equals(curr_j.getDate()) || t.getDate().before(curr_j.getDate()))){
+                            Vis curr_j = elements.get(j);
 
-                            elements.add(j, a);
+                            if (curr_j.getType() == Vis.tipoVis.ATTIVITA && (t.getDate().equals(curr_j.getDate()) || t.getDate().before(curr_j.getDate()))) {
 
-                            stop = true;
+                                elements.add(j, vv);
+                                elements.add(j, a);
+
+                                stop = true;
+                            }
                         }
                     }
-                }
-                else if (t.getDate().before(curr_i.getDate())){   // allora crea un nuovo giorno con l'attività
+                    else if (t.getDate().before(curr_i.getDate())){   // allora crea un nuovo giorno con l'attività
 
-                    addTaskToVis(d, a, vv, i);
+                        addTaskToVis(d, a, vv, i);
 
-                    stop = true;
+                        stop = true;
+                    }
                 }
             }
 
@@ -129,6 +133,8 @@ public class VisualizeSet extends DataSet <Vis> {
 
             elements.clear();
             init();
+
+            is_msgNoTask = true;
         }
         else{
 
@@ -147,8 +153,8 @@ public class VisualizeSet extends DataSet <Vis> {
 
                         if(curr_j.getType() == Vis.tipoVis.ATTIVITA && t.getDescription().equals(curr_j.getTextAtt())){
 
-                            Vis prec = elements.get(j-1);
-                            Vis succ = elements.get(j+1);
+                            Vis prec = elements.get(j-2);
+                            Vis succ = elements.get(j+2);
 
                             if (prec.getType() == Vis.tipoVis.ATTIVITA || succ.getType() == Vis.tipoVis.ATTIVITA)
                                 elements.remove(curr_j);          // caso base: cancella il task

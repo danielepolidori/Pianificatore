@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements MyAdapter.ItemClickListener {
 
@@ -39,30 +37,27 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMM yyyy", Locale.ITALIAN);
-        String strData = sdf.format(dataCorrente);  // es: "venerdì 30 ago 2019"
+        myVisSet.init();
+
 
         /*
+        long v1 = dataCorrente.getTime() + 1000000000;
+        long v2 = dataCorrente.getTime() + 2000000000;
+        Date d1 = new Date(v1);
+        Date d2 = new Date(v2);
 
-
-        Task t1 = new Task(textGiorno + " " + numGiorno + " - " + mese + " " + anno, 0, "A");
-        Task t2 = new Task(getResources().getString(R.string.att), 0, "A");
-        Task t3 = new Task(getResources().getString(R.string.att), 0, "A");
-        Task t4 = new Task(getResources().getString(R.string.att), 0, "A");
-        Task t5 = new Task(getResources().getString(R.string.att), 0, "A");
-        myTaskSet.add(t1);
-        myTaskSet.add(t2);
-        myTaskSet.add(t3);
-        myTaskSet.add(t4);
-        myTaskSet.add(t5);
-
-        Vis v1 = new Vis(textGiorno + " " + numGiorno + " - " + mese + " " + anno, 0);
-        Vis v2 = new Vis(getResources().getString(R.string.att), 0);
-        Vis v3 = new Vis(getResources().getString(R.string.att), 0);
-        myVisSet.add(v1);
-        myVisSet.add(v2);
-        myVisSet.add(v3);
+        Task t1 = new Task("Attività numero uno", dataCorrente, 0, "A");
+        Task t2 = new Task("Attività numero due", d1, 0, "A");
+        Task t3 = new Task("Attività numero tre", d1, 0, "A");
+        Task t4 = new Task("Attività numero quattro", d1, 0, "A");
+        Task t5 = new Task("Attività numero cinque", d2, 0, "A");
+        myTaskSet.addTask(t1, myVisSet);
+        myTaskSet.addTask(t2, myVisSet);
+        myTaskSet.addTask(t3, myVisSet);
+        myTaskSet.addTask(t4, myVisSet);
+        myTaskSet.addTask(t5, myVisSet);
         */
+
 
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myVisSet, this);

@@ -10,29 +10,46 @@ public class TaskSet extends DataSet <Task> {
     public void addTask(Task t, VisualizeSet vs) {
 
         int i;
-        boolean stop = false;
+        boolean aggiunto = false;
 
-        for(i = 0; i < elements.size() && !stop; i++){
+        if (elements.size() < 1){
 
-            Task currEl = elements.get(i);
+            elements.add(t);
 
-            if(currEl.getDate().equals(t.getDate()) || currEl.getDate().after(t.getDate())){
+            aggiunto = true;
+        }
+        else{
 
-                elements.add(i, t);
+            for(i = 0; i < elements.size() && !aggiunto; i++){
 
-                stop = true;
+                Task currEl = elements.get(i);
+
+                if(currEl.getDate().equals(t.getDate()) || currEl.getDate().after(t.getDate())){
+
+                    elements.add(i, t);
+
+                    aggiunto = true;
+                }
+            }
+
+            if (!aggiunto){
+
+                elements.add(t);
+
+                aggiunto = true;
             }
         }
 
-        vs.toVisualizeAdd(t);
+        if (aggiunto)
+            vs.toVisualizeAdd(t);
     }
 
     public void delTask(Task t, VisualizeSet vs) {
 
         int i;
-        boolean stop = false;
+        boolean eliminato = false;
 
-        for(i = 0; i < elements.size() && !stop; i++){
+        for(i = 0; i < elements.size() && !eliminato; i++){
 
             Task currEl = elements.get(i);
 
@@ -40,10 +57,11 @@ public class TaskSet extends DataSet <Task> {
 
                 elements.remove(i);
 
-                stop = true;
+                eliminato = true;
             }
         }
 
-        vs.toVisualizeDel(t, elements.size());
+        if (eliminato)
+            vs.toVisualizeDel(t, elements.size());
     }
 }

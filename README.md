@@ -4,9 +4,9 @@
 
 ### TODO:
 
-- Con due task uguali mi salta tutto (soluzione: IDtask?)
-
 - Fai una prova di aggiunta e rimozione di task
+
+- Con due task uguali mi salta tutto (soluzione: IDtask?)
 
 - Rimane lo spazio vuoto (una riga bianca) quando si rimuove un task dalla visualizzazione della home?
 
@@ -35,6 +35,12 @@
 - (Mostrare dettagli di un task)
 
 - (Credits del progetto)
+
+
+
+### RICORDA:
+
+- Se si gira il cellulare in orizzontale l'app funziona ugualmente?
 
 
 

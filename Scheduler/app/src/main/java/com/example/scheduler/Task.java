@@ -1,6 +1,8 @@
 package com.example.scheduler;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Task {
 
@@ -12,7 +14,9 @@ public class Task {
 
     private String descrizione;
     private Date data_ora;
-    String[] dateTokens;
+    private SimpleDateFormat sdf;
+    private String strData;
+    private String[] dateTokens;
     private int priorita;
     private String classe;
     private statoTask stato;
@@ -22,7 +26,9 @@ public class Task {
 
         this.descrizione = des;
         this.data_ora = dat;
-        this.dateTokens = data_ora.toString().split(" ");
+        this.sdf = new SimpleDateFormat("EEEE d MMM yyyy", Locale.ITALIAN);
+        this.strData = sdf.format(data_ora);  // es: "venerdì 30 ago 2019"
+        this.dateTokens = strData.split(" ");
         this.priorita = p;
         this.classe = c;
         this.stato = statoTask.PENDING;

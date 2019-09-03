@@ -12,14 +12,24 @@ public class Vis {
     }
 
     private String testo;
-    private Date data_ora;
     private tipoVis tipo;
+    private Date data_ora;
     private String[] textTokens;    // DATA -> textTokens[0]: giorno, textTokens[1]: numGiorno, textTokens[2]: trattino, textTokens[3]: mese, textTokens[4]: anno
 
     public Vis(String text, tipoVis type) {
 
         this.testo = text;
         this.tipo = type;
+        this.data_ora = new Date();     // Soltanto per non lasciarlo non inizializzato, non verrà mai usato
+        this.textTokens = testo.split(" ");
+        // ...
+    }
+
+    public Vis(String text, tipoVis type, Date dataTask) {
+
+        this.testo = text;
+        this.tipo = type;
+        this.data_ora = dataTask;
         this.textTokens = testo.split(" ");
         // ...
     }
