@@ -1,11 +1,18 @@
 package com.example.scheduler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import java.util.Date;
+import static android.app.PendingIntent.getActivity;
 
 public class MainActivity extends AppCompatActivity implements MyAdapter.ItemClickListener {
 
@@ -39,46 +46,25 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         myVisSet.init();
 
-
-        /*
-        int inc = 0;
-
-        long v1 = dataCorrente.getTime() + 1000000000;
-        long v2 = dataCorrente.getTime() + 2000000000;
-        Date d1 = new Date(v1);
-        Date d2 = new Date(v2);
-
-        Task t1 = new Task("Attività numero uno", dataCorrente, 0, "A", inc++);
-        Task t2 = new Task("Attività numero due", d1, 0, "A", inc++);
-        Task t3 = new Task("Attività numero tre", d1, 0, "A", inc++);
-        Task t4 = new Task("Attività numero quattro", d1, 0, "A", inc++);
-        Task t5 = new Task("Attività numero cinque", d2, 0, "A", inc++);
-
-        myTaskSet.addTask(t1, myVisSet);
-        myTaskSet.addTask(t2, myVisSet);
-        myTaskSet.addTask(t3, myVisSet);
-        myTaskSet.addTask(t4, myVisSet);
-        myTaskSet.addTask(t5, myVisSet);
-
-        myTaskSet.delTask(t5.getId(), myVisSet);
-        myTaskSet.delTask(t3.getId(), myVisSet);
-
-        myTaskSet.addTask(t3, myVisSet);
-
-        myTaskSet.delTask(t1.getId(), myVisSet);
-
-        myTaskSet.addTask(t1, myVisSet);
-
-        myTaskSet.delTask(t1.getId(), myVisSet);
-        myTaskSet.delTask(t2.getId(), myVisSet);
-        myTaskSet.delTask(t3.getId(), myVisSet);
-        myTaskSet.delTask(t4.getId(), myVisSet);
-        */
-
-
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myVisSet, this);
         recyclerView.setAdapter(mAdapter);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final EditText edit_name = (EditText)findViewById(R.id.edit_name);
+                final EditText edit_lastname = (EditText)findViewById(R.id.edit_lastname);
+                Bundle bundle = new Bundle();
+                bundle.putString("name", edit_name.getText().toString());
+                bundle.putString("lastname", edit_lastname.getText().toString());
+                Intent form_intent = new Intent(getApplicationContext(), Form.class);
+                form_intent.putExtras(bundle);
+                startActivity(form_intent);
+            }
+        });
     }
 
     @Override

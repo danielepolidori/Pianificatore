@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- "The overall container for your user interface is a RecyclerView object that you add to your layout." -->
-<!-- A RecyclerView with some commonly used attributes -->
-<androidx.recyclerview.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/my_recycler_view"
-    android:scrollbars="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="5dp"
-    tools:context=".MainActivity"/>
+    tools:context=".MainActivity">
+
+    <!-- "The overall container for your user interface is a RecyclerView object that you add to your layout." -->
+    <!-- A RecyclerView with some commonly used attributes -->
+    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/my_recycler_view"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="5dp"
+        tools:context=".MainActivity" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/fab"
+    android:layout_gravity="bottom|end"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/fab_margin"
+    android:layout_width="wrap_content"
+    app:srcCompat="@android:drawable/ic_input_add" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

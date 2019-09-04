@@ -4,7 +4,11 @@
 
 ### TODO:
 
-- Form per creazione di un task
+- BOTTONE per passare dalla MainActivity al form
+
+- INVIA dati dal form alla MainActivity
+
+- Completa FORM per creazione di un nuovo task
 
 
 

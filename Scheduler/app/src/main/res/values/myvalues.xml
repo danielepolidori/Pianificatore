@@ -3,4 +3,5 @@
     <dimen name="textView_height">25dp</dimen>
     <dimen name="textView_width">150dp</dimen>
     <dimen name="myfont">20sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
