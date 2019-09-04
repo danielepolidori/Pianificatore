@@ -52,17 +52,13 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
 
-                final EditText edit_name = (EditText)findViewById(R.id.edit_name);
-                final EditText edit_lastname = (EditText)findViewById(R.id.edit_lastname);
-                Bundle bundle = new Bundle();
-                bundle.putString("name", edit_name.getText().toString());
-                bundle.putString("lastname", edit_lastname.getText().toString());
-                Intent form_intent = new Intent(getApplicationContext(), Form.class);
-                form_intent.putExtras(bundle);
-                startActivity(form_intent);
+                Intent intent = new Intent(MainActivity.this, Form.class);
+
+                startActivity(intent);
             }
         });
     }
@@ -87,3 +83,15 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 // "The view holder objects are managed by an adapter, which you create by extending RecyclerView.Adapter"
 
 // "Once you have added a RecyclerView widget to your layout, obtain a handle to the object, connect it to a layout manager, and attach an adapter for the data to be displayed"
+
+
+/*
+// Richiama nel codice i due controlli TextView in cui visualizzeremo i dati inseriti dall’utente ed inviati dall’Activity di default attraverso il Bundle
+        final TextView text_name = (TextView) findViewById(R.id.view_name);
+        final TextView text_lastname = (TextView) findViewById(R.id.view_lastname);
+
+        // Recupero i valori dal Bundle tramite il metodo getString() e li impostiamo rispettivamente negli oggetti TextView text_name e text_lastname
+        Bundle bundle = this.getIntent().getExtras();
+        text_name.setText(bundle.getString("name"));
+        text_lastname.setText(bundle.getString("lastname"));
+ */
