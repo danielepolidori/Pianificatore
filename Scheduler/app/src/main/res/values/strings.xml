@@ -7,10 +7,11 @@
     <string name="testo_prova">Ciao a tutti!</string>
     <string name="vuota"></string>
 
-    <string name="form_intro">Invia il form premendo sul pulsante di invio.</string>
-    <string name="name">Inserisci il tuo nome</string>
-    <string name="lastname">Inserisci il tuo cognome</string>
-    <string name="form_button_label">Invia</string>
-    <string name="label_form_name">Nome Inserito:</string>
-    <string name="label_form_lastname">Cognome Inserito:</string>
+    <string name="form_intro">Inserisci i dati per la creazione di una nuova attività.</string>
+    <string name="desc">Inserisci la descrizione dell\'attività:</string>
+    <string name="data">Inserisci la data in cui svolgere l\'attività:</string>
+    <string name="ora">Inserisci l\'ora in cui svolgere l\'attività:</string>
+    <string name="prior">Inserisci la priorità dell\'attività:</string>
+    <string name="classe">Inserisci la classe dell\'attività:</string>
+    <string name="form_button_label">Salva</string>
 </resources>

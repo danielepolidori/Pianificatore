@@ -2,15 +2,15 @@ package com.example.scheduler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
 import java.util.Date;
 import static android.app.PendingIntent.getActivity;
 
@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     Date dataCorrente = new Date();
 
     private Toast mToast;
+
+    static final int REQ_CODE = 0;  // The request code
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +58,42 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, Form.class);
+                Intent intent = new Intent(MainActivity.this, FormActivity.class);
 
-                startActivity(intent);
+                //startActivity(intent);
+                startActivityForResult(intent, REQ_CODE);
             }
         });
+    }
+
+    // Invoked when FormActivity completes its operations
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        // Check which request we're responding to
+        if (requestCode == REQ_CODE) {
+
+            // Make sure the request was successful
+            if(resultCode == Activity.RESULT_OK){
+
+                String resultNome = data.getStringExtra("name");    // oppure ...= data.getExtras().get("name")
+                String resultCognome = data.getStringExtra("lastname");
+
+                Task newTask = new Task(resultNome, dataCorrente, 0, "A", 123);
+                myTaskSet.addTask(newTask, myVisSet);
+
+                // Aggiorna la visualizzazione della home
+                int ind;
+                for (ind = 0; ind < myVisSet.getNumberOfElements(); ind++)
+                    mAdapter.notifyItemChanged(ind);
+            }
+            else if (resultCode == Activity.RESULT_CANCELED) {
+
+                // Write your code if there's no result
+
+                // ...
+            }
+        }
     }
 
     @Override

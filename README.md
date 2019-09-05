@@ -4,11 +4,13 @@
 
 ### TODO:
 
-- BOTTONE per passare dalla MainActivity al form
-
-- INVIA dati dal form alla MainActivity
+- DialogExample per esempio FORM
 
 - Completa FORM per creazione di un nuovo task
+
+- MEMORIZZARE dati sul telefono così da riutilizzarli ad ogni nuova apertura dell'app
+
+- Gestisci NOTIFICHE
 
 
 
@@ -47,16 +49,6 @@
 ### IDEE:
 
 - Grafico a TORTA per visualizzare le varie classi di task (famiglia, lavoro, ...)
-
-- Variabile universale, incrementata ad ogni creazione di un nuovo elemento del RecyclerView, per tenere traccia di quale elemento stiamo creando e così possiamo impostare l'elemento come serve (es: mesi in grassetto, giorni con il quadratino, font diversi, ...)
-
-- RecyclerView per i giorni, CardView per i task all'interno dei giorni.
-
-- Scheduler = Pianificatore d'attività
-
-- Non calendario dell'app, ma possibile sincronizzazione dei task nel CALENDARIO DI SISTEMA (così che compaiano lì nella visualizzazione a griglia, mentre nell'app solo in lista).
-
-- Mentre si scorre la home, il MESE riferito al giorno delle attività attualmente visualizzate sullo schermo rimane sempre visibile.
 
 
 

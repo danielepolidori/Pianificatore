@@ -40,8 +40,14 @@ public class TaskSet extends DataSet <Task> {
             }
         }
 
+        for(Task el : elements)
+            System.out.println(el.getDescription());
+
         if (aggiunto)
             vs.toVisualizeAdd(t);
+
+        for(Vis el : vs.getElements())
+            System.out.println(el.getText());
     }
 
     public void delTask(int id_t, VisualizeSet vs) {

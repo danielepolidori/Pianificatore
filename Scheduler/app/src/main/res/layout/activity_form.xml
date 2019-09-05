@@ -13,31 +13,38 @@
         />
 
     <TextView
-
-        android:id="@+id/view_name"
-
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/name"
+        android:text="@string/desc"
         />
     <EditText
-        android:id="@+id/edit_name"
+        android:id="@+id/edit_desc"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text=""
         />
 
     <TextView
-
-        android:id="@+id/view_lastname"
-
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/lastname"
+        android:text="@string/prior"
         android:layout_marginTop="15dip"
         />
     <EditText
-        android:id="@+id/edit_lastname"
+        android:id="@+id/edit_prior"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/classe"
+        android:layout_marginTop="15dip"
+        />
+    <EditText
+        android:id="@+id/edit_classe"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text=""
