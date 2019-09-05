@@ -6,6 +6,19 @@ import java.util.Locale;
 
 public class Task {
 
+    public enum priorTask {
+        ALTA,
+        MEDIA,
+        BASSA
+    }
+
+    public enum classeTask {
+        FAMIGLIA,
+        LAVORO,
+        TEMPO_LIBERO,
+        ALTRO
+    }
+
     public enum statoTask {
         PENDING,
         ONGOING,
@@ -15,8 +28,8 @@ public class Task {
     private int id;
     private String descrizione;
     private Date data_ora;
-    private int priorita;
-    private String classe;
+    private priorTask priorita;
+    private classeTask classe;
     private statoTask stato;
 
     private SimpleDateFormat sdf;
@@ -25,13 +38,13 @@ public class Task {
 
     // ...
 
-    public Task(String des, Date dat, int p, String c, int nIdentificativo){
+    public Task(String des, Date dat_ora, priorTask p, classeTask c, int nIdentificativo){
 
         this.id = nIdentificativo;
         this.descrizione = des;
-        this.data_ora = dat;
-        this.sdf = new SimpleDateFormat("EEEE d MMM yyyy", Locale.ITALIAN);
-        this.strData = sdf.format(data_ora);  // es: "venerdì 30 ago 2019"
+        this.data_ora = dat_ora;
+        this.sdf = new SimpleDateFormat("EEEE d MMM yyyy HH mm", Locale.ITALIAN);
+        this.strData = sdf.format(data_ora);  // es: "venerdì 30 ago 2019 15 30"
         this.dateTokens = strData.split(" ");
         this.priorita = p;
         this.classe = c;

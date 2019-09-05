@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import static android.app.PendingIntent.getActivity;
 
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private Toast mToast;
 
     static final int REQ_CODE = 0;  // The request code
+
+    int inc = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +80,54 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             // Make sure the request was successful
             if(resultCode == Activity.RESULT_OK){
 
-                String resultNome = data.getStringExtra("name");    // oppure ...= data.getExtras().get("name")
-                String resultCognome = data.getStringExtra("lastname");
+                String resultDesc = data.getStringExtra("desc");    // oppure ...= data.getExtras().get("name")
+                String resultDataOraStr = data.getStringExtra("data_ora");
+                int resultPriorInt = data.getIntExtra("prior", -1);
+                int resultClasseInt = data.getIntExtra("classe", -1);
 
-                Task newTask = new Task(resultNome, dataCorrente, 0, "A", 123);
+                Task.priorTask resultPrior;
+                switch (resultPriorInt){
+
+                    case 0:
+                        resultPrior = Task.priorTask.ALTA;
+                        break;
+
+                    case 1:
+                        resultPrior = Task.priorTask.MEDIA;
+                        break;
+
+                    default:    // caso 2 o caso default
+                        resultPrior = Task.priorTask.BASSA;
+                }
+
+                Task.classeTask resultClasse;
+                switch (resultClasseInt){
+
+                    case 0:
+                        resultClasse = Task.classeTask.FAMIGLIA;
+                        break;
+
+                    case 1:
+                        resultClasse = Task.classeTask.LAVORO;
+                        break;
+
+                    case 2:
+                        resultClasse = Task.classeTask.TEMPO_LIBERO;
+                        break;
+
+                    default:    // caso 3 o caso di default
+                        resultClasse = Task.classeTask.ALTRO;
+                }
+
+                Date resultDataOra = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("d M yyyy HH mm");
+                try {
+                    resultDataOra = sdf.parse(resultDataOraStr);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                Task newTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, inc++);
                 myTaskSet.addTask(newTask, myVisSet);
 
                 // Aggiorna la visualizzazione della home
@@ -116,15 +164,3 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 // "The view holder objects are managed by an adapter, which you create by extending RecyclerView.Adapter"
 
 // "Once you have added a RecyclerView widget to your layout, obtain a handle to the object, connect it to a layout manager, and attach an adapter for the data to be displayed"
-
-
-/*
-// Richiama nel codice i due controlli TextView in cui visualizzeremo i dati inseriti dall’utente ed inviati dall’Activity di default attraverso il Bundle
-        final TextView text_name = (TextView) findViewById(R.id.view_name);
-        final TextView text_lastname = (TextView) findViewById(R.id.view_lastname);
-
-        // Recupero i valori dal Bundle tramite il metodo getString() e li impostiamo rispettivamente negli oggetti TextView text_name e text_lastname
-        Bundle bundle = this.getIntent().getExtras();
-        text_name.setText(bundle.getString("name"));
-        text_lastname.setText(bundle.getString("lastname"));
- */

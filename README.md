@@ -4,8 +4,6 @@
 
 ### TODO:
 
-- DialogExample per esempio FORM
-
 - Completa FORM per creazione di un nuovo task
 
 - MEMORIZZARE dati sul telefono così da riutilizzarli ad ogni nuova apertura dell'app
