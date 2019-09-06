@@ -4,8 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import io.realm.RealmObject;
 
-public class Vis {
+public class Vis extends RealmObject {
 
     public enum tipoVis {
         DATA,
@@ -142,5 +143,60 @@ public class Vis {
     public int getIdTask() {
 
         return idTask;
+    }
+
+    public String[] getTextTokens() {
+
+        return textTokens;
+    }
+
+    public SimpleDateFormat getSdfOnlyData() {
+
+        return sdf_only_data;
+    }
+
+    public String getDataTmp() {
+
+        return strData_tmp;
+    }
+
+    public void setText(String newText) {
+
+        testo = newText;
+    }
+
+    public void setType(tipoVis newType) {
+
+        tipo = newType;
+    }
+
+    public void setDateHour(Date newDateHour) {
+
+        data_ora = newDateHour;
+    }
+
+    public void setIdTask(int newId) {
+
+        idTask = newId;
+    }
+
+    public void setTextTokens(String[] newTextTokens) {
+
+        textTokens = newTextTokens;
+    }
+
+    public void setSdfOnlyData(SimpleDateFormat newSdfOnlyData) {
+
+        sdf_only_data = newSdfOnlyData;
+    }
+
+    public void setStrDataTmp(String newStrDataTmp) {
+
+        strData_tmp = newStrDataTmp;
+    }
+
+    public void setOnlyDate(Date newOnlyDate) {
+
+        only_data = newOnlyDate;
     }
 }

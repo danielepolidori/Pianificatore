@@ -1,7 +1,6 @@
 package com.example.scheduler;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +9,11 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import static android.app.PendingIntent.getActivity;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity implements MyAdapter.ItemClickListener {
 
@@ -33,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     int inc = 0;
 
+    private Realm realm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,7 +51,19 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        myVisSet.init();
+        realm = Realm.getDefaultInstance();
+
+        RealmResults<Vis> resultsVis = realm.where(Vis.class).findAll();
+
+        if (resultsVis.isEmpty()){
+
+            myVisSet.init();
+        }
+        else{
+
+            for (Vis v : resultsVis)
+                myVisSet.add(v);
+        }
 
         // specify an adapter (see also next example)
         mAdapter = new MyAdapter(myVisSet, this);
@@ -64,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                 Intent intent = new Intent(MainActivity.this, FormActivity.class);
 
-                //startActivity(intent);
                 startActivityForResult(intent, REQ_CODE);
             }
         });
@@ -134,6 +146,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 int ind;
                 for (ind = 0; ind < myVisSet.getNumberOfElements(); ind++)
                     mAdapter.notifyItemChanged(ind);
+
+                salvaNuoviDati();
             }
             else if (resultCode == Activity.RESULT_CANCELED) {
 
@@ -155,6 +169,42 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         mToast.show();
 
         // if (vieneCliccatoUnTask) mostraDettagliTask/segnaTaskCompletato
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+        realm.close();
+    }
+
+    private void salvaNuoviDati() {
+
+        //realm.deleteObj
+
+        realm.executeTransaction(new Realm.Transaction() {
+
+            @Override
+            public void execute(Realm realm) {
+
+                for (Vis el : myVisSet.getElements()){
+
+                    Vis v_toStore = realm.createObject(Vis.class);
+
+                    v_toStore.setText(el.getText());
+                    v_toStore.setType(el.getType());
+                    v_toStore.setDateHour(el.getDateHour());
+                    v_toStore.setIdTask(el.getIdTask());
+                    v_toStore.setTextTokens(el.getTextTokens());
+                    v_toStore.setSdfOnlyData(el.getSdfOnlyData());
+                    v_toStore.setStrDataTmp(el.getDataTmp());
+                    v_toStore.setOnlyDate(el.getOnlyDate());
+                    // ...
+                }
+
+                // ... fare lo stesso per il TaskSet
+            }
+        });
     }
 
     // ...

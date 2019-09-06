@@ -1,10 +1,16 @@
 package com.example.scheduler;
 
-public class TaskSet extends DataSet <Task> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class TaskSet extends DataSet<Task> {
+
+    //private List<Task> elements;
 
     public TaskSet(){
 
         super();
+        //elements = new ArrayList<Task>();
     }
 
     public void addTask(Task t, VisualizeSet vs) {
@@ -64,4 +70,48 @@ public class TaskSet extends DataSet <Task> {
         if (eliminato)
             vs.toVisualizeDel(id_t, elements.size());
     }
+
+    /*
+    // Aggiunge elemento in coda
+    public void add(Task element) {
+
+        elements.add(element);
+    }
+
+    // Inserisce 'element' nella posizione 'index' e sposta tutti gli elementi, da 'index' in poi, di una posizione
+    public void addIn(Task element, int index) {
+
+        elements.add(index, element);
+    }
+
+    public void delete(int index) {
+
+        elements.remove(index);
+    }
+
+    public void deleteAll() {
+
+        elements.clear();
+    }
+
+    public int getNumberOfElements() {
+
+        return elements.size();
+    }
+
+    public List<Task> getElements() {
+
+        return elements;
+    }
+
+    public Task getElement(int index) {
+
+        return elements.get(index);
+    }
+
+    public boolean isEmpty() {
+
+        return (elements.size() < 1);
+    }
+    */
 }
