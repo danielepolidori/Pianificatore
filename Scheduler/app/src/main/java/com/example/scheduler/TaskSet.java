@@ -16,7 +16,7 @@ public class TaskSet extends DataSet<Task> {
     public void addTask(Task t, VisualizeSet vs) {
 
         int i;
-        boolean aggiunto = false;
+        boolean aggiunto = false, giaPresente = false;
 
         if (elements.size() < 1){
 
@@ -26,19 +26,26 @@ public class TaskSet extends DataSet<Task> {
         }
         else{
 
-            for(i = 0; i < elements.size() && !aggiunto; i++){
+            for(i = 0; i < elements.size() && !aggiunto && !giaPresente; i++){
 
                 Task currEl = elements.get(i);
 
-                if(currEl.getDateHour().equals(t.getDateHour()) || currEl.getDateHour().after(t.getDateHour())){
+                if (currEl.getId() == t.getId()){
 
-                    elements.add(i, t);
+                    giaPresente = true;
+                }
+                else{
 
-                    aggiunto = true;
+                    if(currEl.getDateHour().equals(t.getDateHour()) || currEl.getDateHour().after(t.getDateHour())){
+
+                        elements.add(i, t);
+
+                        aggiunto = true;
+                    }
                 }
             }
 
-            if (!aggiunto){
+            if (!aggiunto && !giaPresente){
 
                 elements.add(t);
 

@@ -4,10 +4,6 @@
 
 ### TODO:
 
-- REALM sui singoli elementi e non su tutto l'insieme
-
-- CANCELLARE dati memorizzati con Realm per salvare al loro posto i nuovi
-
 - MEMORIZZARE dati sul telefono così da riutilizzarli ad ogni nuova apertura dell'app
 
 - Gestisci NOTIFICHE

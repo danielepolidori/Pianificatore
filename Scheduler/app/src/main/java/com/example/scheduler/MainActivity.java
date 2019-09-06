@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     int inc = 0;
 
     private Realm realm;
+    RealmResults<Task> resultsTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,24 +54,38 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         realm = Realm.getDefaultInstance();
 
-        RealmResults<Vis> resultsVis = realm.where(Vis.class).findAll();
+        resultsTask = realm.where(Task.class).findAll();
 
-        if (resultsVis.isEmpty()){
+        if (resultsTask.isEmpty()){
+
+            System.out.println("if");
 
             myVisSet.init();
         }
         else{
 
-            for (Vis v : resultsVis)
-                myVisSet.add(v);
+            System.out.println("else");
+
+            for (Task t : resultsTask)
+                myTaskSet.addTask(t, myVisSet);
+
+            /*
+            realm.executeTransaction(new Realm.Transaction() {
+
+                @Override
+                public void execute(Realm realm) {
+
+                    resultsTask.deleteAllFromRealm();
+                }
+            });*/
         }
 
-        // specify an adapter (see also next example)
+        // specify an adapter
         mAdapter = new MyAdapter(myVisSet, this);
         recyclerView.setAdapter(mAdapter);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabNewTask = findViewById(R.id.fab);
+        fabNewTask.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -91,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             // Make sure the request was successful
             if(resultCode == Activity.RESULT_OK){
+
+                // Raccogli i dati del form
 
                 String resultDesc = data.getStringExtra("desc");    // oppure ...= data.getExtras().get("name")
                 String resultDataOraStr = data.getStringExtra("data_ora");
@@ -139,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     e.printStackTrace();
                 }
 
+                // Utilizza i dati raccolti dal form per creare un nuovo task
                 Task newTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, inc++);
                 myTaskSet.addTask(newTask, myVisSet);
 
@@ -147,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 for (ind = 0; ind < myVisSet.getNumberOfElements(); ind++)
                     mAdapter.notifyItemChanged(ind);
 
-                salvaNuoviDati();
+                salvaDatiApp();
             }
             else if (resultCode == Activity.RESULT_CANCELED) {
 
@@ -171,46 +189,54 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         // if (vieneCliccatoUnTask) mostraDettagliTask/segnaTaskCompletato
     }
 
+/*
+    @Override
+    protected void onStop() {
+
+        super.onStop();
+
+        if(salvaDatiApp())
+            realm.close();
+    }*/
+
     @Override
     protected void onDestroy() {
 
         super.onDestroy();
+
         realm.close();
     }
 
-    private void salvaNuoviDati() {
+    private boolean salvaDatiApp() {
 
-        //realm.deleteObj
+        System.out.println("inizio salva");
+
+        resultsTask.deleteAllFromRealm();
 
         realm.executeTransaction(new Realm.Transaction() {
 
             @Override
             public void execute(Realm realm) {
 
-                for (Vis el : myVisSet.getElements()){
+                for (Task el : myTaskSet.getElements()){
 
-                    Vis v_toStore = realm.createObject(Vis.class);
+                    Task t_toStore = realm.createObject(Task.class);
 
-                    v_toStore.setText(el.getText());
-                    v_toStore.setType(el.getType());
-                    v_toStore.setDateHour(el.getDateHour());
-                    v_toStore.setIdTask(el.getIdTask());
-                    v_toStore.setTextTokens(el.getTextTokens());
-                    v_toStore.setSdfOnlyData(el.getSdfOnlyData());
-                    v_toStore.setStrDataTmp(el.getDataTmp());
-                    v_toStore.setOnlyDate(el.getOnlyDate());
+                    t_toStore.setId(el.getId());
+                    t_toStore.setDesc(el.getDescription());
+                    t_toStore.setDateHour(el.getDateHour());
+                    t_toStore.setPrior(el.getPriorToStore());
+                    t_toStore.setClasse(el.getClasseToStore());
+                    t_toStore.setStato(el.getStatoToStore());
                     // ...
                 }
-
-                // ... fare lo stesso per il TaskSet
             }
         });
+
+        System.out.println("fine salva");
+
+        return true;
     }
 
     // ...
 }
-
-// "The views in the list are represented by view holder objects. These objects are instances of a class you define by extending RecyclerView.ViewHolder"
-// "The view holder objects are managed by an adapter, which you create by extending RecyclerView.Adapter"
-
-// "Once you have added a RecyclerView widget to your layout, obtain a handle to the object, connect it to a layout manager, and attach an adapter for the data to be displayed"

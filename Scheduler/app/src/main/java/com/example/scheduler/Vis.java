@@ -6,17 +6,19 @@ import java.util.Date;
 import java.util.Locale;
 import io.realm.RealmObject;
 
-public class Vis extends RealmObject {
+public class Vis {
 
     public enum tipoVis {
-        DATA,
-        ATTIVITA,
-        RIGA_VUOTA,
-        MSG_NO_TASK
+        DATA,           // 0
+        ATTIVITA,       // 1
+        RIGA_VUOTA,     // 2
+        MSG_NO_TASK,    // 3
+        TMP             // 4
     }
 
     private String testo;
     private tipoVis tipo;
+    //private int tipo;
     private Date data_ora;
     private int idTask;
 
@@ -30,11 +32,28 @@ public class Vis extends RealmObject {
     public Vis(String text, tipoVis type) {
 
         this.testo = text;
-        this.tipo = type;
         this.data_ora = new Date();     // Soltanto per non lasciarlo non inizializzato, non verrà mai usato
-        this.only_data = new Date();    // Soltanto per non lasciarlo non inizializzato, non verrà mai usato
         this.textTokens = testo.split(" ");
         this.idTask = -1;
+
+        //this.sdf_only_data = new SimpleDateFormat("EEEE d MMM yyyy", Locale.ITALIAN);   // Soltanto per non lasciarlo non inizializzato, non verrà mai usato
+        this.strData_tmp = "";                                                                  // Soltanto per non lasciarlo non inizializzato, non verrà mai usato
+        this.only_data = new Date();                                                            // Soltanto per non lasciarlo non inizializzato, non verrà mai usato
+
+        this.tipo = type;
+        /*
+        switch (type){
+
+            case RIGA_VUOTA:
+                this.tipo = 2;
+
+            case MSG_NO_TASK:
+                this.tipo = 3;
+
+            default:    // non deve mai capitare, è errore
+                this.tipo = -1;
+        }*/
+
         // ...
     }
 
@@ -78,6 +97,23 @@ public class Vis extends RealmObject {
         // ...
     }
 
+    /*
+    // Costruttore senza argomenti
+    public Vis() {
+
+        this.testo = "";
+        this.tipo = 4;
+        this.data_ora = new Date();     // Soltanto per non lasciarlo non inizializzato, non verrà mai usato
+        //this.textTokens = testo.split(" ");
+        this.idTask = -1;
+
+        //this.sdf_only_data = new SimpleDateFormat("EEEE d MMM yyyy", Locale.ITALIAN);   // Soltanto per non lasciarlo non inizializzato, non verrà mai usato
+        this.strData_tmp = "";                                                                  // Soltanto per non lasciarlo non inizializzato, non verrà mai usato
+        this.only_data = new Date();                                                            // Soltanto per non lasciarlo non inizializzato, non verrà mai usato
+
+        // ...
+    }*/
+
     //.... get e set
 
     public String getText() {
@@ -96,6 +132,28 @@ public class Vis extends RealmObject {
     }
 
     public tipoVis getType() {
+/*
+        tipoVis tv;
+
+        switch (tipo){
+
+            case 0:
+                tv = tipoVis.DATA;
+
+            case 1:
+                tv = tipoVis.ATTIVITA;
+
+            case 2:
+                tv = tipoVis.RIGA_VUOTA;
+
+            case 3:
+                tv = tipoVis.MSG_NO_TASK;
+
+            default:    // case 4 o default
+                tv = tipoVis.TMP;
+        }
+
+        return tv;*/
 
         return tipo;
     }

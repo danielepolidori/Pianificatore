@@ -58,6 +58,10 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
+        System.out.println("inizio crea form");
+        mToast = Toast.makeText(this, "inizio crea form", Toast.LENGTH_LONG);
+        mToast.show();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
 
@@ -71,6 +75,10 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
         buttonPrior.setOnClickListener(this);
         buttonClasse.setOnClickListener(this);
         buttonSalva.setOnClickListener(this);
+
+        System.out.println("fine crea form");
+        mToast = Toast.makeText(this, "fine crea form", Toast.LENGTH_LONG);
+        mToast.show();
     }
 
     @Override
