@@ -34,9 +34,9 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
     SimpleDateFormat sdf = new SimpleDateFormat("d M yyyy",Locale.ITALIAN);
     String strData = sdf.format(dataCorrente);  // es: "1 1 2019"
     String[] dateTokens = strData.split(" ");
-    int annoCorrente = Integer.parseInt(dateTokens[0]);
+    int giornoCorrente = Integer.parseInt(dateTokens[0]);
     int meseCorrente = Integer.parseInt(dateTokens[1]);
-    int giornoCorrente = Integer.parseInt(dateTokens[2]);
+    int annoCorrente = Integer.parseInt(dateTokens[2]);
 
     String descScelta = "";
 
@@ -80,7 +80,8 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
 
             case R.id.btnDataForm:
 
-                DatePickerDialog dpd = new DatePickerDialog(this, FormActivity.this, annoCorrente, meseCorrente, giornoCorrente);
+                DatePickerDialog dpd = new DatePickerDialog(this, FormActivity.this, annoCorrente, meseCorrente-1, giornoCorrente);
+                dpd.getDatePicker().setMinDate(System.currentTimeMillis());
                 dpd.show();
 
                 break;
