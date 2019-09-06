@@ -12,7 +12,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -151,9 +150,11 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
 
             case R.id.btnSalvaForm:
 
+                mToast = Toast.makeText(this, "inizio salva", Toast.LENGTH_LONG);
+                mToast.show();
+
                 // Recupera i riferimenti dei controlli EditText definiti precedentemente che serviranno per salvare i dati inseriti dall’utente
                 final EditText desc_setted = (EditText) findViewById(R.id.edit_desc);
-
                 descScelta = desc_setted.getText().toString();
 
                 // Controlla se l'utente ha inserito i dati in tutti i campi
@@ -187,6 +188,9 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
 
                     finish();
                 }
+
+                mToast = Toast.makeText(this, "fine salva", Toast.LENGTH_LONG);
+                mToast.show();
 
                 break;
         }

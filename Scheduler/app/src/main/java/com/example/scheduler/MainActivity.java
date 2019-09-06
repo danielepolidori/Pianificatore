@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     int inc = 0;
 
     private Realm realm;
-    RealmResults<Task> resultsTask;
+    //RealmResults<Task> resultsTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         realm = Realm.getDefaultInstance();
 
-        resultsTask = realm.where(Task.class).findAll();
+        final RealmResults<Task> resultsTask = realm.where(Task.class).findAll();
 
         if (resultsTask.isEmpty()){
 
@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             for (Task t : resultsTask)
                 myTaskSet.addTask(t, myVisSet);
 
-            /*
             realm.executeTransaction(new Realm.Transaction() {
 
                 @Override
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                     resultsTask.deleteAllFromRealm();
                 }
-            });*/
+            });
         }
 
         // specify an adapter
@@ -100,6 +99,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     // Invoked when FormActivity completes its operations
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        System.out.println("inizio activityResult");
+        mToast = Toast.makeText(this, "inizio activityResult", Toast.LENGTH_LONG);
+        mToast.show();
 
         // Check which request we're responding to
         if (requestCode == REQ_CODE) {
@@ -174,6 +177,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 // ...
             }
         }
+
+        System.out.println("fine activityResult");
+        mToast = Toast.makeText(this, "fine activityResult", Toast.LENGTH_LONG);
+        mToast.show();
     }
 
     @Override
@@ -211,7 +218,19 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         System.out.println("inizio salva");
 
-        resultsTask.deleteAllFromRealm();
+        final RealmResults<Task> resultsTask = realm.where(Task.class).findAll();
+
+        if (!resultsTask.isEmpty()) {
+
+            realm.executeTransaction(new Realm.Transaction() {
+
+                @Override
+                public void execute(Realm realm) {
+
+                    resultsTask.deleteAllFromRealm();
+                }
+            });
+        }
 
         realm.executeTransaction(new Realm.Transaction() {
 
