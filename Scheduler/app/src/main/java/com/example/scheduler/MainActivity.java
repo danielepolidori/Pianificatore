@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             for (Task t : resultsTask)
                 myTaskSet.addTask(t, myVisSet);
 
+            /*
             realm.executeTransaction(new Realm.Transaction() {
 
                 @Override
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                     resultsTask.deleteAllFromRealm();
                 }
-            });
+            });*/
         }
 
         // specify an adapter
@@ -163,6 +164,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 Task newTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, inc++);
                 myTaskSet.addTask(newTask, myVisSet);
 
+                for (Task t : myTaskSet.getElements())
+                    System.out.println(t.getDescription());
+
+                for (Vis v : myVisSet.getElements())
+                    System.out.println(v.getText());
+
                 // Aggiorna la visualizzazione della home
                 int ind;
                 for (ind = 0; ind < myVisSet.getNumberOfElements(); ind++)
@@ -220,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         final RealmResults<Task> resultsTask = realm.where(Task.class).findAll();
 
+        /*
         if (!resultsTask.isEmpty()) {
 
             realm.executeTransaction(new Realm.Transaction() {
@@ -230,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     resultsTask.deleteAllFromRealm();
                 }
             });
-        }
+        }*/
 
         realm.executeTransaction(new Realm.Transaction() {
 

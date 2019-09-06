@@ -44,6 +44,8 @@
 
 - Grafico a TORTA per visualizzare le varie classi di task (famiglia, lavoro, ...)
 
+- CRONOLOGIA attività completate
+
 
 
 ### ESEMPI UTILI:

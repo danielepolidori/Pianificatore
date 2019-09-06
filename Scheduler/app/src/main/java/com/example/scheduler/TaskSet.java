@@ -1,16 +1,11 @@
 package com.example.scheduler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TaskSet extends DataSet<Task> {
 
-    //private List<Task> elements;
 
     public TaskSet(){
 
         super();
-        //elements = new ArrayList<Task>();
     }
 
     public void addTask(Task t, VisualizeSet vs) {
@@ -30,7 +25,8 @@ public class TaskSet extends DataSet<Task> {
 
                 Task currEl = elements.get(i);
 
-                if (currEl.getId() == t.getId()){
+                //if (currEl.getId() == t.getId()){
+                if (currEl.getDescription().equals(t.getDescription()) && currEl.getDateHour().equals(t.getDateHour())){
 
                     giaPresente = true;
                 }
