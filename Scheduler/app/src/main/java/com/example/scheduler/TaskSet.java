@@ -24,7 +24,7 @@ public class TaskSet extends DataSet <Task> {
 
                 Task currEl = elements.get(i);
 
-                if(currEl.getDate().equals(t.getDate()) || currEl.getDate().after(t.getDate())){
+                if(currEl.getDateHour().equals(t.getDateHour()) || currEl.getDateHour().after(t.getDateHour())){
 
                     elements.add(i, t);
 
@@ -40,14 +40,8 @@ public class TaskSet extends DataSet <Task> {
             }
         }
 
-        for(Task el : elements)
-            System.out.println(el.getDescription());
-
         if (aggiunto)
             vs.toVisualizeAdd(t);
-
-        for(Vis el : vs.getElements())
-            System.out.println(el.getText());
     }
 
     public void delTask(int id_t, VisualizeSet vs) {

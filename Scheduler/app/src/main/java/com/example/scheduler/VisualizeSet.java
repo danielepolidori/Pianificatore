@@ -65,8 +65,8 @@ public class VisualizeSet extends DataSet <Vis> {
         String att = "- " + t.getDescription();
         String vuota = "~";
 
-        Vis d = new Vis(dat, t.getDate());
-        Vis a = new Vis(att, t.getDate(), t.getId());
+        Vis d = new Vis(dat, t.getDateHour());
+        Vis a = new Vis(att, t.getDateHour(), t.getId());
         Vis vv = new Vis(vuota, Vis.tipoVis.RIGA_VUOTA);
 
         if (is_msgNoTask) {                 // c'è solo il msg_no_task
@@ -78,39 +78,52 @@ public class VisualizeSet extends DataSet <Vis> {
         else{                               // c'è già almeno un task mostrato, allora cerca il punto in cui inserirlo cronologicamente
 
             int i, j;
-            boolean stop = false;
+            boolean added = false;
 
-            for(i = 0; i < elements.size() && !stop; i++) {
+            for(i = 0; i < elements.size() && !added; i++) {
 
                 Vis curr_i = elements.get(i);
 
                 if (curr_i.getType() == Vis.tipoVis.DATA){        // allora inserisci il task, fra gli altri già presenti, nel punto giusto secondo l'ora
 
-                    if (t.getDate().equals(curr_i.getDate())) {
+                    System.out.println(t.getOnlyDate().equals(curr_i.getOnlyDate()));
 
-                        for (j = i + 1; j < elements.size() && !stop; j++) {
+                    if (t.getOnlyDate().equals(curr_i.getOnlyDate())) {
+
+                        for (j = i + 1; j < elements.size() && !added; j++) {
 
                             Vis curr_j = elements.get(j);
+                            Vis succ_j = elements.get(j + 2);
 
-                            if (curr_j.getType() == Vis.tipoVis.ATTIVITA && (t.getDate().equals(curr_j.getDate()) || t.getDate().before(curr_j.getDate()))) {
+                            if (curr_j.getType() == Vis.tipoVis.ATTIVITA){
 
-                                elements.add(j, vv);
-                                elements.add(j, a);
+                                if (t.getDateHour().equals(curr_j.getDateHour()) || t.getDateHour().before(curr_j.getDateHour())){
 
-                                stop = true;
+                                    elements.add(j, vv);
+                                    elements.add(j, a);
+
+                                    added = true;
+                                }
+                                else if (succ_j.getType() == Vis.tipoVis.RIGA_VUOTA){
+
+                                    elements.add(j+1, a);
+                                    elements.add(j+1, vv);
+
+                                    added = true;
+                                }
                             }
                         }
                     }
-                    else if (t.getDate().before(curr_i.getDate())){   // allora crea un nuovo giorno con l'attività
+                    else if (t.getOnlyDate().before(curr_i.getOnlyDate())){   // allora crea un nuovo giorno con l'attività
 
                         addTaskToVis(d, a, vv, i);
 
-                        stop = true;
+                        added = true;
                     }
                 }
             }
 
-            if (!stop)
+            if (!added)
                 addFinalTaskToVis(d, a, vv);
         }
     }

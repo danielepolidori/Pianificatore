@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,8 +27,8 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
     final CharSequence[] prior_items = {"Alta", "Media", "Bassa"};
     final CharSequence[] classe_items = {"Famiglia", "Lavoro", "Tempo libero", "Altro"};
 
-    int priorScelta;
-    int classeScelta;
+    int priorScelta = -1;
+    int classeScelta = -1;
 
     Date dataCorrente = new Date();
     SimpleDateFormat sdf = new SimpleDateFormat("d M yyyy",Locale.ITALIAN);
@@ -37,9 +38,22 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
     int meseCorrente = Integer.parseInt(dateTokens[1]);
     int giornoCorrente = Integer.parseInt(dateTokens[2]);
 
-    String data_setted;
-    String ora_setted;
-    String data_oraScelta;
+    String descScelta = "";
+
+    String data_setted = "";
+    String ora_setted = "";
+    String data_oraScelta = "";
+
+    Toast mToast;
+
+    TimePickerDialog.OnTimeSetListener myOnTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+
+        @Override
+        public void onTimeSet(TimePicker view, int ora, int minuto) {
+
+            ora_setted = ora + " " + minuto;
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,17 +87,8 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
 
             case R.id.btnOraForm:
 
-                TimePickerDialog tpd = new TimePickerDialog(this, null, 0, 0, true);
+                TimePickerDialog tpd = new TimePickerDialog(this, myOnTimeSetListener, 0, 0, true);
                 tpd.show();
-
-                TimePickerDialog.OnTimeSetListener myOnTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-
-                    @Override
-                    public void onTimeSet(TimePicker view, int ora, int minuto) {
-
-                        ora_setted = ora + ":" + minuto;
-                    }
-                };
 
                 break;
 
@@ -137,21 +142,21 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
 
             case R.id.btnSalvaForm:
 
-                //if (utente_ha_inserito_tutti_i_dati){
+                // Recupera i riferimenti dei controlli EditText definiti precedentemente che serviranno per salvare i dati inseriti dall’utente
+                final EditText desc_setted = (EditText) findViewById(R.id.edit_desc);
+
+                descScelta = desc_setted.getText().toString();
+
+                // Controlla se l'utente ha inserito i dati in tutti i campi
+                //if (!descScelta.isEmpty() && !data_setted.isEmpty() && !ora_setted.isEmpty() && priorScelta > -1 && classeScelta > -1){
                 if (true){
 
-                    // Recupera i riferimenti dei controlli EditText definiti precedentemente che serviranno per salvare i dati inseriti dall’utente
-                    final EditText desc_setted = (EditText) findViewById(R.id.edit_desc);
-
-                    if (!data_setted.isEmpty() && !ora_setted.isEmpty()){
-
-                        data_oraScelta = data_setted + " " + ora_setted;
-                    }
+                    data_oraScelta = data_setted + " " + ora_setted;
 
                     // Creiamo un oggetto Bundle che utilizziamo per salvare i dati inseriti dall’utente
                     // Utilizziamo il metodo putString() dell’oggetto bundle per salvare i dati inseriti, recuperati poi con il metodo getText() della classe EditText
                     Bundle bundleResults = new Bundle();
-                    bundleResults.putString("desc", desc_setted.getText().toString());
+                    bundleResults.putString("desc", descScelta);
                     bundleResults.putString("data_ora", data_oraScelta);
                     bundleResults.putInt("prior", priorScelta);
                     bundleResults.putInt("classe", classeScelta);
@@ -166,6 +171,10 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
 
                     Intent returnIntent = new Intent();
                     setResult(Activity.RESULT_CANCELED, returnIntent);
+
+                    String toastMessage = "Attività non creata.\nInserire i dati in tutti i campi.";
+                    mToast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
+                    mToast.show();
 
                     finish();
                 }

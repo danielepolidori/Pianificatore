@@ -1,5 +1,6 @@
 package com.example.scheduler;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -32,9 +33,13 @@ public class Task {
     private classeTask classe;
     private statoTask stato;
 
-    private SimpleDateFormat sdf;
-    private String strData;
-    private String[] dateTokens;
+    private SimpleDateFormat sdf_data_ora;
+    private String strDataOra;
+    private String[] dataOraTokens;
+
+    private SimpleDateFormat sdf_only_data;
+    private String strData_tmp;
+    private Date onlyDate;
 
     // ...
 
@@ -43,12 +48,25 @@ public class Task {
         this.id = nIdentificativo;
         this.descrizione = des;
         this.data_ora = dat_ora;
-        this.sdf = new SimpleDateFormat("EEEE d MMM yyyy HH mm", Locale.ITALIAN);
-        this.strData = sdf.format(data_ora);  // es: "venerdì 30 ago 2019 15 30"
-        this.dateTokens = strData.split(" ");
         this.priorita = p;
         this.classe = c;
         this.stato = statoTask.PENDING;
+
+        this.sdf_data_ora = new SimpleDateFormat("EEEE d MMM yyyy HH mm", Locale.ITALIAN);
+        this.strDataOra = sdf_data_ora.format(data_ora);  // es: "venerdì 30 ago 2019 15 30"
+        this.dataOraTokens = strDataOra.split(" ");
+
+        this.sdf_only_data = new SimpleDateFormat("EEEE d MMM yyyy", Locale.ITALIAN);
+        this.strData_tmp = sdf_only_data.format(data_ora);  // es: "venerdì 30 ago 2019"
+        try {
+            this.onlyDate = sdf_only_data.parse(strData_tmp);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("DateHour: " + strDataOra.toString());
+        System.out.println("onlyDate: " + strData_tmp.toString());
+
         // ...
     }
 
@@ -64,29 +82,34 @@ public class Task {
         return descrizione;
     }
 
-    public Date getDate() {
+    public Date getDateHour() {
 
         return data_ora;
     }
 
+    public Date getOnlyDate() {
+
+        return onlyDate;
+    }
+
     public int getYear() {
 
-        return Integer.parseInt(dateTokens[3]);
+        return Integer.parseInt(dataOraTokens[3]);
     }
 
     public String getMonth() {
 
-        return dateTokens[2].toUpperCase();
+        return dataOraTokens[2].toUpperCase();
     }
 
     public String getDay() {
 
-        return (dateTokens[0].substring(0,1).toUpperCase() + dateTokens[0].substring(1));
+        return (dataOraTokens[0].substring(0,1).toUpperCase() + dataOraTokens[0].substring(1));
     }
 
     public int getNumDay() {
 
-        return Integer.parseInt(dateTokens[1]);
+        return Integer.parseInt(dataOraTokens[1]);
     }
 }
 

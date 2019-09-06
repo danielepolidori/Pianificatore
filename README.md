@@ -4,8 +4,6 @@
 
 ### TODO:
 
-- Completa FORM per creazione di un nuovo task
-
 - MEMORIZZARE dati sul telefono così da riutilizzarli ad ogni nuova apertura dell'app
 
 - Gestisci NOTIFICHE
@@ -13,8 +11,6 @@
 
 
 ### MANCA:
-
-- Aggiunta di nuovi task
 
 - Modifica di un task
 
