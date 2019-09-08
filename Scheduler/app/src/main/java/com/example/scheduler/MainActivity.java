@@ -30,10 +30,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     static final int REQ_CODE = 0;  // The request code
 
-    int inc = 0;
+    Id id_val = new Id();
 
     private Realm realm;
-    //RealmResults<Task> resultsTask;
+    RealmResults<Task> resultsTask;
+    RealmResults<Id> resultsId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +55,21 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         realm = Realm.getDefaultInstance();
 
-        final RealmResults<Task> resultsTask = realm.where(Task.class).findAll();
+        resultsTask = realm.where(Task.class).findAll();
 
         if (resultsTask.isEmpty()){
-
-            System.out.println("if");
 
             myVisSet.init();
         }
         else{
 
-            System.out.println("else");
+            for (Task t_stored : resultsTask) {
 
-            for (Task t : resultsTask)
+                Task t = new Task(t_stored.getDescription(), t_stored.getDateHour(), t_stored.getPrior(), t_stored.getClasse(), t_stored.getId());
+                t.setStato(t_stored.getStato());
+
                 myTaskSet.addTask(t, myVisSet);
+            }
 
             /*
             realm.executeTransaction(new Realm.Transaction() {
@@ -77,7 +79,26 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                     resultsTask.deleteAllFromRealm();
                 }
-            });*/
+            });
+            */
+        }
+
+        resultsId = realm.where(Id.class).findAll();
+
+        if (!resultsId.isEmpty()){
+
+            id_val.setVal(resultsId.get(0).getVal());
+
+            /*
+            realm.executeTransaction(new Realm.Transaction() {
+
+                @Override
+                public void execute(Realm realm) {
+
+                    resultsId.deleteAllFromRealm();
+                }
+            });
+            */
         }
 
         // specify an adapter
@@ -102,8 +123,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         System.out.println("inizio activityResult");
-        mToast = Toast.makeText(this, "inizio activityResult", Toast.LENGTH_LONG);
-        mToast.show();
 
         // Check which request we're responding to
         if (requestCode == REQ_CODE) {
@@ -161,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 }
 
                 // Utilizza i dati raccolti dal form per creare un nuovo task
-                Task newTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, inc++);
+                Task newTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, id_val.getValAndInc());
                 myTaskSet.addTask(newTask, myVisSet);
 
                 for (Task t : myTaskSet.getElements())
@@ -186,8 +205,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         }
 
         System.out.println("fine activityResult");
-        mToast = Toast.makeText(this, "fine activityResult", Toast.LENGTH_LONG);
-        mToast.show();
     }
 
     @Override
@@ -225,9 +242,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         System.out.println("inizio salva");
 
-        final RealmResults<Task> resultsTask = realm.where(Task.class).findAll();
+        // Cancella i vecchi dati (se presenti)
 
-        /*
         if (!resultsTask.isEmpty()) {
 
             realm.executeTransaction(new Realm.Transaction() {
@@ -238,7 +254,21 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     resultsTask.deleteAllFromRealm();
                 }
             });
-        }*/
+        }
+
+        if (!resultsId.isEmpty()) {
+
+            realm.executeTransaction(new Realm.Transaction() {
+
+                @Override
+                public void execute(Realm realm) {
+
+                    resultsId.deleteAllFromRealm();
+                }
+            });
+        }
+
+        // Salva i nuovi dati
 
         realm.executeTransaction(new Realm.Transaction() {
 
@@ -254,9 +284,13 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     t_toStore.setDateHour(el.getDateHour());
                     t_toStore.setPrior(el.getPriorToStore());
                     t_toStore.setClasse(el.getClasseToStore());
-                    t_toStore.setStato(el.getStatoToStore());
+                    t_toStore.setStato(el.getStato());
                     // ...
                 }
+
+                Id id = realm.createObject(Id.class);
+
+                id.setVal(id_val.getVal());
             }
         });
 

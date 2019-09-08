@@ -4,7 +4,9 @@
 
 ### TODO:
 
-- MEMORIZZARE dati sul telefono così da riutilizzarli ad ogni nuova apertura dell'app
+- I task vecchi sono effettivamente RIMOSSI e messi i nuovi?
+
+- RIMUOVI task al clic su di esso
 
 - Gestisci NOTIFICHE
 

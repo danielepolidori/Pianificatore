@@ -58,8 +58,6 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
     public void onCreate(Bundle savedInstanceState) {
 
         System.out.println("inizio crea form");
-        mToast = Toast.makeText(this, "inizio crea form", Toast.LENGTH_LONG);
-        mToast.show();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
@@ -76,8 +74,6 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
         buttonSalva.setOnClickListener(this);
 
         System.out.println("fine crea form");
-        mToast = Toast.makeText(this, "fine crea form", Toast.LENGTH_LONG);
-        mToast.show();
     }
 
     @Override
@@ -150,9 +146,6 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
 
             case R.id.btnSalvaForm:
 
-                mToast = Toast.makeText(this, "inizio salva", Toast.LENGTH_LONG);
-                mToast.show();
-
                 // Recupera i riferimenti dei controlli EditText definiti precedentemente che serviranno per salvare i dati inseriti dall’utente
                 final EditText desc_setted = (EditText) findViewById(R.id.edit_desc);
                 descScelta = desc_setted.getText().toString();
@@ -188,9 +181,6 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
 
                     finish();
                 }
-
-                mToast = Toast.makeText(this, "fine salva", Toast.LENGTH_LONG);
-                mToast.show();
 
                 break;
         }

@@ -25,8 +25,7 @@ public class TaskSet extends DataSet<Task> {
 
                 Task currEl = elements.get(i);
 
-                //if (currEl.getId() == t.getId()){
-                if (currEl.getDescription().equals(t.getDescription()) && currEl.getDateHour().equals(t.getDateHour())){
+                if (currEl.getId() == t.getId()){
 
                     giaPresente = true;
                 }

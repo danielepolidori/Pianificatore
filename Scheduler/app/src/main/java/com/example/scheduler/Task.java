@@ -220,11 +220,6 @@ public class Task extends RealmObject {
         return s;
     }
 
-    public int getStatoToStore() {
-
-        return stato;
-    }
-
     public void setId(int newId) {
 
         this.id = newId;
@@ -250,9 +245,23 @@ public class Task extends RealmObject {
         this.classe = newClasse;
     }
 
-    public void setStato(int newStato) {
+    public void setStato(statoTask newStato) {
 
-        this.stato = newStato;
+        int s;
+
+        switch (newStato){
+
+            case PENDING:
+                s = 0;
+
+            case ONGOING:
+                s = 1;
+
+            default:    // case COMPLETED o default
+                s = 2;
+        }
+
+        this.stato = s;
     }
 }
 
