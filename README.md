@@ -4,16 +4,6 @@
 
 ### TODO:
 
-- Cambia il TITOLO della FormActivity in "Crea nuova attività"
-
-- I task possono essere inseriti non in ordine CRONOLOGICO nel TaskSet
-
-- Anziché rimuovere ogni volta tutto e poi salvare tutto da capo, aggiungere e rimuovere in memoria i SINGOLI elementi interessati
-
-- I task vecchi sono effettivamente RIMOSSI e messi i nuovi?
-
-- RIMUOVI task al clic su di esso
-
 - Gestisci NOTIFICHE
 
 - Rimuovi le stampe di DEBUG
@@ -31,8 +21,6 @@
 - Posporre un task
 
 - Task ongoing
-
-- Rimozione di task svolti
 
 - Visualizzare la home con filtri
 

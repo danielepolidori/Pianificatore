@@ -2,6 +2,13 @@ package com.example.scheduler;
 
 public class VisualizeSet extends DataSet<Vis> {
 
+    public enum tipoDel {
+        SINGOLO_TASK,
+        GIORNO,
+        ULTIMO_TASK,
+        TMP
+    }
+
     private boolean is_msgNoTask;
     private String msgNoTask;
 
@@ -63,7 +70,7 @@ public class VisualizeSet extends DataSet<Vis> {
 
         String dat = t.getDay() + " " + t.getNumDay() + " - " + t.getMonth() + " " + t.getYear();
         String att = "- " + t.getDescription() + ".";
-        String vuota = "~";
+        String vuota = "";
 
         Vis d = new Vis(dat, t.getDateHour());
         Vis a = new Vis(att, t.getDateHour(), t.getId());
@@ -134,14 +141,16 @@ public class VisualizeSet extends DataSet<Vis> {
         // stesso indice, perché dopo la rimozione di un elemento il successivo occupa il suo posto
 
         elements.remove(ind-2);       // prec_prec		DATA		j-2
-        elements.remove(ind-2);       // curr		    ATT		    j
         elements.remove(ind-2);       // prec	        VUOTA		j-1
+        elements.remove(ind-2);       // curr		    ATT		    j
         elements.remove(ind-2);       // suc			    VUOTA		j+1
         elements.remove(ind-2);       // suc_suc			VUOTA		j+2
         elements.remove(ind-2);       // suc_suc_suc		VUOTA		j+3
     }
 
-    protected void toVisualizeDel(int id_t, int sizeTaskSet) {
+    protected tipoDel toVisualizeDel(int id_t, int sizeTaskSet) {
+
+        tipoDel ret = tipoDel.TMP;
 
         if (sizeTaskSet < 1){
 
@@ -149,6 +158,8 @@ public class VisualizeSet extends DataSet<Vis> {
             init();
 
             is_msgNoTask = true;
+
+            ret = tipoDel.ULTIMO_TASK;
         }
         else{
 
@@ -170,15 +181,21 @@ public class VisualizeSet extends DataSet<Vis> {
 
                         elements.remove(i);         // per cancellare il task
                         elements.remove(i);         // per cancellare la riga vuota (stesso indice, perché dopo la rimozione del task la riga vuota ha occupato il suo posto)
+
+                        ret = tipoDel.SINGOLO_TASK;
                     }
                     else {
 
                         delDaySingleTask(i);     // caso speciale: cancella l'intero giorno contenente un singolo task
+
+                        ret = tipoDel.GIORNO;
                     }
 
                     cancellato = true;
                 }
             }
         }
+
+        return ret;
     }
 }

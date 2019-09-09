@@ -41,8 +41,6 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
     String ora_setted = "";
     String data_oraScelta = "";
 
-    Toast mToast;
-
     TimePickerDialog.OnTimeSetListener myOnTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
 
         @Override
@@ -145,13 +143,12 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
                 descScelta = desc_setted.getText().toString();
 
                 // Controlla se l'utente ha inserito i dati in tutti i campi
-                //if (!descScelta.isEmpty() && !data_setted.isEmpty() && !ora_setted.isEmpty() && priorScelta > -1 && classeScelta > -1){
-                if (true){
+                if (!descScelta.isEmpty() && !data_setted.isEmpty() && !ora_setted.isEmpty() && priorScelta > -1 && classeScelta > -1){
 
                     data_oraScelta = data_setted + " " + ora_setted;
 
                     // Creiamo un oggetto Bundle che utilizziamo per salvare i dati inseriti dall’utente
-                    // Utilizziamo il metodo putString() dell’oggetto bundle per salvare i dati inseriti, recuperati poi con il metodo getText() della classe EditText
+                    // Utilizziamo il metodo putString() dell’oggetto bundle per salvare i dati inseriti
                     Bundle bundleResults = new Bundle();
                     bundleResults.putString("desc", descScelta);
                     bundleResults.putString("data_ora", data_oraScelta);

@@ -48,9 +48,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        //
-        // [html.it]
-        // "È responsabile della creazione e del posizionamento delle view all’interno del RecyclerView."
+        // "È responsabile della creazione e del posizionamento delle view all’interno del RecyclerView." [html.it]
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -160,8 +158,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 final Task newTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, id_val.getValAndInc());
                 myTaskSet.addTask(newTask, myVisSet);
 
-                salvaDatiApp();
-                //storeTask(newTask);
+                storeTask(newTask);
 
                 for (Task t : myTaskSet.getElements())
                     System.out.println(t.getDescription());
@@ -169,7 +166,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 for (Vis v : myVisSet.getElements())
                     System.out.println(v.getText());
 
-                aggiornaHomeAdd();
+                // Aggiorna la visualizzazione della home dopo l'aggiunta di un task
+                mAdapter.notifyDataSetChanged();
             }
             else if (resultCode == Activity.RESULT_CANCELED) {
 
@@ -183,13 +181,13 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     public void onListItemClick(int clickedItemIndex) {
 
         Vis visElemClicked = myVisSet.getElement(clickedItemIndex);
+        VisualizeSet.tipoDel td;
 
         if (visElemClicked.getType() == Vis.tipoVis.ATTIVITA){
 
-            myTaskSet.delTask(visElemClicked.getIdTask(), myVisSet);
+            td = myTaskSet.delTask(visElemClicked.getIdTask(), myVisSet);
 
-            //delTaskFromStore(visElemClicked.getIdTask());
-            salvaDatiApp();
+            delTaskFromStore(visElemClicked.getIdTask());
 
             for (Task t : myTaskSet.getElements())
                 System.out.println(t.getDescription());
@@ -197,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             for (Vis v : myVisSet.getElements())
                 System.out.println(v.getText());
 
-            aggiornaHomeDel(clickedItemIndex);
+            aggiornaHome_del(clickedItemIndex, td);
 
             toastDelTask = Toast.makeText(this, "Attività rimossa.", Toast.LENGTH_LONG);
             toastDelTask.show();
@@ -316,24 +314,21 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         }
     }
 
-    // Aggiorna la visualizzazione della home
-    public void aggiornaHomeAdd() {
+    // Aggiorna la visualizzazione della home dopo la rimozione di un task
+    public void aggiornaHome_del(int positionTaskDel, VisualizeSet.tipoDel type) {
 
-        int ind;
-        for (ind = 0; ind < myVisSet.getNumberOfElements(); ind++)
-            mAdapter.notifyItemChanged(ind);
-    }
+        switch (type){
 
-    public void aggiornaHomeDel(int positionDel) {
+            case SINGOLO_TASK:
+                mAdapter.notifyItemRangeRemoved(positionTaskDel, 2);
 
-        int ind;
+            case GIORNO:
+                mAdapter.notifyItemRangeRemoved(positionTaskDel-2, 6);
 
-        //mAdapter.notifyItemRemoved(positionDel);
-        mAdapter.notifyItemRangeChanged(0, myVisSet.getNumberOfElements());
+            default:    // case ULTIMO_TASK e default
+                mAdapter.notifyItemRangeRemoved(0, 7);
+        }
 
-        //NOTIFICA LA RIMOZIONE DEGLI ULTIMI ELEMENTI
-
-        //for (ind = 0; ind < myVisSet.getNumberOfElements(); ind++)
-            //mAdapter.notifyItemChanged(ind);
+        mAdapter.notifyDataSetChanged();
     }
 }

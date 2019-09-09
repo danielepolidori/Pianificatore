@@ -26,10 +26,11 @@ public class TaskSet extends DataSet<Task> {
         }
     }
 
-    public void delTask(int id_t, VisualizeSet vs) {
+    public VisualizeSet.tipoDel delTask(int id_t, VisualizeSet vs) {
 
         int i;
         boolean eliminato = false;
+        VisualizeSet.tipoDel ret = VisualizeSet.tipoDel.TMP;
 
         for(i = 0; i < elements.size() && !eliminato; i++){
 
@@ -39,10 +40,12 @@ public class TaskSet extends DataSet<Task> {
 
                 elements.remove(i);
 
-                vs.toVisualizeDel(id_t, elements.size());
+                ret = vs.toVisualizeDel(id_t, elements.size());
 
                 eliminato = true;
             }
         }
+
+        return ret;
     }
 }
