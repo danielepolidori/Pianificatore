@@ -1,19 +1,13 @@
 package com.example.scheduler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class VisualizeSet extends DataSet<Vis> {
 
     private boolean is_msgNoTask;
     private String msgNoTask;
 
-    //private List<Vis> elements;
-
     public VisualizeSet(){
 
         super();
-        //elements = new ArrayList<Vis>();
 
         this.is_msgNoTask = true;
         this.msgNoTask = "Nessuna attività ancora in programma.";
@@ -68,7 +62,7 @@ public class VisualizeSet extends DataSet<Vis> {
     protected void toVisualizeAdd(Task t) {
 
         String dat = t.getDay() + " " + t.getNumDay() + " - " + t.getMonth() + " " + t.getYear();
-        String att = "- " + t.getDescription();
+        String att = "- " + t.getDescription() + ".";
         String vuota = "~";
 
         Vis d = new Vis(dat, t.getDateHour());
@@ -174,8 +168,8 @@ public class VisualizeSet extends DataSet<Vis> {
 
                         // caso base: cancella il task e una riga vuota seguente
 
-                        elements.remove(i);                // per cancellare il task
-                        elements.remove(i);       // per cancellare la riga vuota (stesso indice, perché dopo la rimozione del task la riga vuota ha occupato il suo posto)
+                        elements.remove(i);         // per cancellare il task
+                        elements.remove(i);         // per cancellare la riga vuota (stesso indice, perché dopo la rimozione del task la riga vuota ha occupato il suo posto)
                     }
                     else {
 
@@ -186,54 +180,5 @@ public class VisualizeSet extends DataSet<Vis> {
                 }
             }
         }
-    }
-
-    /*
-    // Aggiunge elemento in coda
-    public void add(Vis element) {
-
-        elements.add(element);
-    }
-
-    // Inserisce 'element' nella posizione 'index' e sposta tutti gli elementi, da 'index' in poi, di una posizione
-    public void addIn(Vis element, int index) {
-
-        elements.add(index, element);
-    }
-
-    public void delete(int index) {
-
-        elements.remove(index);
-    }
-
-    public void deleteAll() {
-
-        elements.clear();
-    }
-
-    public int getNumberOfElements() {
-
-        return elements.size();
-    }
-
-    public List<Vis> getElements() {
-
-        return elements;
-    }
-
-    public Vis getElement(int index) {
-
-        return elements.get(index);
-    }
-
-    public boolean isEmpty() {
-
-        return (elements.size() < 1);
-    }
-    */
-
-    public void setElements(List<Vis> list_v) {
-
-        elements = list_v;
     }
 }

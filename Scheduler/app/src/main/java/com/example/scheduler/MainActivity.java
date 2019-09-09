@@ -21,20 +21,21 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    TaskSet myTaskSet = new TaskSet();
-    VisualizeSet myVisSet = new VisualizeSet();
+    private TaskSet myTaskSet = new TaskSet();
+    private VisualizeSet myVisSet = new VisualizeSet();
 
-    Date dataCorrente = new Date();
+    private Date dataCorrente = new Date();
 
-    private Toast mToast;
+    private Toast toastDelTask;
+    private Toast toastErrForm;
 
-    static final int REQ_CODE = 0;  // The request code
+    private static final int REQ_CODE = 0;  // The request code
 
-    Id id_val = new Id();
+    private Id id_val = new Id();
 
     private Realm realm;
-    RealmResults<Task> resultsTask;
-    RealmResults<Id> resultsId;
+    private RealmResults<Task> resultsTask;
+    private RealmResults<Id> resultsId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,17 +71,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                 myTaskSet.addTask(t, myVisSet);
             }
-
-            /*
-            realm.executeTransaction(new Realm.Transaction() {
-
-                @Override
-                public void execute(Realm realm) {
-
-                    resultsTask.deleteAllFromRealm();
-                }
-            });
-            */
         }
 
         resultsId = realm.where(Id.class).findAll();
@@ -88,17 +78,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         if (!resultsId.isEmpty()){
 
             id_val.setVal(resultsId.get(0).getVal());
-
-            /*
-            realm.executeTransaction(new Realm.Transaction() {
-
-                @Override
-                public void execute(Realm realm) {
-
-                    resultsId.deleteAllFromRealm();
-                }
-            });
-            */
         }
 
         // specify an adapter
@@ -121,8 +100,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     // Invoked when FormActivity completes its operations
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        System.out.println("inizio activityResult");
 
         // Check which request we're responding to
         if (requestCode == REQ_CODE) {
@@ -180,8 +157,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 }
 
                 // Utilizza i dati raccolti dal form per creare un nuovo task
-                Task newTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, id_val.getValAndInc());
+                final Task newTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, id_val.getValAndInc());
                 myTaskSet.addTask(newTask, myVisSet);
+
+                salvaDatiApp();
+                //storeTask(newTask);
 
                 for (Task t : myTaskSet.getElements())
                     System.out.println(t.getDescription());
@@ -189,46 +169,40 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 for (Vis v : myVisSet.getElements())
                     System.out.println(v.getText());
 
-                // Aggiorna la visualizzazione della home
-                int ind;
-                for (ind = 0; ind < myVisSet.getNumberOfElements(); ind++)
-                    mAdapter.notifyItemChanged(ind);
-
-                salvaDatiApp();
+                aggiornaHomeAdd();
             }
             else if (resultCode == Activity.RESULT_CANCELED) {
 
-                // Write your code if there's no result
-
-                // ...
+                toastErrForm = Toast.makeText(this, "Attività non creata.\nE' necessario inserire i dati in tutti i campi.", Toast.LENGTH_LONG);
+                toastErrForm.show();
             }
         }
-
-        System.out.println("fine activityResult");
     }
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
 
-        if (mToast != null) {
-            mToast.cancel();
+        Vis visElemClicked = myVisSet.getElement(clickedItemIndex);
+
+        if (visElemClicked.getType() == Vis.tipoVis.ATTIVITA){
+
+            myTaskSet.delTask(visElemClicked.getIdTask(), myVisSet);
+
+            //delTaskFromStore(visElemClicked.getIdTask());
+            salvaDatiApp();
+
+            for (Task t : myTaskSet.getElements())
+                System.out.println(t.getDescription());
+
+            for (Vis v : myVisSet.getElements())
+                System.out.println(v.getText());
+
+            aggiornaHomeDel(clickedItemIndex);
+
+            toastDelTask = Toast.makeText(this, "Attività rimossa.", Toast.LENGTH_LONG);
+            toastDelTask.show();
         }
-        String toastMessage = "Item #" + clickedItemIndex + " clicked.";
-        mToast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
-        mToast.show();
-
-        // if (vieneCliccatoUnTask) mostraDettagliTask/segnaTaskCompletato
     }
-
-/*
-    @Override
-    protected void onStop() {
-
-        super.onStop();
-
-        if(salvaDatiApp())
-            realm.close();
-    }*/
 
     @Override
     protected void onDestroy() {
@@ -238,9 +212,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         realm.close();
     }
 
-    private boolean salvaDatiApp() {
+    private void salvaDatiApp() {
 
-        System.out.println("inizio salva");
+        // Ottieni i dati correnti
+        resultsTask = realm.where(Task.class).findAll();
+        resultsId = realm.where(Id.class).findAll();
 
         // Cancella i vecchi dati (se presenti)
 
@@ -269,7 +245,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         }
 
         // Salva i nuovi dati
-
         realm.executeTransaction(new Realm.Transaction() {
 
             @Override
@@ -285,19 +260,80 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     t_toStore.setPrior(el.getPriorToStore());
                     t_toStore.setClasse(el.getClasseToStore());
                     t_toStore.setStato(el.getStato());
-                    // ...
                 }
 
                 Id id = realm.createObject(Id.class);
-
                 id.setVal(id_val.getVal());
             }
         });
-
-        System.out.println("fine salva");
-
-        return true;
     }
 
-    // ...
+    public void storeTask(final Task t) {
+
+        realm.executeTransaction(new Realm.Transaction() {
+
+            @Override
+            public void execute(Realm realm) {
+
+                Task t_toStore = realm.createObject(Task.class);
+                t_toStore.setId(t.getId());
+                t_toStore.setDesc(t.getDescription());
+                t_toStore.setDateHour(t.getDateHour());
+                t_toStore.setPrior(t.getPriorToStore());
+                t_toStore.setClasse(t.getClasseToStore());
+                t_toStore.setStato(t.getStato());
+
+                if (!resultsId.isEmpty())
+                    resultsId.deleteAllFromRealm();
+                Id id_toStore = realm.createObject(Id.class);
+                id_toStore.setVal(id_val.getVal());
+            }
+        });
+    }
+
+    public void delTaskFromStore(int id_t) {
+
+        int i;
+        boolean eliminato = false;
+
+        for (i = 0; i < resultsTask.size() && !eliminato; i++){
+
+            if (resultsTask.get(i).getId() == id_t){
+
+                final int tmp = i;
+
+                realm.executeTransaction(new Realm.Transaction() {
+
+                    @Override
+                    public void execute(Realm realm) {
+
+                        resultsTask.get(tmp).deleteFromRealm();
+                    }
+                });
+
+                eliminato = true;
+            }
+        }
+    }
+
+    // Aggiorna la visualizzazione della home
+    public void aggiornaHomeAdd() {
+
+        int ind;
+        for (ind = 0; ind < myVisSet.getNumberOfElements(); ind++)
+            mAdapter.notifyItemChanged(ind);
+    }
+
+    public void aggiornaHomeDel(int positionDel) {
+
+        int ind;
+
+        //mAdapter.notifyItemRemoved(positionDel);
+        mAdapter.notifyItemRangeChanged(0, myVisSet.getNumberOfElements());
+
+        //NOTIFICA LA RIMOZIONE DEGLI ULTIMI ELEMENTI
+
+        //for (ind = 0; ind < myVisSet.getNumberOfElements(); ind++)
+            //mAdapter.notifyItemChanged(ind);
+    }
 }

@@ -4,11 +4,21 @@
 
 ### TODO:
 
+- Cambia il TITOLO della FormActivity in "Crea nuova attività"
+
+- I task possono essere inseriti non in ordine CRONOLOGICO nel TaskSet
+
+- Anziché rimuovere ogni volta tutto e poi salvare tutto da capo, aggiungere e rimuovere in memoria i SINGOLI elementi interessati
+
 - I task vecchi sono effettivamente RIMOSSI e messi i nuovi?
 
 - RIMUOVI task al clic su di esso
 
 - Gestisci NOTIFICHE
+
+- Rimuovi le stampe di DEBUG
+
+- PULIZIA del codice
 
 
 
@@ -26,9 +36,11 @@
 
 - Visualizzare la home con filtri
 
+- Visualizzare le notifiche con filtri
+
 - Grafici
 
-- Relazione (+ slides ?)
+- Relazione + slides
 
 - (Mostrare dettagli di un task)
 
@@ -36,7 +48,7 @@
 
 
 
-### RICORDA:
+### CONTROLLARE:
 
 - Se si gira il cellulare in orizzontale l'app funziona ugualmente?
 
@@ -47,25 +59,3 @@
 - Grafico a TORTA per visualizzare le varie classi di task (famiglia, lavoro, ...)
 
 - CRONOLOGIA attività completate
-
-
-
-### ESEMPI UTILI:
-
-- FragmentExample: bottone che ti porta in una nuova activity (per mostrare i dettagli di un task)
-
-- Slides 03 e 06 per esempi di FORM
-
-
-
-### VERSIONE MINIMA DEL PROGETTO:
-
-- Home con sole stringhe (le singole voci non sono cliccabili, è una home di sola lettura)
-
-- Possibile inserimento di nuove voci
-
-- Possibile rimozione dei task completati
-
-- Grafico
-
-- Relazione (+ slides ?)

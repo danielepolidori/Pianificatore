@@ -14,9 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -57,8 +55,6 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        System.out.println("inizio crea form");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
 
@@ -72,8 +68,6 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
         buttonPrior.setOnClickListener(this);
         buttonClasse.setOnClickListener(this);
         buttonSalva.setOnClickListener(this);
-
-        System.out.println("fine crea form");
     }
 
     @Override
@@ -174,10 +168,6 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
 
                     Intent returnIntent = new Intent();
                     setResult(Activity.RESULT_CANCELED, returnIntent);
-
-                    String toastMessage = "Attività non creata.\nInserire i dati in tutti i campi.";
-                    mToast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
-                    mToast.show();
 
                     finish();
                 }
