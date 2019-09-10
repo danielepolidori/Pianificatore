@@ -2,6 +2,9 @@ package com.example.scheduler;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -160,11 +163,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                 storeTask(newTask);
 
-                for (Task t : myTaskSet.getElements())
-                    System.out.println(t.getDescription());
-
-                for (Vis v : myVisSet.getElements())
-                    System.out.println(v.getText());
+                // Invia una notifica nel giorno e nell'ora del task
+                Intent notifyIntent = new Intent(this, MyReceiver.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 2, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP,  newTask.getDateHour().getTime(), pendingIntent);
 
                 // Aggiorna la visualizzazione della home dopo l'aggiunta di un task
                 mAdapter.notifyDataSetChanged();
@@ -208,62 +211,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         super.onDestroy();
 
         realm.close();
-    }
-
-    private void salvaDatiApp() {
-
-        // Ottieni i dati correnti
-        resultsTask = realm.where(Task.class).findAll();
-        resultsId = realm.where(Id.class).findAll();
-
-        // Cancella i vecchi dati (se presenti)
-
-        if (!resultsTask.isEmpty()) {
-
-            realm.executeTransaction(new Realm.Transaction() {
-
-                @Override
-                public void execute(Realm realm) {
-
-                    resultsTask.deleteAllFromRealm();
-                }
-            });
-        }
-
-        if (!resultsId.isEmpty()) {
-
-            realm.executeTransaction(new Realm.Transaction() {
-
-                @Override
-                public void execute(Realm realm) {
-
-                    resultsId.deleteAllFromRealm();
-                }
-            });
-        }
-
-        // Salva i nuovi dati
-        realm.executeTransaction(new Realm.Transaction() {
-
-            @Override
-            public void execute(Realm realm) {
-
-                for (Task el : myTaskSet.getElements()){
-
-                    Task t_toStore = realm.createObject(Task.class);
-
-                    t_toStore.setId(el.getId());
-                    t_toStore.setDesc(el.getDescription());
-                    t_toStore.setDateHour(el.getDateHour());
-                    t_toStore.setPrior(el.getPriorToStore());
-                    t_toStore.setClasse(el.getClasseToStore());
-                    t_toStore.setStato(el.getStato());
-                }
-
-                Id id = realm.createObject(Id.class);
-                id.setVal(id_val.getVal());
-            }
-        });
     }
 
     public void storeTask(final Task t) {

@@ -6,10 +6,6 @@
 
 - Gestisci NOTIFICHE
 
-- Rimuovi le stampe di DEBUG
-
-- PULIZIA del codice
-
 
 
 ### MANCA:

@@ -33,7 +33,6 @@ public class Task extends RealmObject {
     private int priorita;
     private int classe;
     private int stato;
-    // ...
 
     public Task(String des, Date dat_ora, priorTask p, classeTask c, int nIdentificativo){
 
@@ -68,8 +67,6 @@ public class Task extends RealmObject {
             default:    // case ALTRO e default
                 this.classe = 3;
         }
-
-        // ...
     }
 
     // Costruttore vuoto, necessario per Realm
@@ -82,8 +79,6 @@ public class Task extends RealmObject {
         this.classe = -1;
         this.stato = -1;
     }
-
-    //.... get e set
 
     public int getId() {
 
@@ -264,9 +259,3 @@ public class Task extends RealmObject {
         this.stato = s;
     }
 }
-
-
-
-
-
-

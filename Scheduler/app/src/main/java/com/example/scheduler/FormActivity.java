@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -96,16 +95,16 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
                 builderPrior.setSingleChoiceItems(prior_items, -1, new DialogInterface.OnClickListener() {
 
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {}
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        priorScelta = which;
+                    }
                 });
 
                 builderPrior.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        priorScelta = which;
-                    }
+                    public void onClick(DialogInterface dialog, int which) {}
                 });
 
                 builderPrior.show();
@@ -120,16 +119,16 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
                 builderClasse.setSingleChoiceItems(classe_items, -1, new DialogInterface.OnClickListener() {
 
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {}
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        classeScelta = which;
+                    }
                 });
 
                 builderClasse.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        classeScelta = which;
-                    }
+                    public void onClick(DialogInterface dialog, int which) {}
                 });
 
                 builderClasse.show();

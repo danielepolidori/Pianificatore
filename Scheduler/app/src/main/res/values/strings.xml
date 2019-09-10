@@ -3,16 +3,14 @@
 
     <string name="msg_no_task">Nessuna attività ancora in programma.</string>
 
-    <string name="att">- Attività</string>
-    <string name="testo_prova">Ciao a tutti!</string>
     <string name="vuota"></string>
 
     <string name="form_intro">Inserisci i dati per la creazione di una nuova attività.</string>
     <string name="desc">Inserisci la descrizione dell\'attività:</string>
     <string name="data">Inserisci la data in cui svolgere l\'attività:</string>
     <string name="ora">Inserisci l\'ora in cui svolgere l\'attività:</string>
-    <string name="prior">Inserisci la priorità dell\'attività:</string>
-    <string name="classe">Inserisci la classe dell\'attività:</string>
+    <string name="prior">Inserisci la priorità relativa all\'attività:</string>
+    <string name="classe">Inserisci la classe di appartenenza dell\'attività:</string>
     <string name="button_data_form">Data</string>
     <string name="button_ora_form">Ora</string>
     <string name="button_prior_form">Priorità</string>
