@@ -14,7 +14,7 @@ public class MyApplication extends Application {
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
         Realm.setDefaultConfiguration(realmConfiguration);
 
-        // All'avvio dell'app viene cancellato tutto lo storage presente sul telefono
+        // All'avvio dell'app viene cancellato tutto lo storage (relativo all'app) presente sul telefono
         //Realm.deleteRealm(realmConfiguration);
     }
 }
