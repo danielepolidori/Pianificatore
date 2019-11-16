@@ -166,29 +166,23 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                 storeTask(newTask);
 
-
-
-                /* VECCHIO
+                /*
+                // VECCHIO
                 // Invia una notifica nel giorno e nell'ora del task
                 Intent notifyIntent = new Intent(this, MyReceiver.class);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 2, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
                 alarmManager.set(AlarmManager.RTC_WAKEUP,  newTask.getDateHour().getTime(), pendingIntent);
-                 */
 
+                 */
 
                 // NUOVO
 
-                // Costruzione
-                NotificationCompat.Builder n = new NotificationCompat.Builder(this)
-                        .setContentTitle("Pianificatore d'attività")
-                        .setContentText("C'è un'attività da compiere in questo momento!")
-                        .setSmallIcon(android.R.drawable.ic_dialog_email);
+                Intent notifyIntent = new Intent(this, MyReceiver.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notifyIntent, 0);
 
-                // Pubblicazione
-                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                notificationManager.notify(0, n.build());
-
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP,  newTask.getDateHour().getTime(), pendingIntent);
 
 
                 // Aggiorna la visualizzazione della home dopo l'aggiunta di un task

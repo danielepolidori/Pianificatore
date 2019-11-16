@@ -38,6 +38,21 @@ public class MyNewIntentService extends IntentService {
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
         managerCompat.notify(NOTIFICATION_ID, notificationCompat);
 
+
+
+
+        // NUOVO
+
+        // Costruzione
+        NotificationCompat.Builder n = new NotificationCompat.Builder(this)
+                .setContentTitle("Pianificatore d'attività")
+                .setContentText("C'è un'attività da compiere in questo momento!")
+                .setSmallIcon(android.R.drawable.ic_dialog_email);
+
+        // Pubblicazione
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(0, n.build());
+
          */
 
 
