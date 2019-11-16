@@ -2,8 +2,11 @@ package com.example.scheduler;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+
+import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 public class MyNewIntentService extends IntentService {
@@ -17,6 +20,8 @@ public class MyNewIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+
+        /*  VECCHIO
 
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("Pianificatore d'attività");
@@ -32,5 +37,10 @@ public class MyNewIntentService extends IntentService {
         Notification notificationCompat = builder.build();
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
         managerCompat.notify(NOTIFICATION_ID, notificationCompat);
+
+         */
+
+
+
     }
 }

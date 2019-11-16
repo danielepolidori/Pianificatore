@@ -12,7 +12,9 @@ public class MyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        /* VECCHIO
         Intent intent1 = new Intent(context, MyNewIntentService.class);
         context.startService(intent1);
+         */
     }
 }

@@ -4,11 +4,23 @@
 
 ### TODO:
 
-- Gestisci NOTIFICHE
+- Tornare alla versione GIT prima di 'old-new mode'
+
+- Aumenta il minimo livello API (16 è troppo basso)
+
+- CREARE una notifica nel giorno e ora del task appena creato
+
+- Aggiungere alla notifica un'AZIONE al click su di essa
+
+- Aggiungere alla notifica un SUONO
+
+- Attenzione a rendere univoci gli ID delle notifiche
 
 
 
 ### MANCA:
+
+- Gestisci NOTIFICHE
 
 - Modifica di un task
 
@@ -43,3 +55,5 @@
 - Grafico a TORTA per visualizzare le varie classi di task (famiglia, lavoro, ...)
 
 - CRONOLOGIA attività completate
+
+- Use le CARD nella home (e magari anche nelle altre activity), al posto di una semplice serie di stringhe
