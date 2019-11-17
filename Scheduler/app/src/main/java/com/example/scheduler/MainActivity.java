@@ -168,9 +168,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                 /*
                 // VECCHIO
+
                 // Invia una notifica nel giorno e nell'ora del task
+
                 Intent notifyIntent = new Intent(this, MyReceiver.class);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 2, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
                 AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
                 alarmManager.set(AlarmManager.RTC_WAKEUP,  newTask.getDateHour().getTime(), pendingIntent);
 
@@ -190,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             }
             else if (resultCode == Activity.RESULT_CANCELED) {
 
-                toastErrForm = Toast.makeText(this, "Attività non creata.\nE' necessario inserire i dati in tutti i campi.", Toast.LENGTH_LONG);
+                toastErrForm = Toast.makeText(this, "Errore: Attività non creata.", Toast.LENGTH_LONG);
                 toastErrForm.show();
             }
         }

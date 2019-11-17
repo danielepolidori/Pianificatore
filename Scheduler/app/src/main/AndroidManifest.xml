@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.scheduler">
 
     <application
@@ -9,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".MyApplication" >
+        android:name=".MyApplication"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -30,13 +32,11 @@
         <receiver
             android:name=".MyReceiver"
             android:enabled="true"
-            android:exported="false" >
-        </receiver>
+            android:exported="false" />
 
         <service
             android:name=".MyNewIntentService"
-            android:exported="false" >
-        </service>
+            android:exported="false" />
 
     </application>
 

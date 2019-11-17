@@ -18,14 +18,14 @@ public class MyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        /*
+
 
         // VECCHIO
         Intent intent1 = new Intent(context, MyNewIntentService.class);
         context.startService(intent1);
 
 
-
+            /*
         // NUOVO
         Intent actionIntent = new Intent(context, MainActivity.class);
 
@@ -48,9 +48,9 @@ public class MyReceiver extends BroadcastReceiver {
         NotificationManager manager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(NOTIFICATION_ID, builder.build());
-        */
 
 
+        //------------------------------------------
 
         // Costruzione
         NotificationCompat.Builder n = new NotificationCompat.Builder(context.getApplicationContext())
@@ -61,5 +61,7 @@ public class MyReceiver extends BroadcastReceiver {
         // Pubblicazione
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(0, n.build());
+
+        */
     }
 }

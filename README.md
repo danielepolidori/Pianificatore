@@ -5,13 +5,16 @@
 ### TODO:
 
 - CREARE una notifica nel giorno e ora del task appena creato
-- E se nel frattempo viene cancellato il task, che succede?
+
+- Se nel frattempo (tra la creazione e la notifica) viene CANCELLATO il task, che succede?
+
+- Creando DUE task viene considerata solo la notifica dell'ultimo task (il primo task non viene notificato)
 
 - Aggiungere alla notifica un'AZIONE al click su di essa
 
 - Aggiungere alla notifica un SUONO
 
-- Attenzione a rendere univoci gli ID delle notifiche
+- Vanno resi univoci gli ID delle notifiche?
 
 
 
@@ -60,12 +63,11 @@
 ### BOZZE:
 
 Test controllo mostrare notifica:
-+ app sempre aperta
-+ andato nella home e poi tornato nell'app
-+ andato nella home
-+ app chiusa e poi riaperta
-- app chiusa
-- telefono bloccato
-- telefono spento ?
-
-NB:  Provare anche con più notifiche contemporaneamente
+  + app sempre aperta
+  + andato nella home e poi tornato nell'app
+  + andato nella home
+  + app chiusa e poi riaperta
+  - app chiusa
+  - telefono bloccato
+  - telefono spento ?
+ (NB: Provare anche con più notifiche contemporaneamente)

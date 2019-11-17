@@ -30,21 +30,19 @@ public class MyNewIntentService extends IntentService {
 
         Intent notifyIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 2, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        //to be able to launch your activity from the notification
-        builder.setContentIntent(pendingIntent);
+        builder.setContentIntent(pendingIntent);    //to be able to launch your activity from the notification
 
         Notification notificationCompat = builder.build();
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
         managerCompat.notify(NOTIFICATION_ID, notificationCompat);
 
-
+        */
 
 
         // NUOVO
 
         // Costruzione
-        NotificationCompat.Builder n = new NotificationCompat.Builder(this)
+        Notification.Builder n = new Notification.Builder(this)
                 .setContentTitle("Pianificatore d'attività")
                 .setContentText("C'è un'attività da compiere in questo momento!")
                 .setSmallIcon(android.R.drawable.ic_dialog_email);
@@ -53,7 +51,6 @@ public class MyNewIntentService extends IntentService {
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(0, n.build());
 
-         */
 
 
 
