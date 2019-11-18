@@ -166,8 +166,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                 storeTask(newTask);
 
+
+
+
+
                 /*
-                // VECCHIO
+                // 0
 
                 // Invia una notifica nel giorno e nell'ora del task
 
@@ -177,15 +181,28 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
                 alarmManager.set(AlarmManager.RTC_WAKEUP,  newTask.getDateHour().getTime(), pendingIntent);
 
-                 */
 
-                // NUOVO
+
+                // 1
 
                 Intent notifyIntent = new Intent(this, MyReceiver.class);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notifyIntent, 0);
 
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 alarmManager.set(AlarmManager.RTC_WAKEUP,  newTask.getDateHour().getTime(), pendingIntent);
+
+*/
+
+                // 2
+
+                Intent notifyIntent = new Intent(this, MyReceiver.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notifyIntent, 0);
+
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP,  newTask.getDateHour().getTime(), pendingIntent);
+
+
+
 
 
                 // Aggiorna la visualizzazione della home dopo l'aggiunta di un task

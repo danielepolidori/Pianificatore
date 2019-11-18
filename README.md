@@ -4,6 +4,8 @@
 
 ### TODO:
 
+- Con l'APP CHIUSA non funzionano le notifiche (fare questa prova: con l'intent non chiamare la classe ma una generica action 'com.example.scheduler.broadcastreceiver')
+
 - CREARE una notifica nel giorno e ora del task appena creato
 
 - Se nel frattempo (tra la creazione e la notifica) viene CANCELLATO il task, che succede?
@@ -47,6 +49,8 @@
 ### CONTROLLARE:
 
 - Se si gira il cellulare in orizzontale l'app funziona ugualmente?
+
+- Tutti i task relativi a giorni/ore passate non devono essere mostrati nella home
 
 
 

@@ -21,7 +21,8 @@ public class MyNewIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        /*  VECCHIO
+        /*
+        // 0
 
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("Pianificatore d'attività");
@@ -39,7 +40,7 @@ public class MyNewIntentService extends IntentService {
         */
 
 
-        // NUOVO
+        // 1
 
         // Costruzione
         Notification.Builder n = new Notification.Builder(this)

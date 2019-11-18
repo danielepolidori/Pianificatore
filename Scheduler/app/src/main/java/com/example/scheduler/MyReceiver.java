@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
@@ -18,15 +19,15 @@ public class MyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+/*
 
-
-        // VECCHIO
+        // 0
         Intent intent1 = new Intent(context, MyNewIntentService.class);
         context.startService(intent1);
 
 
-            /*
-        // NUOVO
+
+        // 1
         Intent actionIntent = new Intent(context, MainActivity.class);
 
         PendingIntent pending =
@@ -50,7 +51,8 @@ public class MyReceiver extends BroadcastReceiver {
         manager.notify(NOTIFICATION_ID, builder.build());
 
 
-        //------------------------------------------
+
+        // 2
 
         // Costruzione
         NotificationCompat.Builder n = new NotificationCompat.Builder(context.getApplicationContext())
@@ -62,6 +64,25 @@ public class MyReceiver extends BroadcastReceiver {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(0, n.build());
 
-        */
+ */
+
+        // 3
+
+
+        // Costruzione
+        NotificationCompat.Builder n = new NotificationCompat.Builder(context.getApplicationContext())
+                .setContentTitle("Pianificatore d'attività")
+                .setContentText("C'è un'attività da compiere in questo momento!")
+                .setSmallIcon(android.R.drawable.ic_dialog_email);
+
+        // Pubblicazione
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(0, n.build());
+
+
+        Toast toastNotifica = Toast.makeText(context.getApplicationContext(), "Notifica creata.", Toast.LENGTH_LONG);
+        toastNotifica.show();
+
+
     }
 }
