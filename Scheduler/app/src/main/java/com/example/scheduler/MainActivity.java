@@ -3,15 +3,12 @@ package com.example.scheduler;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
-
-import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -105,11 +102,13 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        super.onActivityResult(requestCode, resultCode, data);
+
         // Check which request we're responding to
         if (requestCode == REQ_CODE) {
 
             // Make sure the request was successful
-            if(resultCode == Activity.RESULT_OK){
+            if (resultCode == Activity.RESULT_OK) {
 
                 // Raccogli i dati del form
 
@@ -119,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 int resultClasseInt = data.getIntExtra("classe", -1);
 
                 Task.priorTask resultPrior;
-                switch (resultPriorInt){
+                switch (resultPriorInt) {
 
                     case 0:
                         resultPrior = Task.priorTask.ALTA;
@@ -134,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 }
 
                 Task.classeTask resultClasse;
-                switch (resultClasseInt){
+                switch (resultClasseInt) {
 
                     case 0:
                         resultClasse = Task.classeTask.FAMIGLIA;
@@ -168,47 +167,17 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
 
 
-
-
-                /*
-                // 0
-
-                // Invia una notifica nel giorno e nell'ora del task
-
-                Intent notifyIntent = new Intent(this, MyReceiver.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 2, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC_WAKEUP,  newTask.getDateHour().getTime(), pendingIntent);
-
-
-
-                // 1
-
                 Intent notifyIntent = new Intent(this, MyReceiver.class);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notifyIntent, 0);
 
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC_WAKEUP,  newTask.getDateHour().getTime(), pendingIntent);
-
-*/
-
-                // 2
-
-                Intent notifyIntent = new Intent(this, MyReceiver.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notifyIntent, 0);
-
-                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP,  newTask.getDateHour().getTime(), pendingIntent);
-
-
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, newTask.getDateHour().getTime(), pendingIntent);
 
 
 
                 // Aggiorna la visualizzazione della home dopo l'aggiunta di un task
                 mAdapter.notifyDataSetChanged();
-            }
-            else if (resultCode == Activity.RESULT_CANCELED) {
+            } else if (resultCode == Activity.RESULT_CANCELED) {
 
                 toastErrForm = Toast.makeText(this, "Errore: Attività non creata.", Toast.LENGTH_LONG);
                 toastErrForm.show();
@@ -228,13 +197,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             delTaskFromStore(visElemClicked.getIdTask());
 
-            for (Task t : myTaskSet.getElements())
-                System.out.println(t.getDescription());
-
-            for (Vis v : myVisSet.getElements())
-                System.out.println(v.getText());
-
             aggiornaHome_del(clickedItemIndex, td);
+
+            // ~ Cancella notifica --> MyNewIntentService.cancellaNotifica()
 
             toastDelTask = Toast.makeText(this, "Attività rimossa.", Toast.LENGTH_LONG);
             toastDelTask.show();

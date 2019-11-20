@@ -6,54 +6,45 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
 public class MyNewIntentService extends IntentService {
 
-    private static final int NOTIFICATION_ID = 3;
+    private NotificationManager notificationManager;
 
     public MyNewIntentService() {
 
         super("MyNewIntentService");
+
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
 
+        // Costruzione notifica
+
         /*
-        // 0
+        Intent ongoingIntent = new Intent();       // ~ Non deve portare da nessuna parte ma deve modificare lo stato del task in ongoing
+        PendingIntent ongoingPendingIntent = PendingIntent.getBroadcast(this, 0, ongoingIntent, 0);
+
+        Intent postponeIntent = new Intent(this, .class);       // ~ Deve portare nel form di modifica di un task
+        PendingIntent postponePendingIntent = PendingIntent.getBroadcast(this, 0, postponeIntent, 0);
+        */
 
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle("Pianificatore d'attività");
-        builder.setContentText("C'è un'attività da compiere in questo momento!");
-        //builder.setSmallIcon(R.drawable.ic_launcher_foreground);
-
-        Intent notifyIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 2, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);    //to be able to launch your activity from the notification
-
-        Notification notificationCompat = builder.build();
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        managerCompat.notify(NOTIFICATION_ID, notificationCompat);
-
-        */
+        builder.setContentText("C'è un'attività da compiere!");
+        builder.setSmallIcon(android.R.drawable.ic_dialog_email);
+        builder.setAutoCancel(true);
+        //builder.addAction(R.drawable.ic_launcher_background, "In corso", ongoingPendingIntent);
+        //builder.addAction(R.drawable.ic_launcher_background, "Postponi", postponePendingIntent);
 
 
-        // 1
+        // Pubblicazione notifica
+        notificationManager.notify(0, builder.build());
+    }
 
-        // Costruzione
-        Notification.Builder n = new Notification.Builder(this)
-                .setContentTitle("Pianificatore d'attività")
-                .setContentText("C'è un'attività da compiere in questo momento!")
-                .setSmallIcon(android.R.drawable.ic_dialog_email);
+    public void cancellaNotifica(int id) {
 
-        // Pubblicazione
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(0, n.build());
-
-
-
-
+        notificationManager.cancel(id);
     }
 }

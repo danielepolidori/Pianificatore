@@ -4,29 +4,27 @@
 
 ### TODO:
 
-- Con l'APP CHIUSA non funzionano le notifiche (fare questa prova: con l'intent non chiamare la classe ma una generica action 'com.example.scheduler.broadcastreceiver')
+- Come si passano dati attraverso un INTENT (per passare id_task e un bool per capire se è l'id di una notifica da creare o l'id di una notifica che va cancellata)?
 
-- CREARE una notifica nel giorno e ora del task appena creato
+- Vanno resi univoci gli ID delle notifiche (usare l'id del relativo task)
 
-- Se nel frattempo (tra la creazione e la notifica) viene CANCELLATO il task, che succede?
+- Salvare l'ID delle notifiche con Realm
 
-- Creando DUE task viene considerata solo la notifica dell'ultimo task (il primo task non viene notificato)
+- Activity per mostrare DETTAGLI task
 
-- Aggiungere alla notifica un'AZIONE al click su di essa
+- MODIFICA di un task (passando attraverso FormActivity e raccogliendo non tutti i dati ma solo quelli inseriti, che sono quelli nuovi)
 
-- Aggiungere alla notifica un SUONO
-
-- Vanno resi univoci gli ID delle notifiche?
+- Aggiungere alla notifica le AZIONI postpone e ongoing
 
 
 
 ### MANCA:
 
-- Gestisci NOTIFICHE
+- Gestione NOTIFICHE
+
+- Mostrare dettagli di un task
 
 - Modifica di un task
-
-- Inviare notifiche
 
 - Posporre un task
 
@@ -39,8 +37,6 @@
 - Grafici
 
 - Relazione + slides
-
-- (Mostrare dettagli di un task)
 
 - (Credits del progetto)
 
@@ -66,12 +62,22 @@
 
 ### BOZZE:
 
-Test controllo mostrare notifica:
+Test controllo mostrare NOTIFICA:
+
   + app sempre aperta
   + andato nella home e poi tornato nell'app
   + andato nella home
   + app chiusa e poi riaperta
   - app chiusa
-  - telefono bloccato
-  - telefono spento ?
- (NB: Provare anche con più notifiche contemporaneamente)
+  + telefono bloccato (con l'app ancora aperta)
+  - telefono spento e poi app riaperta
+  - telefono spento e riacceso (ma senza aprire l'app)
+  - telefono spento
+
+-------------------------------------------
+
+Activity che mostra nel DETTAGLIO un TASK:
+
+  - bottone Modifica
+  - bottone Elimina
+  - bottone Completato
