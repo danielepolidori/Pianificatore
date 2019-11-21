@@ -3,22 +3,20 @@ package com.example.scheduler;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 
 public class MyNewIntentService extends IntentService {
 
-    private NotificationManager notificationManager;
-
     public MyNewIntentService() {
 
         super("MyNewIntentService");
-
-        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
+
+        int id_ret = intent.getIntExtra("id", -1);
+        String descTask_ret = intent.getStringExtra("descTask");
 
         // Costruzione notifica
 
@@ -31,8 +29,8 @@ public class MyNewIntentService extends IntentService {
         */
 
         Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle("Pianificatore d'attività");
-        builder.setContentText("C'è un'attività da compiere!");
+        builder.setContentTitle(descTask_ret);
+        builder.setContentText("E' ora di svolgere l'attività!");
         builder.setSmallIcon(android.R.drawable.ic_dialog_email);
         builder.setAutoCancel(true);
         //builder.addAction(R.drawable.ic_launcher_background, "In corso", ongoingPendingIntent);
@@ -40,11 +38,7 @@ public class MyNewIntentService extends IntentService {
 
 
         // Pubblicazione notifica
-        notificationManager.notify(0, builder.build());
-    }
-
-    public void cancellaNotifica(int id) {
-
-        notificationManager.cancel(id);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(id_ret, builder.build());
     }
 }

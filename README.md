@@ -4,11 +4,7 @@
 
 ### TODO:
 
-- Come si passano dati attraverso un INTENT (per passare id_task e un bool per capire se è l'id di una notifica da creare o l'id di una notifica che va cancellata)?
-
-- Vanno resi univoci gli ID delle notifiche (usare l'id del relativo task)
-
-- Salvare l'ID delle notifiche con Realm
+- Se viene eliminato un task prima della notifica quest'ultima viene in ogni caso inviata
 
 - Activity per mostrare DETTAGLI task
 
