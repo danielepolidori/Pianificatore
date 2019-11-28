@@ -4,8 +4,6 @@
 
 ### TODO:
 
-- Se viene eliminato un task prima della notifica quest'ultima viene in ogni caso inviata
-
 - Activity per mostrare DETTAGLI task
 
 - MODIFICA di un task (passando attraverso FormActivity e raccogliendo non tutti i dati ma solo quelli inseriti, che sono quelli nuovi)
@@ -76,4 +74,4 @@ Activity che mostra nel DETTAGLIO un TASK:
 
   - bottone Modifica
   - bottone Elimina
-  - bottone Completato
+  - bottone (da ongoing a) Completato

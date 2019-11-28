@@ -3,7 +3,6 @@ package com.example.scheduler;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -29,9 +28,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private VisualizeSet myVisSet = new VisualizeSet();
 
     private Date dataCorrente = new Date();
-
-    private Toast toastDelTask;
-    private Toast toastErrForm;
 
     private static final int REQ_CODE = 0;  // The request code
 
@@ -167,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 storeTask(newTask);
 
 
+                // Crea la notifica del task
 
                 Intent notifyIntent = new Intent(this, MyReceiver.class);
                 notifyIntent.putExtra("id", newTask.getId());
@@ -178,14 +175,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, newTask.getDateHour().getTime(), pendingIntent);
 
 
-
                 // Aggiorna la visualizzazione della home dopo l'aggiunta di un task
                 mAdapter.notifyDataSetChanged();
             }
             else if (resultCode == Activity.RESULT_CANCELED) {
 
-                toastErrForm = Toast.makeText(this, "Errore: Attività non creata.", Toast.LENGTH_LONG);
-                toastErrForm.show();
+                Toast.makeText(this, "Errore: Attività non creata.", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -193,14 +188,18 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     @Override
     public void onListItemClick(int clickedItemIndex) {
 
+        // Se viene cliccato un task lo si cancella
+
         Vis visElemClicked = myVisSet.getElement(clickedItemIndex);
         VisualizeSet.tipoDel td;
 
         if (visElemClicked.getType() == Vis.tipoVis.ATTIVITA){
 
-            // Cancella notifica relativa al task
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            notificationManager.cancel(visElemClicked.getIdTask());
+            // Cancella notifica (non ancora mostrata) relativa al task
+            Intent notifyIntent = new Intent(this, MyReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, visElemClicked.getIdTask(), notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            manager.cancel(pendingIntent);
 
             td = myTaskSet.delTask(visElemClicked.getIdTask(), myVisSet);
 
@@ -208,8 +207,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             aggiornaHome_del(clickedItemIndex, td);
 
-            toastDelTask = Toast.makeText(this, "Attività rimossa.", Toast.LENGTH_LONG);
-            toastDelTask.show();
+            Toast.makeText(this, "Attività rimossa.", Toast.LENGTH_LONG).show();
         }
     }
 
