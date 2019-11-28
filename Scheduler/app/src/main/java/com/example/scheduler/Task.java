@@ -164,6 +164,25 @@ public class Task extends RealmObject {
         return p;
     }
 
+    public String getPrior_string() {
+
+        String p;
+
+        switch (priorita){
+
+            case 0:
+                p = "Alta";
+
+            case 1:
+                p = "Media";
+
+            default:    // case 2 e default
+                p = "Bassa";
+        }
+
+        return p;
+    }
+
     public int getPriorToStore() {
 
         return priorita;
@@ -191,6 +210,28 @@ public class Task extends RealmObject {
         return c;
     }
 
+    public String getClasse_string() {
+
+        String c;
+
+        switch (classe){
+
+            case 0:
+                c = "Famiglia";
+
+            case 1:
+                c = "Lavoro";
+
+            case 2:
+                c = "Tempo libero";
+
+            default:    // case 3 e default
+                c = "Altro";
+        }
+
+        return c;
+    }
+
     public int getClasseToStore() {
 
         return classe;
@@ -210,6 +251,25 @@ public class Task extends RealmObject {
 
             default:    // case 2 e default
                 s = statoTask.COMPLETED;
+        }
+
+        return s;
+    }
+
+    public String getStato_string() {
+
+        String s;
+
+        switch (stato){
+
+            case 0:
+                s = "In attesa di essere svolta";
+
+            case 1:
+                s = "In corso";
+
+            default:    // case 2 e default
+                s = "Completata";
         }
 
         return s;

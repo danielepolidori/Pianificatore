@@ -48,4 +48,17 @@ public class TaskSet extends DataSet<Task> {
 
         return ret;
     }
+
+    public Task getTask(int id) {
+
+        Task ret = new Task();
+
+        for (Task el : elements){
+
+            if (el.getId() == id)
+                ret = el;
+        }
+
+        return ret;
+    }
 }

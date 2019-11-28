@@ -4,11 +4,11 @@
 
 ### TODO:
 
-- Activity per mostrare DETTAGLI task
-
 - MODIFICA di un task (passando attraverso FormActivity e raccogliendo non tutti i dati ma solo quelli inseriti, che sono quelli nuovi)
 
 - Aggiungere alla notifica le AZIONI postpone e ongoing
+
+- Controllare come viene assegnato lo STATO dei task (avevo un task completato)
 
 
 
@@ -51,6 +51,8 @@
 - CRONOLOGIA attività completate
 
 - Use le CARD nella home (e magari anche nelle altre activity), al posto di una semplice serie di stringhe
+
+- Bottoni 'annulla' o frecce per tornare indietro nella navigazione dell'app (form, detailTask, ecc)
 
 
 

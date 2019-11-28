@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     private Date dataCorrente = new Date();
 
-    private static final int REQ_CODE = 0;  // The request code
+    private static final int REQ_CODE_FORM = 0;
+    private static final int REQ_CODE_DET = 1;
 
     private Id id_val = new Id();
 
@@ -90,26 +91,25 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                 Intent intent = new Intent(MainActivity.this, FormActivity.class);
 
-                startActivityForResult(intent, REQ_CODE);
+                startActivityForResult(intent, REQ_CODE_FORM);
             }
         });
     }
 
-    // Invoked when FormActivity completes its operations
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
 
         // Check which request we're responding to
-        if (requestCode == REQ_CODE) {
+        if (requestCode == REQ_CODE_FORM) {     // Invoked when FormActivity completes its operations
 
             // Make sure the request was successful
             if (resultCode == Activity.RESULT_OK) {
 
                 // Raccogli i dati del form
 
-                String resultDesc = data.getStringExtra("desc");    // oppure ...= data.getExtras().get("name")
+                String resultDesc = data.getStringExtra("desc");
                 String resultDataOraStr = data.getStringExtra("data_ora");
                 int resultPriorInt = data.getIntExtra("prior", -1);
                 int resultClasseInt = data.getIntExtra("classe", -1);
@@ -183,31 +183,68 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 Toast.makeText(this, "Errore: Attività non creata.", Toast.LENGTH_LONG).show();
             }
         }
+        else if (requestCode == REQ_CODE_DET) {     // Invoked when DetailTaskActivity completes its operations
+
+            // Make sure the request was successful
+            if (resultCode == Activity.RESULT_OK) {
+
+                int resultCmd = data.getIntExtra("comando", -1);
+                int id_ret = data.getIntExtra("idTask", -1);
+                int indClicked_ret = data.getIntExtra("indClick", -1);
+
+                switch (resultCmd) {
+
+                    case 0:     // Cliccato su 'modifica'
+
+                        // ...
+
+                        break;
+
+                    case 1:     // Cliccato su 'elimina'
+
+                        deleteTask(id_ret, indClicked_ret);
+
+                        break;
+
+                    case 2:     // Cliccato su 'Completato'
+
+                        myTaskSet.getTask(id_ret).setStato(Task.statoTask.COMPLETED);
+
+                        deleteTask(id_ret, indClicked_ret);     // ~ Andrà poi sostituito con l'inserimento del task nella cronologia
+
+                        break;
+
+                    default:
+
+                        Toast.makeText(this, "Errore.", Toast.LENGTH_LONG).show();
+                }
+            }
+            else if (resultCode == Activity.RESULT_CANCELED) {
+
+                Toast.makeText(this, "Errore nel visualizzare l'attività.", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
 
-        // Se viene cliccato un task lo si cancella
-
         Vis visElemClicked = myVisSet.getElement(clickedItemIndex);
-        VisualizeSet.tipoDel td;
+        int idTask = visElemClicked.getIdTask();
+        Task taskClicked = myTaskSet.getTask(idTask);
 
         if (visElemClicked.getType() == Vis.tipoVis.ATTIVITA){
 
-            // Cancella notifica (non ancora mostrata) relativa al task
-            Intent notifyIntent = new Intent(this, MyReceiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, visElemClicked.getIdTask(), notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            manager.cancel(pendingIntent);
+            Intent intent = new Intent(MainActivity.this, DetailTaskActivity.class);
+            intent.putExtra("descTask", taskClicked.getDescription());
+            intent.putExtra("dataoraTask", taskClicked.getDay() + " " + taskClicked.getNumDay() + " " + taskClicked.getMonth() + " " + taskClicked.getYear());
+            intent.putExtra("priorTask", taskClicked.getPrior_string());
+            intent.putExtra("classeTask", taskClicked.getClasse_string());
+            intent.putExtra("statoTask", taskClicked.getStato_string());
+            intent.putExtra("idTask", idTask);
+            intent.putExtra("indClick", clickedItemIndex);
 
-            td = myTaskSet.delTask(visElemClicked.getIdTask(), myVisSet);
-
-            delTaskFromStore(visElemClicked.getIdTask());
-
-            aggiornaHome_del(clickedItemIndex, td);
-
-            Toast.makeText(this, "Attività rimossa.", Toast.LENGTH_LONG).show();
+            startActivityForResult(intent, REQ_CODE_DET);
         }
     }
 
@@ -240,6 +277,27 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 id_toStore.setVal(id_val.getVal());
             }
         });
+    }
+
+    public void deleteTask(int id, int indClicked) {
+
+        Vis visElemClicked = myVisSet.getElement(indClicked);
+        VisualizeSet.tipoDel td;
+
+        // Cancella notifica (non ancora mostrata) relativa al task
+        Intent notifyIntent = new Intent(this, MyReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        manager.cancel(pendingIntent);
+
+        td = myTaskSet.delTask(visElemClicked.getIdTask(), myVisSet);
+
+        delTaskFromStore(visElemClicked.getIdTask());
+
+        aggiornaHome_del(indClicked, td);
+
+        Toast.makeText(this, "Attività rimossa.", Toast.LENGTH_LONG).show();
+
     }
 
     public void delTaskFromStore(int id_t) {

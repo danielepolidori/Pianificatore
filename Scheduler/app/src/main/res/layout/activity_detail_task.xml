@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/info_desc"
+            android:textStyle="bold"
+            android:layout_marginTop="25dip" />
+        <TextView
+            android:id="@+id/desc_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="5dip"
+            android:layout_marginStart="10dip" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/info_dataora"
+            android:textStyle="bold"
+            android:layout_marginTop="25dip" />
+        <TextView
+            android:id="@+id/dataora_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="5dip"
+            android:layout_marginStart="10dip" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/info_prior"
+            android:textStyle="bold"
+            android:layout_marginTop="25dip" />
+        <TextView
+            android:id="@+id/prior_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="5dip"
+            android:layout_marginStart="10dip" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/info_classe"
+            android:textStyle="bold"
+            android:layout_marginTop="25dip" />
+        <TextView
+            android:id="@+id/classe_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="5dip"
+            android:layout_marginStart="10dip" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/info_stato"
+            android:textStyle="bold"
+            android:layout_marginTop="25dip" />
+        <TextView
+            android:id="@+id/stato_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="5dip"
+            android:layout_marginStart="10dip" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dip">
+
+            <Button
+                android:id="@+id/btnModTask"
+                android:layout_height="wrap_content"
+                android:text="@string/button_mod_task"
+                android:layout_marginTop="15dip"
+                android:layout_width="130dip" />
+
+            <Button
+                android:id="@+id/btnElimTask"
+                android:layout_height="wrap_content"
+                android:text="@string/button_elim_task"
+                android:layout_marginTop="15dip"
+                android:layout_width="130dip" />
+
+            <Button
+                android:id="@+id/btnComplTask"
+                android:layout_height="wrap_content"
+                android:text="@string/button_compl_task"
+                android:layout_marginTop="15dip"
+                android:layout_width="130dip" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
