@@ -4,11 +4,17 @@
 
 ### TODO:
 
-- MODIFICA di un task (passando attraverso FormActivity e raccogliendo non tutti i dati ma solo quelli inseriti, che sono quelli nuovi)
+- Inserire l'ORA nel dettaglio del task
+
+- MODIFICA di un task (funziona modificando la data, non funziona modificando la priorità)
+
+- Quando si modifica un task dovrebbe scrivere 'ATTIVITÀ MODIFICATA' e non 'attività rimossa'
+
+- Cambiare titolo e intestazione della FORM_ACTIVITY per la modifica di un task
 
 - Aggiungere alla notifica le AZIONI postpone e ongoing
 
-- Controllare come viene assegnato lo STATO dei task (avevo un task completato)
+- Controllare come viene assegnato lo STATO dei task (avevo un task appena creato segnato come completato)
 
 
 
@@ -69,11 +75,3 @@ Test controllo mostrare NOTIFICA:
   - telefono spento e poi app riaperta
   - telefono spento e riacceso (ma senza aprire l'app)
   - telefono spento
-
--------------------------------------------
-
-Activity che mostra nel DETTAGLIO un TASK:
-
-  - bottone Modifica
-  - bottone Elimina
-  - bottone (da ongoing a) Completato

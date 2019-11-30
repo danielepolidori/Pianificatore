@@ -78,34 +78,24 @@
             android:layout_marginTop="5dip"
             android:layout_marginStart="10dip" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
+        <Button
+            android:id="@+id/btnModTask"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dip">
-
-            <Button
-                android:id="@+id/btnModTask"
-                android:layout_height="wrap_content"
-                android:text="@string/button_mod_task"
-                android:layout_marginTop="15dip"
-                android:layout_width="130dip" />
-
-            <Button
-                android:id="@+id/btnElimTask"
-                android:layout_height="wrap_content"
-                android:text="@string/button_elim_task"
-                android:layout_marginTop="15dip"
-                android:layout_width="130dip" />
-
-            <Button
-                android:id="@+id/btnComplTask"
-                android:layout_height="wrap_content"
-                android:text="@string/button_compl_task"
-                android:layout_marginTop="15dip"
-                android:layout_width="130dip" />
-
-        </LinearLayout>
+            android:text="@string/button_mod_task"
+            android:layout_marginTop="50dip"
+            android:layout_width="130dip" />
+        <Button
+            android:id="@+id/btnElimTask"
+            android:layout_height="wrap_content"
+            android:text="@string/button_elim_task"
+            android:layout_marginTop="15dip"
+            android:layout_width="130dip" />
+        <Button
+            android:id="@+id/btnComplTask"
+            android:layout_height="wrap_content"
+            android:text="@string/button_compl_task"
+            android:layout_marginTop="15dip"
+            android:layout_width="130dip" />
 
     </LinearLayout>
 

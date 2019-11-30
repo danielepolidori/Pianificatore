@@ -8,7 +8,8 @@
 
     <!-- "The overall container for your user interface is a RecyclerView object that you add to your layout." -->
     <!-- A RecyclerView with some commonly used attributes -->
-    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.recyclerview.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/my_recycler_view"

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class DetailTaskActivity extends AppCompatActivity implements View.OnClickListener {
@@ -40,6 +41,15 @@ public class DetailTaskActivity extends AppCompatActivity implements View.OnClic
         prior.setText(priorTask_ret);
         classe.setText(classeTask_ret);
         stato.setText(statoTask_ret);
+
+
+        final Button buttonMod = (Button) findViewById(R.id.btnModTask);
+        final Button buttonElim = (Button) findViewById(R.id.btnElimTask);
+        final Button buttonCompl = (Button) findViewById(R.id.btnComplTask);
+
+        buttonMod.setOnClickListener(this);
+        buttonElim.setOnClickListener(this);
+        buttonCompl.setOnClickListener(this);
     }
 
     @Override
@@ -54,6 +64,10 @@ public class DetailTaskActivity extends AppCompatActivity implements View.OnClic
 
                 returnIntent.putExtra("comando", 0);
                 returnIntent.putExtra("indClick", indClick_ret);
+
+                setResult(Activity.RESULT_OK, returnIntent);
+
+                finish();
 
                 break;
 
@@ -71,6 +85,10 @@ public class DetailTaskActivity extends AppCompatActivity implements View.OnClic
             case R.id.btnComplTask:
 
                 returnIntent.putExtra("comando", 2);
+
+                setResult(Activity.RESULT_OK, returnIntent);
+
+                finish();
 
                 break;
         }

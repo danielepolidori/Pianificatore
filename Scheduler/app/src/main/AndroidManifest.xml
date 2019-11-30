@@ -22,11 +22,7 @@
 
         <activity
             android:name=".FormActivity"
-            android:label="Crea nuova attività">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
+            android:label="Crea nuova attività" />
 
         <activity
             android:name=".DetailTaskActivity"

@@ -110,58 +110,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             // Make sure the request was successful
             if (resultCode == Activity.RESULT_OK) {
 
-                // Raccogli i dati del form
-
-                String resultDesc = data.getStringExtra("desc");
-                String resultDataOraStr = data.getStringExtra("data_ora");
-                int resultPriorInt = data.getIntExtra("prior", -1);
-                int resultClasseInt = data.getIntExtra("classe", -1);
-
-                Task.priorTask resultPrior;
-                switch (resultPriorInt) {
-
-                    case 0:
-                        resultPrior = Task.priorTask.ALTA;
-                        break;
-
-                    case 1:
-                        resultPrior = Task.priorTask.MEDIA;
-                        break;
-
-                    default:    // caso 2 o caso default
-                        resultPrior = Task.priorTask.BASSA;
-                }
-
-                Task.classeTask resultClasse;
-                switch (resultClasseInt) {
-
-                    case 0:
-                        resultClasse = Task.classeTask.FAMIGLIA;
-                        break;
-
-                    case 1:
-                        resultClasse = Task.classeTask.LAVORO;
-                        break;
-
-                    case 2:
-                        resultClasse = Task.classeTask.TEMPO_LIBERO;
-                        break;
-
-                    default:    // caso 3 o caso di default
-                        resultClasse = Task.classeTask.ALTRO;
-                }
-
-                Date resultDataOra = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("d M yyyy HH mm");
-                try {
-                    resultDataOra = sdf.parse(resultDataOraStr);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                // Utilizza i dati raccolti dal form per creare un nuovo task
-                final Task newTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, id_val.getValAndInc());
-                creazioneTask(newTask);
+                gestisciFormNew(data);
             }
             else if (resultCode == Activity.RESULT_CANCELED) {
 
@@ -173,117 +122,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             // Make sure the request was successful
             if (resultCode == Activity.RESULT_OK) {
 
-                int idTask = data.getIntExtra("id", -1);
-                Task taskToMod = myTaskSet.getTask(idTask);
-
-                // Raccogli i dati del form
-
-                String resultDesc = data.getStringExtra("desc");
-                String resultDataStr = data.getStringExtra("data");
-                String resultOraStr = data.getStringExtra("ora");
-                int resultPriorInt = data.getIntExtra("prior", -1);
-                int resultClasseInt = data.getIntExtra("classe", -1);
-
-
-                Task.priorTask resultPrior = Task.priorTask.BASSA;
-                if (resultPriorInt > -1) {
-
-                    switch (resultPriorInt) {
-
-                        case 0:
-                            resultPrior = Task.priorTask.ALTA;
-                            break;
-
-                        case 1:
-                            resultPrior = Task.priorTask.MEDIA;
-                            break;
-
-                        case 2:
-                            resultPrior = Task.priorTask.BASSA;
-
-                        default:    // caso in cui non sia stata modificata
-                            resultPrior = taskToMod.getPrior();
-                    }
-                }
-
-                Task.classeTask resultClasse = Task.classeTask.ALTRO;;
-                if (resultClasseInt > 1) {
-
-                    switch (resultClasseInt) {
-
-                        case 0:
-                            resultClasse = Task.classeTask.FAMIGLIA;
-                            break;
-
-                        case 1:
-                            resultClasse = Task.classeTask.LAVORO;
-                            break;
-
-                        case 2:
-                            resultClasse = Task.classeTask.TEMPO_LIBERO;
-                            break;
-
-                        case 3:
-                            resultClasse = Task.classeTask.ALTRO;
-
-                        default:    // caso in cui non sia stata modificata
-                            resultClasse = taskToMod.getClasse();
-                    }
-                }
-
-                String resultDataOraStr = "";
-                Date resultDataOra = new Date();
-                if (!resultDataStr.isEmpty() && !resultOraStr.isEmpty()) {
-
-                    resultDataOraStr = resultDataStr + " " + resultOraStr;
-                }
-                else if (!resultDataStr.isEmpty() && resultOraStr.isEmpty()) {
-
-                    Date ora_notMod = myTaskSet.getTask(idTask).getOnlyOra();
-
-                    SimpleDateFormat sdf_only_ora = new SimpleDateFormat("HH mm", Locale.ITALIAN);
-                    String ora_notMod_str = sdf_only_ora.format(ora_notMod);
-
-                    resultDataOraStr = resultDataStr + " " + ora_notMod_str;
-                }
-                else if (resultDataStr.isEmpty() && !resultOraStr.isEmpty()) {
-
-                    Date data_notMod = myTaskSet.getTask(idTask).getOnlyDate();
-
-                    SimpleDateFormat sdf_only_data = new SimpleDateFormat("d M yyyy", Locale.ITALIAN);
-                    String data_notMod_str = sdf_only_data.format(data_notMod);  // es: "30 8 2019"
-
-                    resultDataOraStr = data_notMod_str + " " + resultOraStr;
-                }
-
-                SimpleDateFormat sdf = new SimpleDateFormat("d M yyyy HH mm");
-                try {
-                    resultDataOra = sdf.parse(resultDataOraStr);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-
-                // Utilizza i dati raccolti dal form per modificare il task, se non presenti utilizza i dati del task prima della modifica
-
-                if (resultDesc.isEmpty())
-                    resultDesc = taskToMod.getDescription();
-
-                if (resultDataStr.isEmpty() && resultOraStr.isEmpty())
-                    resultDataOra = taskToMod.getDateHour();
-
-                final Task modTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, id_val.getValAndInc());
-
-
-                // Eliminazione del vecchio task
-                int indTask = data.getIntExtra("indClick", -1);
-                deleteTask(idTask, indTask);
-
-                creazioneTask(modTask);
+                gestisciFormMod(data);
             }
             else if (resultCode == Activity.RESULT_CANCELED) {
 
-                Toast.makeText(this, "Errore: Attività non creata.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Errore: Attività non modificata.", Toast.LENGTH_LONG).show();
             }
         }
         else if (requestCode == REQ_CODE_DET_TASK) {     // Invoked when DetailTaskActivity completes its operations
@@ -291,43 +134,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             // Make sure the request was successful
             if (resultCode == Activity.RESULT_OK) {
 
-                int cmd_ret = data.getIntExtra("comando", -1);
-                int id_ret = data.getIntExtra("idTask", -1);
-                int indClicked_ret = data.getIntExtra("indClick", -1);
-
-                switch (cmd_ret) {
-
-                    case 0:     // Cliccato su 'modifica'
-
-                        Intent intent = new Intent(MainActivity.this, FormActivity.class);
-                        intent.putExtra("is_new_task", 0);      // false (perché non è la creazione di un nuovo task, ma la modifica di uno già esistente)
-
-                        startActivityForResult(intent, REQ_CODE_FORM_MOD);
-
-                        break;
-
-                    case 1:     // Cliccato su 'elimina'
-
-                        deleteTask(id_ret, indClicked_ret);
-
-                        break;
-
-                    case 2:     // Cliccato su 'Completato'
-
-                        myTaskSet.getTask(id_ret).setStato(Task.statoTask.COMPLETED);
-
-                        deleteTask(id_ret, indClicked_ret);     // ~ Andrà poi sostituito con l'inserimento del task nella cronologia
-
-                        break;
-
-                    default:
-
-                        Toast.makeText(this, "Errore.", Toast.LENGTH_LONG).show();
-                }
+                gestisciDetTask(data);
             }
             else if (resultCode == Activity.RESULT_CANCELED) {
 
-                Toast.makeText(this, "Errore nel visualizzare l'attività.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Errore nel visualizzare l'attività.", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -471,5 +282,221 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         }
 
         mAdapter.notifyDataSetChanged();
+    }
+
+    public void gestisciFormNew(Intent data) {
+
+        // Raccogli i dati del form
+
+        String resultDesc = data.getStringExtra("desc");
+        String resultDataOraStr = data.getStringExtra("data_ora");
+        int resultPriorInt = data.getIntExtra("prior", -1);
+        int resultClasseInt = data.getIntExtra("classe", -1);
+
+        Task.priorTask resultPrior;
+        switch (resultPriorInt) {
+
+            case 0:
+                resultPrior = Task.priorTask.ALTA;
+                break;
+
+            case 1:
+                resultPrior = Task.priorTask.MEDIA;
+                break;
+
+            default:    // caso 2 o caso default
+                resultPrior = Task.priorTask.BASSA;
+        }
+
+        Task.classeTask resultClasse;
+        switch (resultClasseInt) {
+
+            case 0:
+                resultClasse = Task.classeTask.FAMIGLIA;
+                break;
+
+            case 1:
+                resultClasse = Task.classeTask.LAVORO;
+                break;
+
+            case 2:
+                resultClasse = Task.classeTask.TEMPO_LIBERO;
+                break;
+
+            default:    // caso 3 o caso di default
+                resultClasse = Task.classeTask.ALTRO;
+        }
+
+        Date resultDataOra = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("d M yyyy HH mm");
+        try {
+            resultDataOra = sdf.parse(resultDataOraStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // Utilizza i dati raccolti dal form per creare un nuovo task
+        final Task newTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, id_val.getValAndInc());
+        creazioneTask(newTask);
+    }
+
+    public void gestisciFormMod(Intent data) {
+
+        int idTask = data.getIntExtra("id", -1);
+        Task taskToMod = myTaskSet.getTask(idTask);
+
+
+        // Raccogli i dati del form, se non inseriti utilizza i dati del task prima della modifica
+
+        String resultDesc;
+        if (data.hasExtra("desc"))
+            resultDesc = data.getStringExtra("desc");
+        else
+            resultDesc = taskToMod.getDescription();
+
+        String resultDataOraStr;
+        Date resultDataOra = new Date();
+        if (data.hasExtra("data") || data.hasExtra("ora")){
+
+            String resultDataStr;
+            if (data.hasExtra("data"))
+                resultDataStr = data.getStringExtra("data");
+            else{
+
+                Date data_notMod = myTaskSet.getTask(idTask).getOnlyDate();
+
+                SimpleDateFormat sdf_only_data = new SimpleDateFormat("d M yyyy", Locale.ITALIAN);
+                resultDataStr = sdf_only_data.format(data_notMod);  // es: "30 8 2019"
+            }
+
+            String resultOraStr;
+            if (data.hasExtra("ora"))
+                resultOraStr = data.getStringExtra("ora");
+            else{
+
+                Date ora_notMod = myTaskSet.getTask(idTask).getOnlyOra();
+
+                SimpleDateFormat sdf_only_ora = new SimpleDateFormat("HH mm", Locale.ITALIAN);
+                resultOraStr = sdf_only_ora.format(ora_notMod);
+            }
+
+            resultDataOraStr = resultDataStr + " " + resultOraStr;
+
+            SimpleDateFormat sdf = new SimpleDateFormat("d M yyyy HH mm");
+            try {
+                resultDataOra = sdf.parse(resultDataOraStr);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+
+            resultDataOra = taskToMod.getDateHour();
+        }
+
+        Task.priorTask resultPrior;
+        if (data.hasExtra("prior")){
+
+            int resultPriorInt = data.getIntExtra("prior", -1);
+
+            switch (resultPriorInt) {
+
+                case 0:
+                    resultPrior = Task.priorTask.ALTA;
+                    break;
+
+                case 1:
+                    resultPrior = Task.priorTask.MEDIA;
+                    break;
+
+                default:    // case 2
+                    resultPrior = Task.priorTask.BASSA;
+            }
+        }
+        else{   // caso in cui non sia stata modificata
+
+            resultPrior = taskToMod.getPrior();
+        }
+
+        Task.classeTask resultClasse;
+        if (data.hasExtra("classe")){
+
+            int resultClasseInt = data.getIntExtra("classe", -1);
+
+            switch (resultClasseInt) {
+
+                case 0:
+                    resultClasse = Task.classeTask.FAMIGLIA;
+                    break;
+
+                case 1:
+                    resultClasse = Task.classeTask.LAVORO;
+                    break;
+
+                case 2:
+                    resultClasse = Task.classeTask.TEMPO_LIBERO;
+                    break;
+
+                default:    // case 3
+                    resultClasse = Task.classeTask.ALTRO;
+            }
+        }
+        else{   // caso in cui non sia stata modificata
+
+            resultClasse = taskToMod.getClasse();
+        }
+
+
+        // Utilizza i dati raccolti dal form per modificare il task
+        final Task modTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, id_val.getValAndInc());
+
+
+        // Eliminazione del vecchio task
+        int indTask = data.getIntExtra("indClick", -1);
+        deleteTask(idTask, indTask);
+
+        creazioneTask(modTask);
+    }
+
+    public void gestisciDetTask(Intent data) {
+
+        int cmd_ret = data.getIntExtra("comando", -1);
+        int id_ret = data.getIntExtra("idTask", -1);
+        int indClicked_ret = data.getIntExtra("indClick", -1);
+
+        switch (cmd_ret) {
+
+            case 0:     // Cliccato su 'modifica'
+
+                Intent intent = new Intent(MainActivity.this, FormActivity.class);
+                intent.putExtra("is_new_task", 0);      // false (perché non è la creazione di un nuovo task, ma la modifica di uno già esistente)
+                intent.putExtra("id", id_ret);
+                intent.putExtra("indClick", indClicked_ret);
+
+                startActivityForResult(intent, REQ_CODE_FORM_MOD);
+
+                break;
+
+            case 1:     // Cliccato su 'elimina'
+
+                deleteTask(id_ret, indClicked_ret);
+
+                break;
+
+            case 2:     // Cliccato su 'Completato'
+
+                myTaskSet.getTask(id_ret).setStato(Task.statoTask.COMPLETED);
+
+                // ~ Inserimento del task nella cronologia
+                // ...
+
+                //deleteTask(id_ret, indClicked_ret);
+
+                break;
+
+            default:
+
+                Toast.makeText(this, "Errore.", Toast.LENGTH_LONG).show();
+        }
     }
 }

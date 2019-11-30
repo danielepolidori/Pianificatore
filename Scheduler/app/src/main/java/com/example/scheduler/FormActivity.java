@@ -174,17 +174,31 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
                 else if (is_newTask == 0) {     // Modifica di un task già esistente
 
                     int idTask_ret = getIntent().getIntExtra("id", -1);
+                    int indClick_ret = getIntent().getIntExtra("indClick", -1);
 
                     // Controlla che l'utente abbia inserito i dati in almeno un campo
                     if (!descScelta.isEmpty() || !data_setted.isEmpty() || !ora_setted.isEmpty() || priorScelta > -1 || classeScelta > -1){
 
                         Bundle bundleResults = new Bundle();
+
                         bundleResults.putInt("id", idTask_ret);
-                        bundleResults.putString("desc", descScelta);
-                        bundleResults.putString("data", data_setted);
-                        bundleResults.putString("ora", ora_setted);
-                        bundleResults.putInt("prior", priorScelta);
-                        bundleResults.putInt("classe", classeScelta);
+                        bundleResults.putInt("indClick", indClick_ret);
+
+                        if (!descScelta.isEmpty())
+                            bundleResults.putString("desc", descScelta);
+
+                        if (!data_setted.isEmpty())
+                            bundleResults.putString("data", data_setted);
+
+                        if (!ora_setted.isEmpty())
+                            bundleResults.putString("ora", ora_setted);
+
+                        if (priorScelta > -1)
+                            bundleResults.putInt("prior", priorScelta);
+
+                        if (classeScelta > -1)
+                            bundleResults.putInt("classe", classeScelta);
+
 
                         Intent returnIntent = new Intent();
                         returnIntent.putExtras(bundleResults);      // associamo all’Intent il Bundle
