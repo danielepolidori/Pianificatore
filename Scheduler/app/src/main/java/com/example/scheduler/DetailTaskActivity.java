@@ -53,8 +53,7 @@ public class DetailTaskActivity extends AppCompatActivity implements View.OnClic
             case R.id.btnModTask:
 
                 returnIntent.putExtra("comando", 0);
-
-                // ...
+                returnIntent.putExtra("indClick", indClick_ret);
 
                 break;
 

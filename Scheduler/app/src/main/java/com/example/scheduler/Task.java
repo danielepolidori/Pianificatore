@@ -109,6 +109,20 @@ public class Task extends RealmObject {
         return onlyDate;
     }
 
+    public Date getOnlyOra() {
+
+        SimpleDateFormat sdf_only_ora = new SimpleDateFormat("HH mm", Locale.ITALIAN);
+        String strOra_tmp = sdf_only_ora.format(data_ora);
+        Date onlyOra = new Date();     // Per non lasciarlo senza inizializzazione
+        try {
+            onlyOra = sdf_only_ora.parse(strOra_tmp);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return onlyOra;
+    }
+
     public int getYear() {
 
         SimpleDateFormat sdf_data_ora = new SimpleDateFormat("EEEE d MMM yyyy HH mm", Locale.ITALIAN);

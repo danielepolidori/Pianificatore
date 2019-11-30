@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -29,8 +30,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     private Date dataCorrente = new Date();
 
-    private static final int REQ_CODE_FORM = 0;
-    private static final int REQ_CODE_DET = 1;
+    private static final int REQ_CODE_FORM_NEW = 0;
+    private static final int REQ_CODE_FORM_MOD = 1;
+    private static final int REQ_CODE_DET_TASK = 2;
 
     private Id id_val = new Id();
 
@@ -90,8 +92,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             public void onClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, FormActivity.class);
+                intent.putExtra("is_new_task", 1);      // true (perché è la creazione di un nuovo task)
 
-                startActivityForResult(intent, REQ_CODE_FORM);
+                startActivityForResult(intent, REQ_CODE_FORM_NEW);
             }
         });
     }
@@ -102,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         super.onActivityResult(requestCode, resultCode, data);
 
         // Check which request we're responding to
-        if (requestCode == REQ_CODE_FORM) {     // Invoked when FormActivity completes its operations
+        if (requestCode == REQ_CODE_FORM_NEW) {     // Invoked when FormActivity completes its operations
 
             // Make sure the request was successful
             if (resultCode == Activity.RESULT_OK) {
@@ -158,45 +161,148 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                 // Utilizza i dati raccolti dal form per creare un nuovo task
                 final Task newTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, id_val.getValAndInc());
-                myTaskSet.addTask(newTask, myVisSet);
-
-                storeTask(newTask);
-
-
-                // Crea la notifica del task
-
-                Intent notifyIntent = new Intent(this, MyReceiver.class);
-                notifyIntent.putExtra("id", newTask.getId());
-                notifyIntent.putExtra("descTask", newTask.getDescription());
-
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, newTask.getId(), notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, newTask.getDateHour().getTime(), pendingIntent);
-
-
-                // Aggiorna la visualizzazione della home dopo l'aggiunta di un task
-                mAdapter.notifyDataSetChanged();
+                creazioneTask(newTask);
             }
             else if (resultCode == Activity.RESULT_CANCELED) {
 
                 Toast.makeText(this, "Errore: Attività non creata.", Toast.LENGTH_LONG).show();
             }
         }
-        else if (requestCode == REQ_CODE_DET) {     // Invoked when DetailTaskActivity completes its operations
+        else if (requestCode == REQ_CODE_FORM_MOD) {     // Invoked when FormActivity completes its operations
 
             // Make sure the request was successful
             if (resultCode == Activity.RESULT_OK) {
 
-                int resultCmd = data.getIntExtra("comando", -1);
+                int idTask = data.getIntExtra("id", -1);
+                Task taskToMod = myTaskSet.getTask(idTask);
+
+                // Raccogli i dati del form
+
+                String resultDesc = data.getStringExtra("desc");
+                String resultDataStr = data.getStringExtra("data");
+                String resultOraStr = data.getStringExtra("ora");
+                int resultPriorInt = data.getIntExtra("prior", -1);
+                int resultClasseInt = data.getIntExtra("classe", -1);
+
+
+                Task.priorTask resultPrior = Task.priorTask.BASSA;
+                if (resultPriorInt > -1) {
+
+                    switch (resultPriorInt) {
+
+                        case 0:
+                            resultPrior = Task.priorTask.ALTA;
+                            break;
+
+                        case 1:
+                            resultPrior = Task.priorTask.MEDIA;
+                            break;
+
+                        case 2:
+                            resultPrior = Task.priorTask.BASSA;
+
+                        default:    // caso in cui non sia stata modificata
+                            resultPrior = taskToMod.getPrior();
+                    }
+                }
+
+                Task.classeTask resultClasse = Task.classeTask.ALTRO;;
+                if (resultClasseInt > 1) {
+
+                    switch (resultClasseInt) {
+
+                        case 0:
+                            resultClasse = Task.classeTask.FAMIGLIA;
+                            break;
+
+                        case 1:
+                            resultClasse = Task.classeTask.LAVORO;
+                            break;
+
+                        case 2:
+                            resultClasse = Task.classeTask.TEMPO_LIBERO;
+                            break;
+
+                        case 3:
+                            resultClasse = Task.classeTask.ALTRO;
+
+                        default:    // caso in cui non sia stata modificata
+                            resultClasse = taskToMod.getClasse();
+                    }
+                }
+
+                String resultDataOraStr = "";
+                Date resultDataOra = new Date();
+                if (!resultDataStr.isEmpty() && !resultOraStr.isEmpty()) {
+
+                    resultDataOraStr = resultDataStr + " " + resultOraStr;
+                }
+                else if (!resultDataStr.isEmpty() && resultOraStr.isEmpty()) {
+
+                    Date ora_notMod = myTaskSet.getTask(idTask).getOnlyOra();
+
+                    SimpleDateFormat sdf_only_ora = new SimpleDateFormat("HH mm", Locale.ITALIAN);
+                    String ora_notMod_str = sdf_only_ora.format(ora_notMod);
+
+                    resultDataOraStr = resultDataStr + " " + ora_notMod_str;
+                }
+                else if (resultDataStr.isEmpty() && !resultOraStr.isEmpty()) {
+
+                    Date data_notMod = myTaskSet.getTask(idTask).getOnlyDate();
+
+                    SimpleDateFormat sdf_only_data = new SimpleDateFormat("d M yyyy", Locale.ITALIAN);
+                    String data_notMod_str = sdf_only_data.format(data_notMod);  // es: "30 8 2019"
+
+                    resultDataOraStr = data_notMod_str + " " + resultOraStr;
+                }
+
+                SimpleDateFormat sdf = new SimpleDateFormat("d M yyyy HH mm");
+                try {
+                    resultDataOra = sdf.parse(resultDataOraStr);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+                // Utilizza i dati raccolti dal form per modificare il task, se non presenti utilizza i dati del task prima della modifica
+
+                if (resultDesc.isEmpty())
+                    resultDesc = taskToMod.getDescription();
+
+                if (resultDataStr.isEmpty() && resultOraStr.isEmpty())
+                    resultDataOra = taskToMod.getDateHour();
+
+                final Task modTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, id_val.getValAndInc());
+
+
+                // Eliminazione del vecchio task
+                int indTask = data.getIntExtra("indClick", -1);
+                deleteTask(idTask, indTask);
+
+                creazioneTask(modTask);
+            }
+            else if (resultCode == Activity.RESULT_CANCELED) {
+
+                Toast.makeText(this, "Errore: Attività non creata.", Toast.LENGTH_LONG).show();
+            }
+        }
+        else if (requestCode == REQ_CODE_DET_TASK) {     // Invoked when DetailTaskActivity completes its operations
+
+            // Make sure the request was successful
+            if (resultCode == Activity.RESULT_OK) {
+
+                int cmd_ret = data.getIntExtra("comando", -1);
                 int id_ret = data.getIntExtra("idTask", -1);
                 int indClicked_ret = data.getIntExtra("indClick", -1);
 
-                switch (resultCmd) {
+                switch (cmd_ret) {
 
                     case 0:     // Cliccato su 'modifica'
 
-                        // ...
+                        Intent intent = new Intent(MainActivity.this, FormActivity.class);
+                        intent.putExtra("is_new_task", 0);      // false (perché non è la creazione di un nuovo task, ma la modifica di uno già esistente)
+
+                        startActivityForResult(intent, REQ_CODE_FORM_MOD);
 
                         break;
 
@@ -244,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             intent.putExtra("idTask", idTask);
             intent.putExtra("indClick", clickedItemIndex);
 
-            startActivityForResult(intent, REQ_CODE_DET);
+            startActivityForResult(intent, REQ_CODE_DET_TASK);
         }
     }
 
@@ -277,6 +383,30 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 id_toStore.setVal(id_val.getVal());
             }
         });
+    }
+
+    public void creaNotifica(int id, String desc, long time) {
+
+        Intent notifyIntent = new Intent(this, MyReceiver.class);
+        notifyIntent.putExtra("id", id);
+        notifyIntent.putExtra("descTask", desc);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+    }
+
+    public void creazioneTask(Task t) {
+
+        myTaskSet.addTask(t, myVisSet);
+
+        storeTask(t);
+
+        creaNotifica(t.getId(), t.getDescription(), t.getDateHour().getTime());     // Crea la notifica del task
+
+        // Aggiorna la visualizzazione della home dopo l'aggiunta di un task
+        mAdapter.notifyDataSetChanged();
     }
 
     public void deleteTask(int id, int indClicked) {

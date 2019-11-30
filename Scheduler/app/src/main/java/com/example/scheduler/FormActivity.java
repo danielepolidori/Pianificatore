@@ -141,31 +141,64 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
                 final EditText desc_setted = (EditText) findViewById(R.id.edit_desc);
                 descScelta = desc_setted.getText().toString();
 
-                // Controlla se l'utente ha inserito i dati in tutti i campi
-                if (!descScelta.isEmpty() && !data_setted.isEmpty() && !ora_setted.isEmpty() && priorScelta > -1 && classeScelta > -1){
+                int is_newTask = getIntent().getIntExtra("is_new_task", -1);
 
-                    data_oraScelta = data_setted + " " + ora_setted;
+                if (is_newTask == 1) {      // Creazione di un nuovo task
 
-                    // Creiamo un oggetto Bundle che utilizziamo per salvare i dati inseriti dall’utente
-                    // Utilizziamo il metodo putString() dell’oggetto bundle per salvare i dati inseriti
-                    Bundle bundleResults = new Bundle();
-                    bundleResults.putString("desc", descScelta);
-                    bundleResults.putString("data_ora", data_oraScelta);
-                    bundleResults.putInt("prior", priorScelta);
-                    bundleResults.putInt("classe", classeScelta);
+                    // Controlla se l'utente ha inserito i dati in tutti i campi
+                    if (!descScelta.isEmpty() && !data_setted.isEmpty() && !ora_setted.isEmpty() && priorScelta > -1 && classeScelta > -1){
 
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtras(bundleResults);      // associamo all’Intent il Bundle
-                    setResult(Activity.RESULT_OK, returnIntent);
+                        data_oraScelta = data_setted + " " + ora_setted;
 
-                    finish();
+                        // Creiamo un oggetto Bundle che utilizziamo per salvare i dati inseriti dall’utente
+                        Bundle bundleResults = new Bundle();
+                        bundleResults.putString("desc", descScelta);
+                        bundleResults.putString("data_ora", data_oraScelta);
+                        bundleResults.putInt("prior", priorScelta);
+                        bundleResults.putInt("classe", classeScelta);
+
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtras(bundleResults);      // associamo all’Intent il Bundle
+                        setResult(Activity.RESULT_OK, returnIntent);
+
+                        finish();
+                    }
+                    else{
+
+                        Intent returnIntent = new Intent();
+                        setResult(Activity.RESULT_CANCELED, returnIntent);
+
+                        finish();
+                    }
                 }
-                else{
+                else if (is_newTask == 0) {     // Modifica di un task già esistente
 
-                    Intent returnIntent = new Intent();
-                    setResult(Activity.RESULT_CANCELED, returnIntent);
+                    int idTask_ret = getIntent().getIntExtra("id", -1);
 
-                    finish();
+                    // Controlla che l'utente abbia inserito i dati in almeno un campo
+                    if (!descScelta.isEmpty() || !data_setted.isEmpty() || !ora_setted.isEmpty() || priorScelta > -1 || classeScelta > -1){
+
+                        Bundle bundleResults = new Bundle();
+                        bundleResults.putInt("id", idTask_ret);
+                        bundleResults.putString("desc", descScelta);
+                        bundleResults.putString("data", data_setted);
+                        bundleResults.putString("ora", ora_setted);
+                        bundleResults.putInt("prior", priorScelta);
+                        bundleResults.putInt("classe", classeScelta);
+
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtras(bundleResults);      // associamo all’Intent il Bundle
+                        setResult(Activity.RESULT_OK, returnIntent);
+
+                        finish();
+                    }
+                    else{
+
+                        Intent returnIntent = new Intent();
+                        setResult(Activity.RESULT_CANCELED, returnIntent);
+
+                        finish();
+                    }
                 }
 
                 break;
