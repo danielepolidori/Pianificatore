@@ -108,38 +108,26 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         if (requestCode == REQ_CODE_FORM_NEW) {     // Invoked when FormActivity completes its operations
 
             // Make sure the request was successful
-            if (resultCode == Activity.RESULT_OK) {
-
+            if (resultCode == Activity.RESULT_OK)
                 gestisciFormNew(data);
-            }
-            else if (resultCode == Activity.RESULT_CANCELED) {
-
+            else if (resultCode == Activity.RESULT_CANCELED)
                 Toast.makeText(this, "Errore: Attività non creata.", Toast.LENGTH_LONG).show();
-            }
         }
         else if (requestCode == REQ_CODE_FORM_MOD) {     // Invoked when FormActivity completes its operations
 
             // Make sure the request was successful
-            if (resultCode == Activity.RESULT_OK) {
-
+            if (resultCode == Activity.RESULT_OK)
                 gestisciFormMod(data);
-            }
-            else if (resultCode == Activity.RESULT_CANCELED) {
-
+            else if (resultCode == Activity.RESULT_CANCELED)
                 Toast.makeText(this, "Errore: Attività non modificata.", Toast.LENGTH_LONG).show();
-            }
         }
         else if (requestCode == REQ_CODE_DET_TASK) {     // Invoked when DetailTaskActivity completes its operations
 
             // Make sure the request was successful
-            if (resultCode == Activity.RESULT_OK) {
-
+            if (resultCode == Activity.RESULT_OK)
                 gestisciDetTask(data);
-            }
-            else if (resultCode == Activity.RESULT_CANCELED) {
-
+            //else if (resultCode == Activity.RESULT_CANCELED)
                 //Toast.makeText(this, "Errore nel visualizzare l'attività.", Toast.LENGTH_LONG).show();
-            }
         }
     }
 
@@ -152,9 +140,15 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         if (visElemClicked.getType() == Vis.tipoVis.ATTIVITA){
 
+            Date dataOraTask = taskClicked.getDateHour();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - HH:mm", Locale.ITALIAN);
+            String dataOraTask_str = sdf.format(dataOraTask);
+
+
             Intent intent = new Intent(MainActivity.this, DetailTaskActivity.class);
             intent.putExtra("descTask", taskClicked.getDescription());
-            intent.putExtra("dataoraTask", taskClicked.getDay() + " " + taskClicked.getNumDay() + " " + taskClicked.getMonth() + " " + taskClicked.getYear());
+            intent.putExtra("dataoraTask", dataOraTask_str);
             intent.putExtra("priorTask", taskClicked.getPrior_string());
             intent.putExtra("classeTask", taskClicked.getClasse_string());
             intent.putExtra("statoTask", taskClicked.getStato_string());

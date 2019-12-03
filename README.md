@@ -4,8 +4,6 @@
 
 ### TODO:
 
-- Inserire l'ORA nel dettaglio del task
-
 - MODIFICA di un task (funziona modificando la data, non funziona modificando la priorità)
 
 - Quando si modifica un task dovrebbe scrivere 'ATTIVITÀ MODIFICATA' e non 'attività rimossa'
