@@ -30,6 +30,15 @@ public class DetailTaskActivity extends AppCompatActivity implements View.OnClic
         idTask_ret = getIntent().getIntExtra("idTask", -1);
         indClick_ret = getIntent().getIntExtra("indClick", -1);
 
+        if (!(getIntent().hasExtra("descTask") &&
+                getIntent().hasExtra("dataoraTask") &&
+                getIntent().hasExtra("priorTask") &&
+                getIntent().hasExtra("classeTask") &&
+                getIntent().hasExtra("statoTask") &&
+                getIntent().hasExtra("idTask") &&
+                getIntent().hasExtra("indClick")))
+            System.out.println("ERRORE: Dati non passati nell'intent.");
+
         TextView desc = (TextView) findViewById(R.id.desc_input);
         TextView dataora = (TextView) findViewById(R.id.dataora_input);
         TextView prior = (TextView) findViewById(R.id.prior_input);
@@ -57,13 +66,13 @@ public class DetailTaskActivity extends AppCompatActivity implements View.OnClic
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("idTask", idTask_ret);
+        returnIntent.putExtra("indClick", indClick_ret);
 
         switch (view.getId()) {
 
             case R.id.btnModTask:
 
                 returnIntent.putExtra("comando", 0);
-                returnIntent.putExtra("indClick", indClick_ret);
 
                 setResult(Activity.RESULT_OK, returnIntent);
 
@@ -74,7 +83,6 @@ public class DetailTaskActivity extends AppCompatActivity implements View.OnClic
             case R.id.btnElimTask:
 
                 returnIntent.putExtra("comando", 1);
-                returnIntent.putExtra("indClick", indClick_ret);
 
                 setResult(Activity.RESULT_OK, returnIntent);
 

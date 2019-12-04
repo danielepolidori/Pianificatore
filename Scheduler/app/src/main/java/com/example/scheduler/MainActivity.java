@@ -204,6 +204,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     public void creazioneTask(Task t) {
 
+        System.out.println("TASK --> p: " + t.getPrior_string() + ", c: " + t.getClasse_string() + ", s: " + t.getStato_string());
+
         myTaskSet.addTask(t, myVisSet);
 
         storeTask(t);
@@ -287,6 +289,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         int resultPriorInt = data.getIntExtra("prior", -1);
         int resultClasseInt = data.getIntExtra("classe", -1);
 
+        if (!(data.hasExtra("desc") && data.hasExtra("data_ora") && data.hasExtra("prior") && data.hasExtra("classe")))
+            System.out.println("ERRORE: Dati non passati nell'intent.");
+
         Task.priorTask resultPrior;
         switch (resultPriorInt) {
 
@@ -338,6 +343,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         int idTask = data.getIntExtra("id", -1);
         Task taskToMod = myTaskSet.getTask(idTask);
+
+        if (!data.hasExtra("id"))
+            System.out.println("ERRORE: Dati non passati nell'intent.");
 
 
         // Raccogli i dati del form, se non inseriti utilizza i dati del task prima della modifica
@@ -393,6 +401,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             int resultPriorInt = data.getIntExtra("prior", -1);
 
+            System.out.println("prior: " + resultPriorInt);//cancella
+
             switch (resultPriorInt) {
 
                 case 0:
@@ -411,6 +421,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             resultPrior = taskToMod.getPrior();
         }
+
+        System.out.println("resultPrior: " + resultPrior);//cancella
 
         Task.classeTask resultClasse;
         if (data.hasExtra("classe")){
@@ -449,6 +461,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         int indTask = data.getIntExtra("indClick", -1);
         deleteTask(idTask, indTask);
 
+        if (!data.hasExtra("indClick"))
+            System.out.println("ERRORE: Dati non passati nell'intent.");
+
         creazioneTask(modTask);
     }
 
@@ -457,6 +472,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         int cmd_ret = data.getIntExtra("comando", -1);
         int id_ret = data.getIntExtra("idTask", -1);
         int indClicked_ret = data.getIntExtra("indClick", -1);
+
+        if (!(data.hasExtra("comando") && data.hasExtra("idTask") && data.hasExtra("indClick")))
+            System.out.println("ERRORE: Dati non passati nell'intent.");
 
         switch (cmd_ret) {
 

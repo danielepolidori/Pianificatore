@@ -143,6 +143,9 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
 
                 int is_newTask = getIntent().getIntExtra("is_new_task", -1);
 
+                if (!getIntent().hasExtra("is_new_task"))
+                    System.out.println("ERRORE: Dati non passati nell'intent.");
+
                 if (is_newTask == 1) {      // Creazione di un nuovo task
 
                     // Controlla se l'utente ha inserito i dati in tutti i campi
@@ -175,6 +178,9 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
 
                     int idTask_ret = getIntent().getIntExtra("id", -1);
                     int indClick_ret = getIntent().getIntExtra("indClick", -1);
+
+                    if (!(getIntent().hasExtra("id") && getIntent().hasExtra("indClick")))
+                        System.out.println("ERRORE: Dati non passati nell'intent.");
 
                     // Controlla che l'utente abbia inserito i dati in almeno un campo
                     if (!descScelta.isEmpty() || !data_setted.isEmpty() || !ora_setted.isEmpty() || priorScelta > -1 || classeScelta > -1){

@@ -4,7 +4,7 @@
 
 ### TODO:
 
-- MODIFICA di un task (funziona modificando la data, non funziona modificando la priorità)
+- MODIFICA di un task non funziona con priorità e classe (idee: sostituire switch con if; non usare enumerazioni)
 
 - Quando si modifica un task dovrebbe scrivere 'ATTIVITÀ MODIFICATA' e non 'attività rimossa'
 
