@@ -178,8 +178,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 t_toStore.setId(t.getId());
                 t_toStore.setDesc(t.getDescription());
                 t_toStore.setDateHour(t.getDateHour());
-                t_toStore.setPrior(t.getPriorToStore());
-                t_toStore.setClasse(t.getClasseToStore());
+                t_toStore.setPrior(t.getPrior());
+                t_toStore.setClasse(t.getClasse());
                 t_toStore.setStato(t.getStato());
 
                 if (!resultsId.isEmpty())
@@ -203,8 +203,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     }
 
     public void creazioneTask(Task t) {
-
-        System.out.println("TASK --> p: " + t.getPrior_string() + ", c: " + t.getClasse_string() + ", s: " + t.getStato_string());
 
         myTaskSet.addTask(t, myVisSet);
 
@@ -286,45 +284,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         String resultDesc = data.getStringExtra("desc");
         String resultDataOraStr = data.getStringExtra("data_ora");
-        int resultPriorInt = data.getIntExtra("prior", -1);
-        int resultClasseInt = data.getIntExtra("classe", -1);
+        int resultPrior = data.getIntExtra("prior", -1);
+        int resultClasse = data.getIntExtra("classe", -1);
 
         if (!(data.hasExtra("desc") && data.hasExtra("data_ora") && data.hasExtra("prior") && data.hasExtra("classe")))
             System.out.println("ERRORE: Dati non passati nell'intent.");
-
-        Task.priorTask resultPrior;
-        switch (resultPriorInt) {
-
-            case 0:
-                resultPrior = Task.priorTask.ALTA;
-                break;
-
-            case 1:
-                resultPrior = Task.priorTask.MEDIA;
-                break;
-
-            default:    // caso 2 o caso default
-                resultPrior = Task.priorTask.BASSA;
-        }
-
-        Task.classeTask resultClasse;
-        switch (resultClasseInt) {
-
-            case 0:
-                resultClasse = Task.classeTask.FAMIGLIA;
-                break;
-
-            case 1:
-                resultClasse = Task.classeTask.LAVORO;
-                break;
-
-            case 2:
-                resultClasse = Task.classeTask.TEMPO_LIBERO;
-                break;
-
-            default:    // caso 3 o caso di default
-                resultClasse = Task.classeTask.ALTRO;
-        }
 
         Date resultDataOra = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("d M yyyy HH mm");
@@ -396,61 +360,17 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             resultDataOra = taskToMod.getDateHour();
         }
 
-        Task.priorTask resultPrior;
-        if (data.hasExtra("prior")){
-
-            int resultPriorInt = data.getIntExtra("prior", -1);
-
-            System.out.println("prior: " + resultPriorInt);//cancella
-
-            switch (resultPriorInt) {
-
-                case 0:
-                    resultPrior = Task.priorTask.ALTA;
-                    break;
-
-                case 1:
-                    resultPrior = Task.priorTask.MEDIA;
-                    break;
-
-                default:    // case 2
-                    resultPrior = Task.priorTask.BASSA;
-            }
-        }
-        else{   // caso in cui non sia stata modificata
-
+        int resultPrior;
+        if (data.hasExtra("prior"))
+            resultPrior = data.getIntExtra("prior", -1);
+        else
             resultPrior = taskToMod.getPrior();
-        }
 
-        System.out.println("resultPrior: " + resultPrior);//cancella
-
-        Task.classeTask resultClasse;
-        if (data.hasExtra("classe")){
-
-            int resultClasseInt = data.getIntExtra("classe", -1);
-
-            switch (resultClasseInt) {
-
-                case 0:
-                    resultClasse = Task.classeTask.FAMIGLIA;
-                    break;
-
-                case 1:
-                    resultClasse = Task.classeTask.LAVORO;
-                    break;
-
-                case 2:
-                    resultClasse = Task.classeTask.TEMPO_LIBERO;
-                    break;
-
-                default:    // case 3
-                    resultClasse = Task.classeTask.ALTRO;
-            }
-        }
-        else{   // caso in cui non sia stata modificata
-
+        int resultClasse;
+        if (data.hasExtra("classe"))
+            resultClasse = data.getIntExtra("classe", -1);
+        else
             resultClasse = taskToMod.getClasse();
-        }
 
 
         // Utilizza i dati raccolti dal form per modificare il task
@@ -497,12 +417,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             case 2:     // Cliccato su 'Completato'
 
-                myTaskSet.getTask(id_ret).setStato(Task.statoTask.COMPLETED);
+                myTaskSet.getTask(id_ret).setStato(2);
 
                 // ~ Inserimento del task nella cronologia
+                // ~ copiare il task nella lista di quelli in cronologia
+                // deleteTask(id_ret, indClicked_ret);
                 // ...
-
-                //deleteTask(id_ret, indClicked_ret);
 
                 break;
 

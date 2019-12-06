@@ -8,25 +8,6 @@ import io.realm.RealmObject;
 
 public class Task extends RealmObject {
 
-    public enum priorTask {
-        ALTA,   // 0
-        MEDIA,  // 1
-        BASSA   // 2
-    }
-
-    public enum classeTask {
-        FAMIGLIA,       // 0
-        LAVORO,         // 1
-        TEMPO_LIBERO,   // 2
-        ALTRO           // 3
-    }
-
-    public enum statoTask {
-        PENDING,    // 0
-        ONGOING,    // 1
-        COMPLETED   // 2
-    }
-
     private int id;
     private String descrizione;
     private Date data_ora;
@@ -34,39 +15,14 @@ public class Task extends RealmObject {
     private int classe;
     private int stato;
 
-    public Task(String des, Date dat_ora, priorTask p, classeTask c, int nIdentificativo){
+    public Task(String des, Date dat_ora, int p, int c, int nIdentificativo){
 
         this.id = nIdentificativo;
         this.descrizione = des;
         this.data_ora = dat_ora;
+        this.priorita = p;
+        this.classe = c;
         this.stato = 0;
-
-        switch (p){
-
-            case ALTA:
-                this.priorita = 0;
-
-            case MEDIA:
-                this.priorita = 1;
-
-            default:    // case BASSA e default
-                this.priorita = 2;
-        }
-
-        switch (c){
-
-            case FAMIGLIA:
-                this.classe = 0;
-
-            case LAVORO:
-                this.classe = 1;
-
-            case TEMPO_LIBERO:
-                this.classe = 2;
-
-            default:    // case ALTRO e default
-                this.classe = 3;
-        }
     }
 
     // Costruttore vuoto, necessario per Realm
@@ -159,134 +115,69 @@ public class Task extends RealmObject {
         return Integer.parseInt(dataOraTokens[1]);
     }
 
-    public priorTask getPrior() {
-
-        priorTask p;
-
-        switch (priorita){
-
-            case 0:
-                p = priorTask.ALTA;
-
-            case 1:
-                p = priorTask.MEDIA;
-
-            default:    // case 2 e default
-                p = priorTask.BASSA;
-        }
-
-        return p;
-    }
-
-    public String getPrior_string() {
-
-        String p;
-
-        switch (priorita){
-
-            case 0:
-                p = "Alta";
-
-            case 1:
-                p = "Media";
-
-            default:    // case 2 e default
-                p = "Bassa";
-        }
-
-        return p;
-    }
-
-    public int getPriorToStore() {
+    public int getPrior() {
 
         return priorita;
     }
 
-    public classeTask getClasse() {
+    public String getPrior_string() {
 
-        classeTask c;
+        String ret = "";
 
-        switch (classe){
+        if (priorita == 0)
+            ret = "Alta";
+        else if (priorita == 1)
+            ret = "Media";
+        else if (priorita == 2)
+            ret = "Bassa";
+        else
+            System.out.println("ERRORE_VALORE_PRIORITÀ_TASK");
 
-            case 0:
-                c = classeTask.FAMIGLIA;
-
-            case 1:
-                c = classeTask.LAVORO;
-
-            case 2:
-                c = classeTask.TEMPO_LIBERO;
-
-            default:    // case 3 e default
-                c = classeTask.ALTRO;
-        }
-
-        return c;
+        return ret;
     }
 
-    public String getClasse_string() {
-
-        String c;
-
-        switch (classe){
-
-            case 0:
-                c = "Famiglia";
-
-            case 1:
-                c = "Lavoro";
-
-            case 2:
-                c = "Tempo libero";
-
-            default:    // case 3 e default
-                c = "Altro";
-        }
-
-        return c;
-    }
-
-    public int getClasseToStore() {
+    public int getClasse() {
 
         return classe;
     }
 
-    public statoTask getStato() {
+    public String getClasse_string() {
 
-        statoTask s;
+        String ret = "";
 
-        switch (stato){
+        if (classe == 0)
+            ret = "Famiglia";
+        else if (classe == 1)
+            ret = "Lavoro";
+        else if (classe == 2)
+            ret = "Tempo libero";
+        else if (classe == 3)
+            ret = "Altro";
+        else
+            System.out.println("ERRORE_VALORE_CLASSE_TASK");
 
-            case 0:
-                s = statoTask.PENDING;
+        return ret;
+    }
 
-            case 1:
-                s = statoTask.ONGOING;
+    public int getStato() {
 
-            default:    // case 2 e default
-                s = statoTask.COMPLETED;
-        }
-
-        return s;
+        return stato;
     }
 
     public String getStato_string() {
 
-        String s;
+        String ret = "";
 
-        switch (stato){
+        if (stato == 0)
+            ret = "In attesa di essere svolta";
+        else if (stato == 1)
+            ret = "In corso";
+        else if (stato == 2)
+            ret = "Completata";
+        else
+            System.out.println("ERRORE_VALORE_STATO_TASK");
 
-            case 0:
-                s = "In attesa di essere svolta";
-
-            case 1:
-                s = "In corso";
-
-            default:    // case 2 e default
-                s = "Completata";
-        }
-
-        return s;
+        return ret;
     }
 
     public void setId(int newId) {
@@ -314,22 +205,8 @@ public class Task extends RealmObject {
         this.classe = newClasse;
     }
 
-    public void setStato(statoTask newStato) {
+    public void setStato(int newStato) {
 
-        int s;
-
-        switch (newStato){
-
-            case PENDING:
-                s = 0;
-
-            case ONGOING:
-                s = 1;
-
-            default:    // case COMPLETED o default
-                s = 2;
-        }
-
-        this.stato = s;
+        this.stato = newStato;
     }
 }
