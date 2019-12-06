@@ -1,11 +1,10 @@
 <resources>
-    <string name="app_name">Pianificatore d\'attività</string>
+    <string name="app_name">Pianificatore</string>
 
     <string name="msg_no_task">Nessuna attività ancora in programma.</string>
 
     <string name="vuota"></string>
 
-    <string name="form_intro">Inserisci i dati per la creazione di una nuova attività.</string>
     <string name="desc">Inserisci la descrizione dell\'attività:</string>
     <string name="data">Inserisci la data in cui svolgere l\'attività:</string>
     <string name="ora">Inserisci l\'ora in cui svolgere l\'attività:</string>
@@ -26,5 +25,8 @@
     <string name="button_mod_task">Modifica</string>
     <string name="button_elim_task">Elimina</string>
     <string name="button_compl_task">Completata!</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_det_task">Dettagli dell\'attività selezionata</string>
 </resources>
 

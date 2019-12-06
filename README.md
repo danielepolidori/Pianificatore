@@ -4,17 +4,7 @@
 
 ### TODO:
 
-- Quando si crea un task prendere in input anche lo stato (quando se ne crea uno nuovo si passerà sempre il valore 0)
-
-- MODIFICA di un task non funziona con priorità e classe (idee: sostituire switch con if; non usare enumerazioni)
-
-- Quando si modifica un task dovrebbe scrivere 'ATTIVITÀ MODIFICATA' e non 'attività rimossa'
-
-- Cambiare titolo e intestazione della FORM_ACTIVITY per la modifica di un task
-
 - Aggiungere alla notifica le AZIONI postpone e ongoing
-
-- Controllare come viene assegnato lo STATO dei task (avevo un task appena creato segnato come completato)
 
 - Si può mettere un task come COMPLETATO soltanto dopo che è stato messo in Ongoing
 

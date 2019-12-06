@@ -231,8 +231,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         aggiornaHome_del(indClicked, td);
 
-        Toast.makeText(this, "Attività rimossa.", Toast.LENGTH_LONG).show();
-
     }
 
     public void delTaskFromStore(int id_t) {
@@ -385,6 +383,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             System.out.println("ERRORE: Dati non passati nell'intent.");
 
         creazioneTask(modTask);
+
+        Toast.makeText(this, "L'attività è stata modificata.", Toast.LENGTH_LONG).show();
     }
 
     public void gestisciDetTask(Intent data) {
@@ -413,6 +413,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                 deleteTask(id_ret, indClicked_ret);
 
+                Toast.makeText(this, "L'attività è stata eliminata.", Toast.LENGTH_LONG).show();
+
                 break;
 
             case 2:     // Cliccato su 'Completato'
@@ -423,6 +425,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 // ~ copiare il task nella lista di quelli in cronologia
                 // deleteTask(id_ret, indClicked_ret);
                 // ...
+
+                Toast.makeText(this, "L'attività è stata completata.", Toast.LENGTH_LONG).show();
 
                 break;
 

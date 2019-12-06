@@ -13,7 +13,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,11 +24,11 @@
 
         <activity
             android:name=".FormActivity"
-            android:label="Crea nuova attività" />
+            android:label="@string/vuota" />
 
         <activity
             android:name=".DetailTaskActivity"
-            android:label="Dettagli dell'attività selezionata" />
+            android:label="@string/title_det_task" />
 
         <receiver
             android:name=".MyReceiver"

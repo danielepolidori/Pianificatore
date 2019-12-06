@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
@@ -49,17 +50,47 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
         }
     };
 
+    int is_newTask;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_form);
+
+
+        is_newTask = getIntent().getIntExtra("is_new_task", -1);
+
+        if (!getIntent().hasExtra("is_new_task"))
+            System.out.println("ERRORE: Dati non passati nell'intent.");
+
+        TextView text_intro = (TextView) findViewById(R.id.intro);
+
+        String str_text = "";
+        if (is_newTask == 1) {
+
+            setTitle("Crea nuova attività");
+            str_text = "Inserisci i dati per la creazione di una nuova attività.";
+        }
+        else if (is_newTask == 0) {
+
+            setTitle("Modifica attività");
+            str_text = "Inserisci i dati per la modifica dell'attività selezionata (inserire soltanto quelli necessari)";
+        }
+        else
+            System.out.println("ERRORE_VALORE_ISNEWTASK");
+
+        text_intro.setText(str_text);
+
 
         final Button buttonData = (Button) findViewById(R.id.btnDataForm);
         final Button buttonOra = (Button) findViewById(R.id.btnOraForm);
         final Button buttonPrior = (Button) findViewById(R.id.btnPriorForm);
         final Button buttonClasse = (Button) findViewById(R.id.btnClasseForm);
         final Button buttonSalva = (Button) findViewById(R.id.btnSalvaForm);
+
         buttonData.setOnClickListener(this);
         buttonOra.setOnClickListener(this);
         buttonPrior.setOnClickListener(this);
@@ -140,11 +171,6 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
                 // Recupera i riferimenti dei controlli EditText definiti precedentemente che serviranno per salvare i dati inseriti dall’utente
                 final EditText desc_setted = (EditText) findViewById(R.id.edit_desc);
                 descScelta = desc_setted.getText().toString();
-
-                int is_newTask = getIntent().getIntExtra("is_new_task", -1);
-
-                if (!getIntent().hasExtra("is_new_task"))
-                    System.out.println("ERRORE: Dati non passati nell'intent.");
 
                 if (is_newTask == 1) {      // Creazione di un nuovo task
 
