@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        //setTitle(R.string.title_home);
+
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 

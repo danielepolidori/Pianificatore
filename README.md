@@ -4,9 +4,15 @@
 
 ### TODO:
 
+- Nell'OnCreate della MainAct: if(getIntent.hasExtra "is_notif")intentToFormAct
+
 - Aggiungere alla notifica le AZIONI postpone e ongoing
 
 - Si può mettere un task come COMPLETATO soltanto dopo che è stato messo in Ongoing
+
+- Dare alla MAIN ACTIVITY un titolo diverso dal nome dell'app
+
+- Postponi o posponi?
 
 
 

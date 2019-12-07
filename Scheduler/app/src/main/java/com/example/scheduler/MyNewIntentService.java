@@ -3,13 +3,20 @@ package com.example.scheduler;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 
 public class MyNewIntentService extends IntentService {
+
+    private Uri soundNotif;
 
     public MyNewIntentService() {
 
         super("MyNewIntentService");
+
+        soundNotif = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     }
 
     @Override
@@ -20,21 +27,24 @@ public class MyNewIntentService extends IntentService {
 
         // Costruzione notifica
 
-        /*
-        Intent ongoingIntent = new Intent();       // ~ Non deve portare da nessuna parte ma deve modificare lo stato del task in ongoing
-        PendingIntent ongoingPendingIntent = PendingIntent.getBroadcast(this, 0, ongoingIntent, 0);
+        //Intent ongoingIntent = new Intent();       // ~ Non deve portare da nessuna parte ma deve modificare lo stato del task in ongoing
+        //PendingIntent ongoingPendingIntent = PendingIntent.getBroadcast(this, 0, ongoingIntent, 0);
 
-        Intent postponeIntent = new Intent(this, .class);       // ~ Deve portare nel form di modifica di un task
+        // ~ Deve portare nel form di modifica di un task
+        Intent postponeIntent = new Intent(this, MainActivity.class);
+        // ~     MainAct --> FormAct
+        postponeIntent.putExtra("is_new_task", 0);
         PendingIntent postponePendingIntent = PendingIntent.getBroadcast(this, 0, postponeIntent, 0);
-        */
+
 
         Notification.Builder builder = new Notification.Builder(this);
         builder.setContentTitle(descTask_ret);
         builder.setContentText("E' ora di svolgere l'attività!");
         builder.setSmallIcon(android.R.drawable.ic_dialog_email);
         builder.setAutoCancel(true);
+        builder.setSound(soundNotif);
         //builder.addAction(R.drawable.ic_launcher_background, "In corso", ongoingPendingIntent);
-        //builder.addAction(R.drawable.ic_launcher_background, "Postponi", postponePendingIntent);
+        builder.addAction(R.drawable.ic_launcher_background, "Postponi", postponePendingIntent);
 
 
         // Pubblicazione notifica

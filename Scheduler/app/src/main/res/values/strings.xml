@@ -26,7 +26,7 @@
     <string name="button_elim_task">Elimina</string>
     <string name="button_compl_task">Completata!</string>
 
-    <string name="title_home">Home</string>
+    <string name="title_home">Attività da svolgere</string>
     <string name="title_det_task">Dettagli dell\'attività selezionata</string>
 </resources>
 
