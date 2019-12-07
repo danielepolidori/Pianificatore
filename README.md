@@ -4,15 +4,13 @@
 
 ### TODO:
 
-- Nell'OnCreate della MainAct: if(getIntent.hasExtra "is_notif")intentToFormAct
+- Quando si clicca su POSPONI cancella la notifica e tira su la tendina delle notifiche del cellulare
 
 - Aggiungere alla notifica le AZIONI postpone e ongoing
 
 - Si può mettere un task come COMPLETATO soltanto dopo che è stato messo in Ongoing
 
 - Dare alla MAIN ACTIVITY un titolo diverso dal nome dell'app
-
-- Postponi o posponi?
 
 
 

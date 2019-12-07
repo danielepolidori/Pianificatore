@@ -22,33 +22,51 @@ public class MyNewIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        int id_ret = intent.getIntExtra("id", -1);
-        String descTask_ret = intent.getStringExtra("descTask");
+        if (intent.hasExtra("cmd_notif")) {
 
-        // Costruzione notifica
+            String comando = intent.getStringExtra("cmd_notif");
 
-        //Intent ongoingIntent = new Intent();       // ~ Non deve portare da nessuna parte ma deve modificare lo stato del task in ongoing
-        //PendingIntent ongoingPendingIntent = PendingIntent.getBroadcast(this, 0, ongoingIntent, 0);
+            Intent notifIntent = new Intent(this, MainActivity.class);
+            notifIntent.putExtra("cmd_notif", comando);
+            notifIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        // ~ Deve portare nel form di modifica di un task
-        Intent postponeIntent = new Intent(this, MainActivity.class);
-        // ~     MainAct --> FormAct
-        postponeIntent.putExtra("is_new_task", 0);
-        PendingIntent postponePendingIntent = PendingIntent.getBroadcast(this, 0, postponeIntent, 0);
+            startActivity(notifIntent);
+        }
+        else {
 
+            int id_ret = intent.getIntExtra("id", -1);
+            String descTask_ret = intent.getStringExtra("descTask");
 
-        Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle(descTask_ret);
-        builder.setContentText("E' ora di svolgere l'attività!");
-        builder.setSmallIcon(android.R.drawable.ic_dialog_email);
-        builder.setAutoCancel(true);
-        builder.setSound(soundNotif);
-        //builder.addAction(R.drawable.ic_launcher_background, "In corso", ongoingPendingIntent);
-        builder.addAction(R.drawable.ic_launcher_background, "Postponi", postponePendingIntent);
+            if (!(intent.hasExtra("id") && intent.hasExtra("descTask")))
+                System.out.println("ERRORE: Dati non passati nell'intent.");
 
 
-        // Pubblicazione notifica
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(id_ret, builder.build());
+            // Costruzione notifica
+
+            //Intent ongoingIntent = new Intent();       // ~ Non deve portare da nessuna parte ma deve modificare lo stato del task in ongoing
+            //PendingIntent ongoingPendingIntent = PendingIntent.getBroadcast(this, 0, ongoingIntent, 0);
+
+            // Porta nel form di modifica di un task
+            Intent postponeIntent = new Intent(this, MyReceiver.class);
+            postponeIntent.putExtra("cmd_notif", "postpone_notif");
+            postponeIntent.putExtra("id", id_ret);
+            postponeIntent.putExtra("indClick", );
+            PendingIntent postponePendingIntent = PendingIntent.getBroadcast(this, 0, postponeIntent, 0);
+
+
+            Notification.Builder builder = new Notification.Builder(this);
+            builder.setContentTitle(descTask_ret);
+            builder.setContentText("E' ora di svolgere l'attività!");
+            builder.setSmallIcon(android.R.drawable.ic_dialog_email);
+            builder.setAutoCancel(true);
+            builder.setSound(soundNotif);
+            //builder.addAction(R.drawable.ic_launcher_background, "In corso", ongoingPendingIntent);
+            builder.addAction(R.drawable.ic_launcher_background, "Posponi", postponePendingIntent);
+
+
+            // Pubblicazione notifica
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.notify(id_ret, builder.build());
+        }
     }
 }

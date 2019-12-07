@@ -40,13 +40,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private RealmResults<Task> resultsTask;
     private RealmResults<Id> resultsId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-        //setTitle(R.string.title_home);
-
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
@@ -100,6 +98,28 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 startActivityForResult(intent, REQ_CODE_FORM_NEW);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+
+
+        if (getIntent().hasExtra("cmd_notif")) {
+
+            String comando = getIntent().getStringExtra("cmd_notif");
+
+            if (comando.equals("postpone_notif")) {
+
+                Intent notifIntent = new Intent(this, FormActivity.class);
+                notifIntent.putExtra("is_new_task", 0);
+                notifIntent.putExtra("id", );
+                notifIntent.putExtra("indClick", );
+
+                startActivityForResult(notifIntent, REQ_CODE_FORM_MOD);
+            }
+        }
     }
 
     @Override
@@ -193,11 +213,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         });
     }
 
-    public void creaNotifica(int id, String desc, long time) {
+    public void creaNotifica(int id, long time) {
 
         Intent notifyIntent = new Intent(this, MyReceiver.class);
         notifyIntent.putExtra("id", id);
-        notifyIntent.putExtra("descTask", desc);
+        notifyIntent.putExtra("descTask", myTaskSet.getTask(id).getDescription());
+        notifyIntent.putExtra("indVis", );
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -211,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         storeTask(t);
 
-        creaNotifica(t.getId(), t.getDescription(), t.getDateHour().getTime());     // Crea la notifica del task
+        creaNotifica(t.getId(), t.getDateHour().getTime());     // Crea la notifica del task
 
         // Aggiorna la visualizzazione della home dopo l'aggiunta di un task
         mAdapter.notifyDataSetChanged();

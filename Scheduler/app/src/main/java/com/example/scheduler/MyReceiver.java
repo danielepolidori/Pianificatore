@@ -1,5 +1,6 @@
 package com.example.scheduler;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,13 +13,23 @@ public class MyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        int id_ret = intent.getIntExtra("id", -1);
-        String descTask_ret = intent.getStringExtra("descTask");
+        Intent intentToIntentService = new Intent(context, MyNewIntentService.class);
 
-        Intent intent1 = new Intent(context, MyNewIntentService.class);
-        intent1.putExtra("id", id_ret);
-        intent1.putExtra("descTask", descTask_ret);
+        if (intent.hasExtra("cmd_notif")) {                             // È stato invocato dal bottone premuto sulla notifica
 
-        context.startService(intent1);
+            String comando = intent.getStringExtra("cmd_notif");
+
+            intentToIntentService.putExtra("cmd_notif", comando);
+        }
+        else{                                                             // È stato chiamato dalla MainActivity per la creazione di una notifica
+
+            int id_ret = intent.getIntExtra("id", -1);
+            String descTask_ret = intent.getStringExtra("descTask");
+
+            intentToIntentService.putExtra("id", id_ret);
+            intentToIntentService.putExtra("descTask", descTask_ret);
+        }
+
+        context.startService(intentToIntentService);
     }
 }
