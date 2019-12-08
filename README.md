@@ -4,9 +4,7 @@
 
 ### TODO:
 
-- Quando si clicca su POSPONI cancella la notifica e tira su la tendina delle notifiche del cellulare
-
-- Aggiungere alla notifica le AZIONI postpone e ongoing
+- Aggiungere alla notifica l'AZIONE ongoing
 
 - Si può mettere un task come COMPLETATO soltanto dopo che è stato messo in Ongoing
 

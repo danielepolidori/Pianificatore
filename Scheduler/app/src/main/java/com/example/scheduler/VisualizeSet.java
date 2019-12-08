@@ -208,8 +208,6 @@ public class VisualizeSet extends DataSet<Vis> {
 
             Vis elemCorrente = elements.get(i);
 
-            System.out.println("VIS [" + idTask + "] --> i: " + i + ", idTask: " + elemCorrente.getIdTask());
-
             if ((elemCorrente.getType() == Vis.tipoVis.ATTIVITA) && (elemCorrente.getIdTask() == idTask)) {
 
                 ret = i;

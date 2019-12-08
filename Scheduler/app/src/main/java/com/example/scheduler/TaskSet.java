@@ -61,4 +61,17 @@ public class TaskSet extends DataSet<Task> {
 
         return ret;
     }
+
+    public boolean containsTask(int idTask) {
+
+        boolean result = false;
+
+        for (Task el : elements){
+
+            if (el.getId() == idTask)
+                result = true;
+        }
+
+        return result;
+    }
 }

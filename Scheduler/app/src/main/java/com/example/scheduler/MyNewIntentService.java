@@ -24,6 +24,9 @@ public class MyNewIntentService extends IntentService {
 
         if (intent.hasExtra("cmd_notif")) {
 
+            if (!intent.hasExtra("id"))
+                System.out.println("ERRORE_DATI_INTENT");
+
             String comando = intent.getStringExtra("cmd_notif");
             int id_ret = intent.getIntExtra("id", -1);
 
@@ -52,8 +55,7 @@ public class MyNewIntentService extends IntentService {
             Intent postponeIntent = new Intent(this, MyReceiver.class);
             postponeIntent.putExtra("cmd_notif", "postpone_notif");
             postponeIntent.putExtra("id", id_ret);
-            PendingIntent postponePendingIntent = PendingIntent.getBroadcast(this, 0, postponeIntent, 0);
-
+            PendingIntent postponePendingIntent = PendingIntent.getBroadcast(this, 0, postponeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Notification.Builder builder = new Notification.Builder(this);
             builder.setContentTitle(descTask_ret);

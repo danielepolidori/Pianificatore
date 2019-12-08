@@ -28,7 +28,6 @@ public class MyReceiver extends BroadcastReceiver {
             int id_ret = intent.getIntExtra("id", -1);
             String descTask_ret = intent.getStringExtra("descTask");
 
-
             intentToIntentService.putExtra("id", id_ret);
             intentToIntentService.putExtra("descTask", descTask_ret);
         }

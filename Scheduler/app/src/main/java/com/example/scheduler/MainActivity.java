@@ -3,6 +3,7 @@ package com.example.scheduler;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -109,19 +110,25 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         if (getIntent().hasExtra("cmd_notif")) {
 
             if (!getIntent().hasExtra("id"))
-                System.out.println("ERORE_DATI_INTENT");
+                System.out.println("ERRORE_DATI_INTENT");
 
             String comando = getIntent().getStringExtra("cmd_notif");
             int idTask_ret = getIntent().getIntExtra("id", -1);
 
-            if (comando.equals("postpone_notif")) {
+            if (myTaskSet.containsTask(idTask_ret)) {
 
-                Intent notifIntent = new Intent(this, FormActivity.class);
-                notifIntent.putExtra("is_new_task", 0);
-                notifIntent.putExtra("id", idTask_ret);
-                notifIntent.putExtra("indClick", myVisSet.getIndOfTask(idTask_ret));
+                if (comando.equals("postpone_notif")) {
 
-                startActivityForResult(notifIntent, REQ_CODE_FORM_MOD);
+                    Intent notifIntent = new Intent(this, FormActivity.class);
+                    notifIntent.putExtra("is_new_task", 0);
+                    notifIntent.putExtra("id", idTask_ret);
+                    notifIntent.putExtra("indClick", myVisSet.getIndOfTask(idTask_ret));
+
+                    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    notificationManager.cancel(idTask_ret);
+
+                    startActivityForResult(notifIntent, REQ_CODE_FORM_MOD);
+                }
             }
         }
     }
