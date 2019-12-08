@@ -108,14 +108,18 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         if (getIntent().hasExtra("cmd_notif")) {
 
+            if (!getIntent().hasExtra("id"))
+                System.out.println("ERORE_DATI_INTENT");
+
             String comando = getIntent().getStringExtra("cmd_notif");
+            int idTask_ret = getIntent().getIntExtra("id", -1);
 
             if (comando.equals("postpone_notif")) {
 
                 Intent notifIntent = new Intent(this, FormActivity.class);
                 notifIntent.putExtra("is_new_task", 0);
-                notifIntent.putExtra("id", );
-                notifIntent.putExtra("indClick", );
+                notifIntent.putExtra("id", idTask_ret);
+                notifIntent.putExtra("indClick", myVisSet.getIndOfTask(idTask_ret));
 
                 startActivityForResult(notifIntent, REQ_CODE_FORM_MOD);
             }
@@ -213,14 +217,13 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         });
     }
 
-    public void creaNotifica(int id, long time) {
+    public void creaNotifica(int idTask, long time) {
 
         Intent notifyIntent = new Intent(this, MyReceiver.class);
-        notifyIntent.putExtra("id", id);
-        notifyIntent.putExtra("descTask", myTaskSet.getTask(id).getDescription());
-        notifyIntent.putExtra("indVis", );
+        notifyIntent.putExtra("id", idTask);
+        notifyIntent.putExtra("descTask", myTaskSet.getTask(idTask).getDescription());
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, idTask, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
@@ -399,12 +402,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         final Task modTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, id_val.getValAndInc());
 
 
+        if (!data.hasExtra("indClick"))
+            System.out.println("ERRORE: Dati non passati nell'intent.");
+
         // Eliminazione del vecchio task
         int indTask = data.getIntExtra("indClick", -1);
         deleteTask(idTask, indTask);
-
-        if (!data.hasExtra("indClick"))
-            System.out.println("ERRORE: Dati non passati nell'intent.");
 
         creazioneTask(modTask);
 

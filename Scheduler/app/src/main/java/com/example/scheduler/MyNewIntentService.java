@@ -25,9 +25,11 @@ public class MyNewIntentService extends IntentService {
         if (intent.hasExtra("cmd_notif")) {
 
             String comando = intent.getStringExtra("cmd_notif");
+            int id_ret = intent.getIntExtra("id", -1);
 
             Intent notifIntent = new Intent(this, MainActivity.class);
             notifIntent.putExtra("cmd_notif", comando);
+            notifIntent.putExtra("id", id_ret);
             notifIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             startActivity(notifIntent);
@@ -50,7 +52,6 @@ public class MyNewIntentService extends IntentService {
             Intent postponeIntent = new Intent(this, MyReceiver.class);
             postponeIntent.putExtra("cmd_notif", "postpone_notif");
             postponeIntent.putExtra("id", id_ret);
-            postponeIntent.putExtra("indClick", );
             PendingIntent postponePendingIntent = PendingIntent.getBroadcast(this, 0, postponeIntent, 0);
 
 

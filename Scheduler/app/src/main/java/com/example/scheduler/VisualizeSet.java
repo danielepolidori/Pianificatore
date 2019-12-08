@@ -198,4 +198,28 @@ public class VisualizeSet extends DataSet<Vis> {
 
         return ret;
     }
+
+    public int getIndOfTask(int idTask) {
+
+        int i, ret = -1;
+        boolean trovato = false;
+
+        for (i = 0; i < elements.size() && !trovato; i++) {
+
+            Vis elemCorrente = elements.get(i);
+
+            System.out.println("VIS [" + idTask + "] --> i: " + i + ", idTask: " + elemCorrente.getIdTask());
+
+            if ((elemCorrente.getType() == Vis.tipoVis.ATTIVITA) && (elemCorrente.getIdTask() == idTask)) {
+
+                ret = i;
+                trovato = true;
+            }
+        }
+
+        if (!trovato)
+            System.out.println("ERRORE_ELEMENTO_NON_TROVATO_IN_VISUALIZESET");
+
+        return ret;
+    }
 }
