@@ -64,7 +64,7 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
         is_newTask = getIntent().getIntExtra("is_new_task", -1);
 
         if (!getIntent().hasExtra("is_new_task"))
-            System.out.println("ERRORE: Dati non passati nell'intent.");
+            System.out.println("ERRORE_DATI_INTENT");
 
         TextView text_intro = (TextView) findViewById(R.id.intro);
 
@@ -203,7 +203,7 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
                 else if (is_newTask == 0) {     // Modifica di un task già esistente
 
                     if (!(getIntent().hasExtra("id") && getIntent().hasExtra("indClick")))
-                        System.out.println("ERRORE: Dati non passati nell'intent.");
+                        System.out.println("ERRORE_DATI_INTENT");
 
                     int idTask_ret = getIntent().getIntExtra("id", -1);
                     int indClick_ret = getIntent().getIntExtra("indClick", -1);

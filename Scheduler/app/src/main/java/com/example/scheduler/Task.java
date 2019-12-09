@@ -15,14 +15,14 @@ public class Task extends RealmObject {
     private int classe;
     private int stato;
 
-    public Task(String des, Date dat_ora, int p, int c, int nIdentificativo){
+    public Task(String des, Date dat_ora, int p, int c, int s, int nIdentificativo){
 
         this.id = nIdentificativo;
         this.descrizione = des;
         this.data_ora = dat_ora;
         this.priorita = p;
         this.classe = c;
-        this.stato = 0;
+        this.stato = s;
     }
 
     // Costruttore vuoto, necessario per Realm

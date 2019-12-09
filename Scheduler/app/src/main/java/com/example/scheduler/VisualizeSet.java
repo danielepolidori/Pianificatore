@@ -93,8 +93,6 @@ public class VisualizeSet extends DataSet<Vis> {
 
                 if (curr_i.getType() == Vis.tipoVis.DATA){        // allora inserisci il task, fra gli altri già presenti, nel punto giusto secondo l'ora
 
-                    System.out.println(t.getOnlyDate().equals(curr_i.getOnlyDate()));
-
                     if (t.getOnlyDate().equals(curr_i.getOnlyDate())) {
 
                         for (j = i + 1; j < elements.size() && !added; j++) {

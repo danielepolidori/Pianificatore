@@ -22,14 +22,6 @@ public class DetailTaskActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_detail_task);
 
 
-        String descTask_ret = getIntent().getStringExtra("descTask");
-        String dataoraTask_ret = getIntent().getStringExtra("dataoraTask");
-        String priorTask_ret = getIntent().getStringExtra("priorTask");
-        String classeTask_ret = getIntent().getStringExtra("classeTask");
-        String statoTask_ret = getIntent().getStringExtra("statoTask");
-        idTask_ret = getIntent().getIntExtra("idTask", -1);
-        indClick_ret = getIntent().getIntExtra("indClick", -1);
-
         if (!(getIntent().hasExtra("descTask") &&
                 getIntent().hasExtra("dataoraTask") &&
                 getIntent().hasExtra("priorTask") &&
@@ -37,7 +29,15 @@ public class DetailTaskActivity extends AppCompatActivity implements View.OnClic
                 getIntent().hasExtra("statoTask") &&
                 getIntent().hasExtra("idTask") &&
                 getIntent().hasExtra("indClick")))
-            System.out.println("ERRORE: Dati non passati nell'intent.");
+            System.out.println("ERRORE_DATI_INTENT");
+
+        String descTask_ret = getIntent().getStringExtra("descTask");
+        String dataoraTask_ret = getIntent().getStringExtra("dataoraTask");
+        String priorTask_ret = getIntent().getStringExtra("priorTask");
+        String classeTask_ret = getIntent().getStringExtra("classeTask");
+        String statoTask_ret = getIntent().getStringExtra("statoTask");
+        idTask_ret = getIntent().getIntExtra("idTask", -1);
+        indClick_ret = getIntent().getIntExtra("indClick", -1);
 
         TextView desc = (TextView) findViewById(R.id.desc_input);
         TextView dataora = (TextView) findViewById(R.id.dataora_input);

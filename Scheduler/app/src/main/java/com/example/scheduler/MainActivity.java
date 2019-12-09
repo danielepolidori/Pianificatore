@@ -69,8 +69,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             for (Task t_stored : resultsTask) {
 
-                Task t = new Task(t_stored.getDescription(), t_stored.getDateHour(), t_stored.getPrior(), t_stored.getClasse(), t_stored.getId());
-                t.setStato(t_stored.getStato());
+                Task t = new Task(t_stored.getDescription(), t_stored.getDateHour(), t_stored.getPrior(), t_stored.getClasse(), t_stored.getStato(), t_stored.getId());
 
                 myTaskSet.addTask(t, myVisSet);
             }
@@ -117,13 +116,50 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             if (myTaskSet.containsTask(idTask_ret)) {
 
-                if (comando.equals("postpone_notif")) {
+                if (comando.equals("ongoing_notif")) {
+
+                    // Setta lo stato del task su 'In corso'
+
+                    Task taskCorrente = myTaskSet.getTask(idTask_ret);
+
+                    if (taskCorrente.getStato() == 0) {
+
+                        Task taskModStato = new Task(taskCorrente.getDescription(), taskCorrente.getDateHour(), taskCorrente.getPrior(), taskCorrente.getClasse(), 1, idTask_ret);
+
+                        deleteTask(idTask_ret, myVisSet.getIndOfTask(idTask_ret));
+                        creazioneTask_senzaNotif(taskModStato);
+
+
+                        Date dataOraTask = taskModStato.getDateHour();
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - HH:mm", Locale.ITALIAN);
+                        String dataOraTask_str = sdf.format(dataOraTask);
+
+                        Intent intent = new Intent(MainActivity.this, DetailTaskActivity.class);
+                        intent.putExtra("descTask", taskModStato.getDescription());
+                        intent.putExtra("dataoraTask", dataOraTask_str);
+                        intent.putExtra("priorTask", taskModStato.getPrior_string());
+                        intent.putExtra("classeTask", taskModStato.getClasse_string());
+                        intent.putExtra("statoTask", taskModStato.getStato_string());
+                        intent.putExtra("idTask", idTask_ret);
+                        intent.putExtra("indClick", myVisSet.getIndOfTask(idTask_ret));
+
+                        // Cancella la notifica appena cliccata
+                        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                        notificationManager.cancel(idTask_ret);
+
+                        Toast.makeText(this, "L'attività è in corso di svolgimento.", Toast.LENGTH_LONG).show();
+
+                        startActivityForResult(intent, REQ_CODE_DET_TASK);
+                    }
+                }
+                else if (comando.equals("postpone_notif")) {
 
                     Intent notifIntent = new Intent(this, FormActivity.class);
                     notifIntent.putExtra("is_new_task", 0);
                     notifIntent.putExtra("id", idTask_ret);
                     notifIntent.putExtra("indClick", myVisSet.getIndOfTask(idTask_ret));
 
+                    // Cancella la notifica appena cliccata
                     NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                     notificationManager.cancel(idTask_ret);
 
@@ -248,6 +284,16 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         mAdapter.notifyDataSetChanged();
     }
 
+    public void creazioneTask_senzaNotif(Task t) {
+
+        myTaskSet.addTask(t, myVisSet);
+
+        storeTask(t);
+
+        // Aggiorna la visualizzazione della home dopo l'aggiunta di un task
+        mAdapter.notifyDataSetChanged();
+    }
+
     public void deleteTask(int id, int indClicked) {
 
         Vis visElemClicked = myVisSet.getElement(indClicked);
@@ -320,7 +366,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         int resultClasse = data.getIntExtra("classe", -1);
 
         if (!(data.hasExtra("desc") && data.hasExtra("data_ora") && data.hasExtra("prior") && data.hasExtra("classe")))
-            System.out.println("ERRORE: Dati non passati nell'intent.");
+            System.out.println("ERRORE_DATI_INTENT");
 
         Date resultDataOra = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("d M yyyy HH mm");
@@ -331,7 +377,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         }
 
         // Utilizza i dati raccolti dal form per creare un nuovo task
-        final Task newTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, id_val.getValAndInc());
+        final Task newTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, 0, id_val.getValAndInc());
         creazioneTask(newTask);
     }
 
@@ -341,7 +387,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         Task taskToMod = myTaskSet.getTask(idTask);
 
         if (!data.hasExtra("id"))
-            System.out.println("ERRORE: Dati non passati nell'intent.");
+            System.out.println("ERRORE_DATI_INTENT");
 
 
         // Raccogli i dati del form, se non inseriti utilizza i dati del task prima della modifica
@@ -406,11 +452,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
 
         // Utilizza i dati raccolti dal form per modificare il task
-        final Task modTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, id_val.getValAndInc());
+        final Task modTask = new Task(resultDesc, resultDataOra, resultPrior, resultClasse, taskToMod.getStato(), id_val.getValAndInc());
 
 
         if (!data.hasExtra("indClick"))
-            System.out.println("ERRORE: Dati non passati nell'intent.");
+            System.out.println("ERRORE_DATI_INTENT");
 
         // Eliminazione del vecchio task
         int indTask = data.getIntExtra("indClick", -1);
@@ -428,18 +474,27 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         int indClicked_ret = data.getIntExtra("indClick", -1);
 
         if (!(data.hasExtra("comando") && data.hasExtra("idTask") && data.hasExtra("indClick")))
-            System.out.println("ERRORE: Dati non passati nell'intent.");
+            System.out.println("ERRORE_DATI_INTENT");
 
         switch (cmd_ret) {
 
             case 0:     // Cliccato su 'modifica'
 
-                Intent intent = new Intent(MainActivity.this, FormActivity.class);
-                intent.putExtra("is_new_task", 0);      // false (perché non è la creazione di un nuovo task, ma la modifica di uno già esistente)
-                intent.putExtra("id", id_ret);
-                intent.putExtra("indClick", indClicked_ret);
+                if (myTaskSet.getTask(id_ret).getStato() == 0) {    // Lo stato del task è 'pending'
 
-                startActivityForResult(intent, REQ_CODE_FORM_MOD);
+                    Intent intent = new Intent(MainActivity.this, FormActivity.class);
+                    intent.putExtra("is_new_task", 0);      // false (perché non è la creazione di un nuovo task, ma la modifica di uno già esistente)
+                    intent.putExtra("id", id_ret);
+                    intent.putExtra("indClick", indClicked_ret);
+
+                    startActivityForResult(intent, REQ_CODE_FORM_MOD);
+                }
+                else if (myTaskSet.getTask(id_ret).getStato() == 1)     // Lo stato del task è 'ongoing'
+                    Toast.makeText(this, "L'attività non può più essere modificata perché è già in corso di svolgimento.", Toast.LENGTH_LONG).show();
+                else if (myTaskSet.getTask(id_ret).getStato() == 2)     // Lo stato del task è 'completed'
+                    Toast.makeText(this, "L'attività non può più essere modificata perché è già stata completata.", Toast.LENGTH_LONG).show();
+                else
+                    System.out.println("ERRORE_STATO_TASK");
 
                 break;
 
@@ -453,14 +508,31 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             case 2:     // Cliccato su 'Completato'
 
-                myTaskSet.getTask(id_ret).setStato(2);
+                // Setta lo stato del task su 'Completato'
 
-                // ~ Inserimento del task nella cronologia
-                // ~ copiare il task nella lista di quelli in cronologia
-                // deleteTask(id_ret, indClicked_ret);
-                // ...
+                Task taskCorrente = myTaskSet.getTask(id_ret);
 
-                Toast.makeText(this, "L'attività è stata completata.", Toast.LENGTH_LONG).show();
+                if (taskCorrente.getStato() == 1) {     // Se il task è nello stato 'ongoing'
+
+                    Task taskModStato = new Task(taskCorrente.getDescription(), taskCorrente.getDateHour(), taskCorrente.getPrior(), taskCorrente.getClasse(), 2, id_ret);
+
+                    deleteTask(id_ret, myVisSet.getIndOfTask(id_ret));
+                    creazioneTask_senzaNotif(taskModStato);
+
+
+                    // ~ Inserimento del task nella cronologia
+                    // ~ copiare il task nella lista di quelli in cronologia
+                    // deleteTask(id_ret, indClicked_ret);
+                    // ...
+
+                    Toast.makeText(this, "L'attività è stata completata.", Toast.LENGTH_LONG).show();
+                }
+                else if (taskCorrente.getStato() == 0)      // Se il task è nello stato 'pending'
+                    Toast.makeText(this, "L'attività può essere completata soltanto quando è in corso di svolgimento.", Toast.LENGTH_LONG).show();
+                else if (taskCorrente.getStato() == 2)      // Se il task è nello stato 'completed'
+                    Toast.makeText(this, "L'attività è già stata completata.", Toast.LENGTH_LONG).show();
+                else
+                    System.out.println("ERRORE_STATO_TASK");
 
                 break;
 

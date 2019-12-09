@@ -43,19 +43,21 @@ public class MyNewIntentService extends IntentService {
             String descTask_ret = intent.getStringExtra("descTask");
 
             if (!(intent.hasExtra("id") && intent.hasExtra("descTask")))
-                System.out.println("ERRORE: Dati non passati nell'intent.");
+                System.out.println("ERRORE_DATI_INTENT");
 
 
             // Costruzione notifica
 
-            //Intent ongoingIntent = new Intent();       // ~ Non deve portare da nessuna parte ma deve modificare lo stato del task in ongoing
-            //PendingIntent ongoingPendingIntent = PendingIntent.getBroadcast(this, 0, ongoingIntent, 0);
+            Intent ongoingIntent = new Intent(this, MyReceiver.class);       // ~ Non deve portare da nessuna parte ma deve modificare lo stato del task in ongoing
+            ongoingIntent.putExtra("cmd_notif", "ongoing_notif");
+            ongoingIntent.putExtra("id", id_ret);
+            PendingIntent ongoingPendingIntent = PendingIntent.getBroadcast(this, 0, ongoingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             // Porta nel form di modifica di un task
             Intent postponeIntent = new Intent(this, MyReceiver.class);
             postponeIntent.putExtra("cmd_notif", "postpone_notif");
             postponeIntent.putExtra("id", id_ret);
-            PendingIntent postponePendingIntent = PendingIntent.getBroadcast(this, 0, postponeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent postponePendingIntent = PendingIntent.getBroadcast(this, 1, postponeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Notification.Builder builder = new Notification.Builder(this);
             builder.setContentTitle(descTask_ret);
@@ -63,8 +65,8 @@ public class MyNewIntentService extends IntentService {
             builder.setSmallIcon(android.R.drawable.ic_dialog_email);
             builder.setAutoCancel(true);
             builder.setSound(soundNotif);
-            //builder.addAction(R.drawable.ic_launcher_background, "In corso", ongoingPendingIntent);
-            builder.addAction(R.drawable.ic_launcher_background, "Posponi", postponePendingIntent);
+            builder.addAction(R.drawable.ic_launcher_background, "In corso", ongoingPendingIntent);
+            builder.addAction(R.drawable.ic_launcher_background, "Posticipa", postponePendingIntent);
 
 
             // Pubblicazione notifica

@@ -4,25 +4,11 @@
 
 ### TODO:
 
-- Aggiungere alla notifica l'AZIONE ongoing
-
-- Si può mettere un task come COMPLETATO soltanto dopo che è stato messo in Ongoing
-
-- Dare alla MAIN ACTIVITY un titolo diverso dal nome dell'app
+- Aggiungi NAVIGATION DRAWER per passaggio tra le varie activity dell'app
 
 
 
 ### MANCA:
-
-- Gestione NOTIFICHE
-
-- Mostrare dettagli di un task
-
-- Modifica di un task
-
-- Posporre un task
-
-- Task ongoing
 
 - Visualizzare la home con filtri
 
