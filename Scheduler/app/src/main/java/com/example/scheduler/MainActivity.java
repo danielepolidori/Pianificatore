@@ -1,5 +1,6 @@
 package com.example.scheduler;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -8,11 +9,19 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private Realm realm;
     private RealmResults<Task> resultsTask;
     private RealmResults<Id> resultsId;
+
+    private DrawerLayout mDrawerLayout;
 
 
     @Override
@@ -98,6 +109,40 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 startActivityForResult(intent, REQ_CODE_FORM_NEW);
             }
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        mDrawerLayout = new DrawerLayout(this);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        // ...
+                        return true;
+                    }
+                });
+
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_launcher_background);  // ~ qui ci andava il simbolo del menu
     }
 
     @Override
@@ -540,5 +585,22 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                 Toast.makeText(this, "Errore.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // ~ È necessaria questa funzione? Oppure, essendo il menu parte del navigation drawer, è compresa in altre funzioni non esplicitamente del menu?
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.myMenu, menu);
+        menu.findItem(R.id.menu_first).setIntent(new Intent(this, First.class));
+        return true;
     }
 }
