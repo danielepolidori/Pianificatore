@@ -596,6 +596,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         return super.onOptionsItemSelected(item);
     }
 
+    /*
     // ~ È necessaria questa funzione? Oppure, essendo il menu parte del navigation drawer, è compresa in altre funzioni non esplicitamente del menu?
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -603,4 +604,5 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         menu.findItem(R.id.menu_first).setIntent(new Intent(this, First.class));
         return true;
     }
+     */
 }
