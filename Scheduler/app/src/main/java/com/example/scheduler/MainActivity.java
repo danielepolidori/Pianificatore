@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -122,9 +124,19 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
 
 
+        // Navigation Drawer
 
 
-        mDrawerLayout = new DrawerLayout(this);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+
+
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_launcher_background);  // ~ qui ci andava il simbolo del menu
+
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(
@@ -137,12 +149,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                         return true;
                     }
                 });
-
-        Toolbar toolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_launcher_background);  // ~ qui ci andava il simbolo del menu
     }
 
     @Override
@@ -587,6 +593,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         }
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:

@@ -4,11 +4,17 @@
 
 ### TODO:
 
-- Aggiungi NAVIGATION DRAWER per passaggio tra le varie activity dell'app
+- Controlla di aver eseguito tutti i passaggi nelle SLIDES del prof
+
+- Nella HOME vengono tagliate le prime righe
+
+- Nelle altre ACTIVITY non compare la barra superiore con il titolo dell'activity corrente
 
 
 
 ### MANCA:
+
+- Navigation Drawer
 
 - Visualizzare la home con filtri
 

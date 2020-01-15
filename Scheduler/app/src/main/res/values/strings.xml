@@ -29,9 +29,11 @@
     <string name="title_home">Attività da svolgere</string>
     <string name="title_det_task">Dettagli dell\'attività selezionata</string>
 
-    <string name="campoNav_home">Home</string>
-    <string name="campoNav_graf">Grafici</string>
-    <string name="campoNav_crono">Cronologia</string>
-    <string name="campoNav_credits">Informazioni sull\'app</string>
+    <string name="menuNav_home">Home</string>
+    <string name="menuNav_graf">Grafici</string>
+    <string name="menuNav_crono">Cronologia</string>
+    <string name="menuNav_credits">Informazioni sull\'app</string>
+
+    <string name="headNav">Pianificatore</string>
 </resources>
 
