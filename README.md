@@ -4,7 +4,7 @@
 
 ### TODO:
 
-- Controlla di aver eseguito tutti i passaggi nelle SLIDES del prof
+- Modifica TOOLBAR in activity_main.xml
 
 - Nella HOME vengono tagliate le prime righe
 
