@@ -9,27 +9,23 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import io.realm.Realm;
 import io.realm.RealmResults;
+
 
 public class MainActivity extends AppCompatActivity implements MyAdapter.ItemClickListener {
 
@@ -59,7 +55,20 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+
+        // Toolbar
+
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_48dp);
+
+
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
         // use this setting to improve performance if you know that changes in content do not change the layout size of the RecyclerView
@@ -69,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         // "È responsabile della creazione e del posizionamento delle view all’interno del RecyclerView." [html.it]
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
 
         realm = Realm.getDefaultInstance();
 
@@ -95,9 +105,11 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             id_val.setVal(resultsId.get(0).getVal());
         }
 
+
         // specify an adapter
         mAdapter = new MyAdapter(myVisSet, this);
         recyclerView.setAdapter(mAdapter);
+
 
         FloatingActionButton fabNewTask = findViewById(R.id.fab);
         fabNewTask.setOnClickListener(new View.OnClickListener() {
@@ -113,42 +125,54 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         });
 
 
-
-
-
-
-
-
-
-
-
-
-
         // Navigation Drawer
 
+        mDrawerLayout = findViewById(R.id.drawer_layout_main);
 
-        mDrawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view_main);
 
-
-        Toolbar toolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(toolbar);
-
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_launcher_background);  // ~ qui ci andava il simbolo del menu
-
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-                        // ...
-                        return true;
+
+            new NavigationView.OnNavigationItemSelectedListener() {
+
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                    menuItem.setChecked(true);
+                    mDrawerLayout.closeDrawers();
+
+                    switch (menuItem.getItemId()) {
+
+                        case R.id.item_home:
+
+                            break;
+
+                        case R.id.item_crono:
+
+                            //~ ...
+
+                            break;
+
+                        case R.id.item_graf:
+
+                            //~ ...
+
+                            break;
+
+                        case R.id.item_cred:
+
+                            Intent i = new Intent(MainActivity.this, CreditsActivity.class);
+                            startActivity(i);
+
+                            break;
+
+                        default:
+                            //~ ...
                     }
-                });
+
+                    return true;
+                }
+            });
     }
 
     @Override
@@ -579,7 +603,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     Toast.makeText(this, "L'attività è stata completata.", Toast.LENGTH_LONG).show();
                 }
                 else if (taskCorrente.getStato() == 0)      // Se il task è nello stato 'pending'
-                    Toast.makeText(this, "L'attività può essere completata soltanto quando è in corso di svolgimento.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "L'attività può essere completata soltanto mentre è in corso di svolgimento.", Toast.LENGTH_LONG).show();
                 else if (taskCorrente.getStato() == 2)      // Se il task è nello stato 'completed'
                     Toast.makeText(this, "L'attività è già stata completata.", Toast.LENGTH_LONG).show();
                 else
@@ -595,21 +619,14 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
+
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
-
-    /*
-    // ~ È necessaria questa funzione? Oppure, essendo il menu parte del navigation drawer, è compresa in altre funzioni non esplicitamente del menu?
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.myMenu, menu);
-        menu.findItem(R.id.menu_first).setIntent(new Intent(this, First.class));
-        return true;
-    }
-     */
 }

@@ -4,17 +4,9 @@
 
 ### TODO:
 
-- Modifica TOOLBAR in activity_main.xml
-
-- Nella HOME vengono tagliate le prime righe
-
-- Nelle altre ACTIVITY non compare la barra superiore con il titolo dell'activity corrente
-
 
 
 ### MANCA:
-
-- Navigation Drawer
 
 - Visualizzare la home con filtri
 
@@ -44,7 +36,11 @@
 
 - Use le CARD nella home (e magari anche nelle altre activity), al posto di una semplice serie di stringhe
 
-- Bottoni 'annulla' o frecce per tornare indietro nella navigazione dell'app (form, detailTask, ecc)
+- Bottoni 'annulla' o frecce per tornare indietro nella NAVIGAZIONE dell'app (form, detailTask, ecc)
+
+- Inserire in tutte le activity (quindi anche in dettaglio_task, in crea_nuovo_task e in modifica_task) BARRA superiore con titolo dell'activity corrente
+
+- Fare in modo che le activity non si SOVRAPPONGANO le une sulle altre durante la navigazione (ma quelle precedenti dovrebbero venire cancellate, così che tornando indietro non compaiano nuovamente le precedenti activity visualizzate)
 
 
 

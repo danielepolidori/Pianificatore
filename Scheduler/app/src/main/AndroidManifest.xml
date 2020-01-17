@@ -13,10 +13,11 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity
-            android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:label="@string/menuNav_home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -28,6 +29,10 @@
         <activity
             android:name=".DetailTaskActivity"
             android:label="@string/title_det_task" />
+
+        <activity
+            android:name=".CreditsActivity"
+            android:label="@string/menuNav_credits"/>
 
         <receiver
             android:name=".MyReceiver"

@@ -14,110 +14,94 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:layout_marginTop="15dip"
-            android:layout_marginBottom="25dip"
-            />
+            android:layout_marginBottom="25dip" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/desc"
-            android:layout_marginTop="15dip"
-            />
+            android:layout_marginTop="15dip" />
         <EditText
             android:id="@+id/edit_desc"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/vuota"
-            android:layout_marginBottom="25dip"
-            />
+            android:layout_marginBottom="25dip" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/data"
-            android:layout_marginTop="15dip"
-            />
+            android:layout_marginTop="15dip" />
         <TextView
             android:id="@+id/mostra_data"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/vuota"
-            />
+            android:text="@string/vuota" />
         <Button
             android:id="@+id/btnDataForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_data_form"
-            android:layout_marginBottom="25dip"
-            />
+            android:layout_marginBottom="25dip" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/ora"
-            android:layout_marginTop="15dip"
-            />
+            android:layout_marginTop="15dip" />
         <TextView
             android:id="@+id/mostra_ora"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/vuota"
-            />
+            android:text="@string/vuota" />
         <Button
             android:id="@+id/btnOraForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_ora_form"
-            android:layout_marginBottom="25dip"
-            />
+            android:layout_marginBottom="25dip" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/prior"
-            android:layout_marginTop="15dip"
-            />
+            android:layout_marginTop="15dip" />
         <TextView
             android:id="@+id/mostra_prior"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/vuota"
-            />
+            android:text="@string/vuota" />
         <Button
             android:id="@+id/btnPriorForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_prior_form"
-            android:layout_marginBottom="25dip"
-            />
+            android:layout_marginBottom="25dip" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/classe"
-            android:layout_marginTop="15dip"
-            />
+            android:layout_marginTop="15dip" />
         <TextView
             android:id="@+id/mostra_classe"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/vuota"
-            />
+            android:text="@string/vuota" />
         <Button
             android:id="@+id/btnClasseForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_classe_form"
-            android:layout_marginBottom="25dip"
-            />
+            android:layout_marginBottom="25dip" />
 
         <Button
             android:id="@+id/btnSalvaForm"
             android:layout_height="wrap_content"
             android:text="@string/button_salva_form"
             android:layout_marginTop="15dip"
-            android:layout_width="130dip"
-            />
+            android:layout_width="130dip" />
 
     </LinearLayout>
 
