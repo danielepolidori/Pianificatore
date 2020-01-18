@@ -4,6 +4,10 @@
 
 ### TODO:
 
+- Seguire la GUIDA per il grafico a istogramma (ogni mese quanti task ci sono da svolgere)
+
+- Grafico a TORTA per visualizzare le varie classi di task (famiglia, lavoro, ...)
+
 
 
 ### MANCA:
@@ -30,8 +34,6 @@
 
 ### IDEE:
 
-- Grafico a TORTA per visualizzare le varie classi di task (famiglia, lavoro, ...)
-
 - CRONOLOGIA attività completate
 
 - Use le CARD nella home (e magari anche nelle altre activity), al posto di una semplice serie di stringhe
@@ -41,6 +43,8 @@
 - Inserire in tutte le activity (quindi anche in dettaglio_task, in crea_nuovo_task e in modifica_task) BARRA superiore con titolo dell'activity corrente
 
 - Fare in modo che le activity non si SOVRAPPONGANO le une sulle altre durante la navigazione (ma quelle precedenti dovrebbero venire cancellate, così che tornando indietro non compaiano nuovamente le precedenti activity visualizzate)
+
+- Se serve utilizzare anche GraphView per i grafici
 
 
 
