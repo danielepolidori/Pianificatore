@@ -20,18 +20,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".FormActivity"
             android:label="@string/vuota" />
-
         <activity
             android:name=".DetailTaskActivity"
             android:label="@string/title_det_task" />
 
         <activity
+            android:name=".GraphicsActivity"
+            android:label="@string/menuNav_graf" />
+
+        <activity
             android:name=".CreditsActivity"
-            android:label="@string/menuNav_credits"/>
+            android:label="@string/menuNav_credits" />
 
         <receiver
             android:name=".MyReceiver"

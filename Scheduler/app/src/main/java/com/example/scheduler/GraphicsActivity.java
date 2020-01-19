@@ -10,8 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 
-
-public class CreditsActivity extends AppCompatActivity {
+public class GraphicsActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
 
@@ -20,12 +19,12 @@ public class CreditsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_credits);
+        setContentView(R.layout.activity_graphics);
 
 
         // Toolbar
 
-        Toolbar toolbar = findViewById(R.id.toolbar_cred);
+        Toolbar toolbar = findViewById(R.id.toolbar_graf);
         setSupportActionBar(toolbar);
 
         ActionBar actionbar = getSupportActionBar();
@@ -35,9 +34,9 @@ public class CreditsActivity extends AppCompatActivity {
 
         // Navigation Drawer
 
-        mDrawerLayout = findViewById(R.id.drawer_layout_cred);
+        mDrawerLayout = findViewById(R.id.drawer_layout_graf);
 
-        NavigationView navigationView = findViewById(R.id.nav_view_cred);
+        NavigationView navigationView = findViewById(R.id.nav_view_graf);
 
         navigationView.setNavigationItemSelectedListener(
 
@@ -54,7 +53,7 @@ public class CreditsActivity extends AppCompatActivity {
 
                             case R.id.item_home:
 
-                                i = new Intent(CreditsActivity.this, MainActivity.class);
+                                i = new Intent(GraphicsActivity.this, MainActivity.class);
                                 startActivity(i);
 
                                 break;
@@ -67,12 +66,12 @@ public class CreditsActivity extends AppCompatActivity {
 
                             case R.id.item_graf:
 
-                                i = new Intent(CreditsActivity.this, GraphicsActivity.class);
-                                startActivity(i);
-
                                 break;
 
                             case R.id.item_cred:
+
+                                i = new Intent(GraphicsActivity.this, CreditsActivity.class);
+                                startActivity(i);
 
                                 break;
 

@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     menuItem.setChecked(true);
                     mDrawerLayout.closeDrawers();
 
+                    Intent i;
                     switch (menuItem.getItemId()) {
 
                         case R.id.item_home:
@@ -155,13 +156,14 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                         case R.id.item_graf:
 
-                            //~ ...
+                            i = new Intent(MainActivity.this, GraphicsActivity.class);
+                            startActivity(i);
 
                             break;
 
                         case R.id.item_cred:
 
-                            Intent i = new Intent(MainActivity.this, CreditsActivity.class);
+                            i = new Intent(MainActivity.this, CreditsActivity.class);
                             startActivity(i);
 
                             break;
