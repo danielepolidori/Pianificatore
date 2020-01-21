@@ -10,14 +10,20 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.BarLineChartBase;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class GraphicsActivity extends AppCompatActivity {
 
@@ -117,16 +123,24 @@ public class GraphicsActivity extends AppCompatActivity {
 
 
         ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(4f, 0));
-        entries.add(new BarEntry(8f, 1));
-        entries.add(new BarEntry(6f, 2));
-        entries.add(new BarEntry(12f, 3));
-        entries.add(new BarEntry(18f, 4));
-        entries.add(new BarEntry(9f, 5));
+        entries.add(new BarEntry(1, 8f));
+        entries.add(new BarEntry(2, 6f));
+        //entries.add(new BarEntry(3, 12f));
+        //entries.add(new BarEntry(4, 18f));
+        //entries.add(new BarEntry(5, 9f));
+        entries.add(new BarEntry(6, 4f));
+        entries.add(new BarEntry(7, 8f));
+        entries.add(new BarEntry(8, 6f));
+        //entries.add(new BarEntry(9, 12f));
+        //entries.add(new BarEntry(10, 18f));
+        //entries.add(new BarEntry(11, 9f));
+        entries.add(new BarEntry(12, 4f));
+        entries.add(new BarEntry(30, 4f));
 
-        BarDataSet dataset = new BarDataSet(entries, "# of Calls");
+        BarDataSet dataset = new BarDataSet(entries, "Numero di attività da svolgere per mese");
 
 
+        /*
         ArrayList<String> labels = new ArrayList<String>();
         labels.add("January");
         labels.add("February");
@@ -134,31 +148,31 @@ public class GraphicsActivity extends AppCompatActivity {
         labels.add("April");
         labels.add("May");
         labels.add("June");
+        */
 
 
         BarChart chart = new BarChart(this);
         setContentView(chart);
 
-        BarData data = new BarData(labels, dataset);
-        chart.setData(data);
+        //BarData data = new BarData(labels, dataset);
+        //chart.setData(data);
 
-        chart.setDescription("# of times Alice called Bob");
-
-
+        //chart.setDescription("# of times Alice called Bob");
 
 
 
+        // ------------
+
+        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+        dataSets.add((IBarDataSet) dataset);
+        BarData data2 = new BarData(dataSets);
+
+        chart.setData(data2);
 
 
-
-
-
-
-
-
-
-
-
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
     }
 
     @Override
