@@ -4,9 +4,11 @@
 
 ### TODO:
 
-- Seguire la GUIDA per il grafico a istogramma (ogni mese quanti task ci sono da svolgere)
+- Inserire il grafico all'INTERNO dell'activity
 
 - Grafico a TORTA per visualizzare le varie classi di task (famiglia, lavoro, ...)
+
+- Grafico a TORTA per visualizzare i vari stati dei task (pending, ongoing, completed)
 
 
 
