@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_bar"
+        android:title="@string/bottom_nav_bar"
+        android:icon="@drawable/ic_menu_black_48dp" />
+
+    <item
+        android:id="@+id/action_pie"
+        android:title="@string/bottom_nav_pie"
+        android:icon="@drawable/ic_menu_black_48dp" />
+
+</menu>

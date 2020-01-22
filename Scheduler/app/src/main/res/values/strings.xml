@@ -36,6 +36,9 @@
     <string name="menuNav_crono">Cronologia</string>
     <string name="menuNav_credits">Informazioni sull\'app</string>
 
+    <string name="bottom_nav_bar">Istogramma</string>
+    <string name="bottom_nav_pie">Torta</string>
+
     <string name="credits">Daniele Polidori</string>
 
 </resources>

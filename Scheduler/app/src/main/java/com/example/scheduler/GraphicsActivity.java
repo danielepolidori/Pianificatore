@@ -1,5 +1,6 @@
 package com.example.scheduler;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,6 +9,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -15,6 +18,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
@@ -149,6 +153,36 @@ public class GraphicsActivity extends AppCompatActivity {
         yAxisLeft.setDrawLabels(false);                     // Rimuove i numeri dell'asse Y sinistro
         yAxisLeft.setDrawGridLines(false);                  // Rimuove la griglia retrostante
         chart.animateY(1500);                   // Aggiunge l'animazione alle barre del grafico
+
+
+
+        // Bottom Navigation View
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav_view);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+
+                    case R.id.action_bar:
+
+                        //~ ...
+
+                        break;
+
+                    case R.id.action_pie:
+
+                        //~ ...
+
+                        break;
+                }
+
+                return true;
+            }
+        });
     }
 
     @Override

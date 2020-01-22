@@ -4,9 +4,13 @@
 
 ### TODO:
 
-- Inserire il grafico all'INTERNO dell'activity
+- barchart.clear() e poi piechart.setdata() per SOSTITUIRE un grafico con l'altro
 
-- HorizontalScrollView con all'interno un LinearLayout
+- Aggiungi LOGICA al BottomNavigationView 
+
+- Cambia i SIMBOLI del BottomNavigationView
+
+- Cambia il colore/modo di EVIDENZIARE il BottomNavigationView
 
 - Grafico a TORTA per visualizzare le varie classi di task (famiglia, lavoro, ...)
 
