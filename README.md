@@ -6,9 +6,13 @@
 
 - Inserire il grafico all'INTERNO dell'activity
 
+- HorizontalScrollView con all'interno un LinearLayout
+
 - Grafico a TORTA per visualizzare le varie classi di task (famiglia, lavoro, ...)
 
 - Grafico a TORTA per visualizzare i vari stati dei task (pending, ongoing, completed)
+
+- Aggiungere la vera LOGICA ai grafici
 
 
 

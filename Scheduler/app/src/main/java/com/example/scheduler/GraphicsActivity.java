@@ -14,6 +14,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 
@@ -127,14 +128,17 @@ public class GraphicsActivity extends AppCompatActivity {
         BarDataSet dataset = new BarDataSet(valori, "Numero di attività");
 
 
-        BarChart chart = new BarChart(this);
+        //BarChart chart = new BarChart(this);
         //setContentView(chart);
+        BarChart chart = findViewById(R.id.barchart);
 
         BarData data = new BarData(dataset);
         chart.setData(data);
 
         chart.getDescription().setText("Attività da svolgere in ogni mese (dell'anno corrente)");
 
+
+        // Abbellimenti grafici
 
         XAxis xAxis = chart.getXAxis();
         YAxis yAxisRight = chart.getAxisRight();
@@ -146,6 +150,7 @@ public class GraphicsActivity extends AppCompatActivity {
         yAxisRight.setEnabled(false);                       // Rimuove l'asse Y destro
         yAxisLeft.setDrawLabels(false);                     // Rimuove i numeri dell'asse Y sinistro
         yAxisLeft.setDrawGridLines(false);                  // Rimuove la griglia retrostante
+        chart.animateY(1500);                   // Aggiunge l'animazione alle barre del grafico
     }
 
     @Override
