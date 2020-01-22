@@ -97,7 +97,7 @@ public class GraphicsActivity extends AppCompatActivity {
         // Istogramma
 
 
-	// Di default inserire il valore 0 se non si ha alcun valore, così che il campo venga comunque rappresentato nel diagramma
+	    // Di default inserire il valore 0 se non si ha alcun valore, così che il campo venga comunque rappresentato nel diagramma
         float gen_numTask = 8;
         float feb_numTask = 5;
         float mar_numTask = 0;
@@ -112,7 +112,7 @@ public class GraphicsActivity extends AppCompatActivity {
         float dic_numTask = 0;
 
         ArrayList<BarEntry> valori = new ArrayList<>();
-        valori.add(new BarEntry(1, gen_numTask, "Gennaio"));
+        valori.add(new BarEntry(1, gen_numTask));
         valori.add(new BarEntry(2, feb_numTask));
         valori.add(new BarEntry(3, mar_numTask));
         valori.add(new BarEntry(4, apr_numTask));
@@ -123,13 +123,11 @@ public class GraphicsActivity extends AppCompatActivity {
         valori.add(new BarEntry(9, set_numTask));
         valori.add(new BarEntry(10, ott_numTask));
         valori.add(new BarEntry(11, nov_numTask));
-        valori.add(new BarEntry(12, dic_numTask));    // Di default inserire il valore 0, così che mostri comunque l'asse X fino al punto 12
+        valori.add(new BarEntry(12, dic_numTask));
 
         BarDataSet dataset = new BarDataSet(valori, "Numero di attività");
 
 
-        //BarChart chart = new BarChart(this);
-        //setContentView(chart);
         BarChart chart = findViewById(R.id.barchart);
 
         BarData data = new BarData(dataset);
