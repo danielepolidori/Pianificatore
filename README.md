@@ -4,15 +4,11 @@
 
 ### TODO:
 
-- barchart.clear() e poi piechart.setdata() per SOSTITUIRE un grafico con l'altro
+- Inserisci il simbolo della PERCENTUALE nel PieChart
 
 - Aggiungi LOGICA al BottomNavigationView 
 
 - Cambia i SIMBOLI del BottomNavigationView
-
-- Cambia il colore/modo di EVIDENZIARE il BottomNavigationView
-
-- Grafico a TORTA per visualizzare le varie classi di task (famiglia, lavoro, ...)
 
 - Grafico a TORTA per visualizzare i vari stati dei task (pending, ongoing, completed)
 

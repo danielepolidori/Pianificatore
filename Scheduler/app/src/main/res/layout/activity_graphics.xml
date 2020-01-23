@@ -30,13 +30,13 @@
             android:layout_below="@+id/toolbar_graf"
             android:layout_above="@+id/bottom_nav_view">
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/barchart"
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/piechart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/piechart"
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barchart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
