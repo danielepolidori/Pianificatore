@@ -4,6 +4,8 @@
 
 ### TODO:
 
+- Prova i due ABBELLIMENTI grafici per il BarChart
+
 - Inserisci il simbolo della PERCENTUALE nel PieChart
 
 - Aggiungi LOGICA al BottomNavigationView 

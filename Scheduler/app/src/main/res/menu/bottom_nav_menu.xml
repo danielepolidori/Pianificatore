@@ -3,12 +3,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_bar"
+        android:id="@+id/action_barchart"
         android:title="@string/bottom_nav_bar"
         android:icon="@drawable/ic_menu_black_48dp" />
 
     <item
-        android:id="@+id/action_pie"
+        android:id="@+id/action_piechart"
         android:title="@string/bottom_nav_pie"
         android:icon="@drawable/ic_menu_black_48dp" />
 

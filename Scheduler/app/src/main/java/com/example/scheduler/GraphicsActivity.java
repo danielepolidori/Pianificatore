@@ -6,20 +6,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
-import com.github.mikephil.charting.charts.BarChart;
+
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -27,7 +23,6 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -115,92 +110,39 @@ public class GraphicsActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+                Fragment selectedFragment = null;
+
                 switch (item.getItemId()) {
 
-                    case R.id.action_bar:
+                    case R.id.action_barchart:
 
-                        //~ ...
+                        selectedFragment = BarChartFragment.newInstance();
 
                         break;
 
-                    case R.id.action_pie:
+                    case R.id.action_piechart:
 
-                        //~ ...
+                        //selectedFragment = PieChartFragment.newInstance();
 
                         break;
                 }
+
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout, selectedFragment);
+                transaction.commit();
 
                 return true;
             }
         });
 
+        //Manually displaying the first fragment - one time only
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, BarChartFragment.newInstance());
+        transaction.commit();
+
 
 
         /*
-        // Istogramma
-
-
-        BarChart barChart = findViewById(R.id.barchart);
-
-
-	    // Di default inserire il valore 0 se non si ha alcun valore, così che il campo venga comunque rappresentato nel diagramma
-        float gen_numTask = 8;
-        float feb_numTask = 5;
-        float mar_numTask = 0;
-        float apr_numTask = 0;
-        float mag_numTask = 1;
-        float giu_numTask = 6;
-        float lug_numTask = 0;
-        float ago_numTask = 2;
-        float set_numTask = 3;
-        float ott_numTask = 5;
-        float nov_numTask = 0;
-        float dic_numTask = 0;
-
-        ArrayList<BarEntry> valori_bar = new ArrayList<>();
-        valori_bar.add(new BarEntry(1, gen_numTask));
-        valori_bar.add(new BarEntry(2, feb_numTask));
-        valori_bar.add(new BarEntry(3, mar_numTask));
-        valori_bar.add(new BarEntry(4, apr_numTask));
-        valori_bar.add(new BarEntry(5, mag_numTask));
-        valori_bar.add(new BarEntry(6, giu_numTask));
-        valori_bar.add(new BarEntry(7, lug_numTask));
-        valori_bar.add(new BarEntry(8, ago_numTask));
-        valori_bar.add(new BarEntry(9, set_numTask));
-        valori_bar.add(new BarEntry(10, ott_numTask));
-        valori_bar.add(new BarEntry(11, nov_numTask));
-        valori_bar.add(new BarEntry(12, dic_numTask));
-
-        BarDataSet dataset = new BarDataSet(valori_bar, "Numero di attività");
-
-
-        // Riempire il grafico
-
-        BarData data = new BarData(dataset);
-        barChart.setData(data);
-
-        barChart.getDescription().setText("Attività da svolgere in ogni mese (dell'anno corrente)");
-
-        barChart.setNoDataText("Non è ancora presente nessuna attività da analizzare.");
-
-
-        // Abbellimenti grafici
-
-        XAxis xAxis = barChart.getXAxis();
-        YAxis yAxisRight = barChart.getAxisRight();
-        YAxis yAxisLeft = barChart.getAxisLeft();
-
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);      // Asse X in basso nello schermo
-        xAxis.setLabelCount(12);                            // Mostra 12 numeri dell'asse X
-        barChart.setScaleEnabled(false);                       // Rimuove la possibilità di fare zoom
-        yAxisRight.setEnabled(false);                       // Rimuove l'asse Y destro
-        yAxisLeft.setDrawLabels(false);                     // Rimuove i numeri dell'asse Y sinistro
-        yAxisLeft.setDrawGridLines(false);                  // Rimuove la griglia retrostante
-        barChart.animateY(1500);                               // Aggiunge l'animazione alle barre del grafico
-        */
-
-
-
         // Diagramma a torta
 
 
@@ -223,7 +165,6 @@ public class GraphicsActivity extends AppCompatActivity {
 
 
         PieData data = new PieData(dataSet);
-        //data.setValueFormatter(new DecimalRemover(new DecimalFormat("###,###,###")));
         pieChart.setData(data);
 
         pieChart.getDescription().setText("Percentuale delle attività (da svolgere) divise nelle ripettive classi d'appartenenza.");
@@ -263,6 +204,7 @@ public class GraphicsActivity extends AppCompatActivity {
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieChart.animateXY(1500, 1500);
         data.setValueTextSize(15f);                                 // this increases the values text size
+        */
     }
 
     @Override
