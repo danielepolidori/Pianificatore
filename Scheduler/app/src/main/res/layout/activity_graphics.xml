@@ -23,7 +23,6 @@
             android:background="?attr/colorPrimary"
             android:elevation="5dp" />
 
-
         <FrameLayout
             android:id="@+id/frame_layout"
             android:layout_width="match_parent"
@@ -32,14 +31,6 @@
             android:layout_above="@+id/bottom_nav_view"
             android:animateLayoutChanges="true">
         </FrameLayout>
-
-
-
-
-
-
-
-
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav_view"

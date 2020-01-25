@@ -4,11 +4,7 @@
 
 ### TODO:
 
-- Prova i due ABBELLIMENTI grafici per il BarChart
-
 - Inserisci il simbolo della PERCENTUALE nel PieChart
-
-- Cambia i SIMBOLI del BottomNavigationView
 
 - Grafico a TORTA per visualizzare i vari stati dei task (pending, ongoing, completed)
 

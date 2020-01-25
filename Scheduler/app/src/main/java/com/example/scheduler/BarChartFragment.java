@@ -111,13 +111,9 @@ public class BarChartFragment extends Fragment {
         yAxisLeft.setDrawLabels(false);                         // Rimuove i numeri dell'asse Y sinistro
         yAxisLeft.setDrawGridLines(false);                      // Rimuove la griglia retrostante
         barChart.animateY(1500);                    // Aggiunge l'animazione alle barre del grafico
+        barChart.setFitBars(true);                              // make the x-axis fit exactly all bars
 
-        //~ DA PROVARE
-        //barChart.setFitBars(true); // make the x-axis fit exactly all bars
-        //Legend l = bar.getLegend();
-
-
-        //return inflater.inflate(R.layout.fragment_barchart, container, false);
+        
         return view;
     }
 }

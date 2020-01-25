@@ -36,13 +36,10 @@
     <string name="menuNav_crono">Cronologia</string>
     <string name="menuNav_credits">Informazioni sull\'app</string>
 
-    <string name="bottom_nav_bar">Istogramma</string>
-    <string name="bottom_nav_pie">Torta</string>
+    <string name="bottom_nav_bar">Mensile</string>
+    <string name="bottom_nav_pie">Classi</string>
 
     <string name="credits">Daniele Polidori</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
 
