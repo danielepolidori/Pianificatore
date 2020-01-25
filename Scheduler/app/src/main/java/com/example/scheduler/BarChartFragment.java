@@ -18,21 +18,41 @@ public class BarChartFragment extends Fragment {
 
     private BarChart barChart;
 
+    private static float gen_numTask;
+    private static float feb_numTask;
+    private static float mar_numTask;
+    private static float apr_numTask;
+    private static float mag_numTask;
+    private static float giu_numTask;
+    private static float lug_numTask;
+    private static float ago_numTask;
+    private static float set_numTask;
+    private static float ott_numTask;
+    private static float nov_numTask;
+    private static float dic_numTask;
+
 
     public BarChartFragment() {
         // Required empty public constructor
     }
 
-    public static BarChartFragment newInstance() {
+    public static BarChartFragment newInstance(int nTask_gen, int nTask_feb, int nTask_mar, int nTask_apr, int nTask_mag, int nTask_giu, int nTask_lug, int nTask_ago, int nTask_set, int nTask_ott, int nTask_nov, int nTask_dic) {
 
         BarChartFragment fragment = new BarChartFragment();
 
-        /*
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        */
+        // Di default inserire il valore 0 se non si ha alcun valore, così che il campo venga comunque rappresentato nel diagramma
+        gen_numTask = nTask_gen;
+        feb_numTask = nTask_feb;
+        mar_numTask = nTask_mar;
+        apr_numTask = nTask_apr;
+        mag_numTask = nTask_mag;
+        giu_numTask = nTask_giu;
+        lug_numTask = nTask_lug;
+        ago_numTask = nTask_ago;
+        set_numTask = nTask_set;
+        ott_numTask = nTask_ott;
+        nov_numTask = nTask_nov;
+        dic_numTask = nTask_dic;
 
         return fragment;
     }
@@ -57,20 +77,6 @@ public class BarChartFragment extends Fragment {
         barChart = (BarChart)view.findViewById(R.id.barchart);
 
 
-        // Di default inserire il valore 0 se non si ha alcun valore, così che il campo venga comunque rappresentato nel diagramma
-        float gen_numTask = 8;
-        float feb_numTask = 5;
-        float mar_numTask = 0;
-        float apr_numTask = 0;
-        float mag_numTask = 1;
-        float giu_numTask = 6;
-        float lug_numTask = 0;
-        float ago_numTask = 2;
-        float set_numTask = 3;
-        float ott_numTask = 5;
-        float nov_numTask = 0;
-        float dic_numTask = 0;
-
         ArrayList<BarEntry> valori_bar = new ArrayList<>();
         valori_bar.add(new BarEntry(1, gen_numTask));
         valori_bar.add(new BarEntry(2, feb_numTask));
@@ -91,7 +97,9 @@ public class BarChartFragment extends Fragment {
         // Riempire il grafico
 
         BarData data = new BarData(dataset);
-        barChart.setData(data);
+
+        if((gen_numTask > 0) || (feb_numTask > 0) || (mar_numTask > 0) || (apr_numTask > 0) || (mag_numTask > 0) || (giu_numTask > 0) || (lug_numTask > 0) || (ago_numTask > 0) || (set_numTask > 0) || (ott_numTask > 0) || (nov_numTask > 0) || (dic_numTask > 0))
+            barChart.setData(data);
 
         barChart.getDescription().setText("Attività da svolgere in ogni mese (dell'anno corrente)");
 
@@ -113,7 +121,7 @@ public class BarChartFragment extends Fragment {
         barChart.animateY(1500);                    // Aggiunge l'animazione alle barre del grafico
         barChart.setFitBars(true);                              // make the x-axis fit exactly all bars
 
-        
+
         return view;
     }
 }

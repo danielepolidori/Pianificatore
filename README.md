@@ -8,10 +8,6 @@
 
 - Grafico a TORTA per visualizzare i vari stati dei task (pending, ongoing, completed)
 
-- Aggiungere la vera LOGICA ai grafici
-
-- Provare i grafici SENZA DATI
-
 - La LEGENDA del PieChart non corrisponde ai colori se le sezioni sono meno di quattro
 
 

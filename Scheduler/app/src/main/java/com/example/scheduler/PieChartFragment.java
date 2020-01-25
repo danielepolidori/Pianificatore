@@ -19,14 +19,24 @@ public class PieChartFragment extends Fragment {
 
     private PieChart pieChart;
 
+    private static float fam_numTask;
+    private static float lav_numTask;
+    private static float tempLib_numTask;
+    private static float altro_numTask;
+
 
     public PieChartFragment() {
         // Required empty public constructor
     }
 
-    public static PieChartFragment newInstance() {
+    public static PieChartFragment newInstance(int nTask_fam, int nTask_lav, int nTask_tempLib, int nTask_altro) {
 
         PieChartFragment fragment = new PieChartFragment();
+
+        fam_numTask = nTask_fam;
+        lav_numTask = nTask_lav;
+        tempLib_numTask = nTask_tempLib;
+        altro_numTask = nTask_altro;
 
         return fragment;
     }
@@ -51,12 +61,6 @@ public class PieChartFragment extends Fragment {
         pieChart = (PieChart)view.findViewById(R.id.piechart);
 
 
-        float fam_numTask = 1;
-        float lav_numTask = 3;
-        float tempLib_numTask = 2;
-        float altro_numTask = 4;
-
-
         ArrayList<PieEntry> valori_pie = new ArrayList<>();
         if(fam_numTask > 0)
             valori_pie.add(new PieEntry(fam_numTask));
@@ -71,7 +75,9 @@ public class PieChartFragment extends Fragment {
 
 
         PieData data = new PieData(dataSet);
-        pieChart.setData(data);
+
+        if((fam_numTask > 0) || (lav_numTask > 0) || (tempLib_numTask > 0) || (altro_numTask > 0))
+            pieChart.setData(data);
 
         pieChart.getDescription().setText("Percentuale delle attività (da svolgere) divise nelle ripettive classi d'appartenenza.");
         pieChart.getDescription().setTextSize(9f);     // sets the size of the label text in density pixels min = 6f, max = 24f, default is 10f, font size will be in dp

@@ -156,8 +156,36 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                         case R.id.item_graf:
 
+                            // Dati necessari per riempire i grafici
+
+                            Bundle dati = new Bundle();
+
+                            // Istogramma
+                            dati.putInt("num_task_gen", getNumTaskOfMonth(1));
+                            dati.putInt("num_task_feb", getNumTaskOfMonth(2));
+                            dati.putInt("num_task_mar", getNumTaskOfMonth(3));
+                            dati.putInt("num_task_apr", getNumTaskOfMonth(4));
+                            dati.putInt("num_task_mag", getNumTaskOfMonth(5));
+                            dati.putInt("num_task_giu", getNumTaskOfMonth(6));
+                            dati.putInt("num_task_lug", getNumTaskOfMonth(7));
+                            dati.putInt("num_task_ago", getNumTaskOfMonth(8));
+                            dati.putInt("num_task_set", getNumTaskOfMonth(9));
+                            dati.putInt("num_task_ott", getNumTaskOfMonth(10));
+                            dati.putInt("num_task_nov", getNumTaskOfMonth(11));
+                            dati.putInt("num_task_dic", getNumTaskOfMonth(12));
+
+                            // Torta
+                            dati.putInt("num_task_fam", getNumTaskOfClass(0));
+                            dati.putInt("num_task_lav", getNumTaskOfClass(1));
+                            dati.putInt("num_task_templib", getNumTaskOfClass(2));
+                            dati.putInt("num_task_altro", getNumTaskOfClass(3));
+
+
                             i = new Intent(MainActivity.this, GraphicsActivity.class);
+                            i.putExtras(dati);
+
                             startActivity(i);
+
 
                             break;
 
@@ -312,6 +340,19 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         super.onDestroy();
 
         realm.close();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void storeTask(final Task t) {
@@ -619,16 +660,36 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public int getNumTaskOfMonth(int mese) {
 
-        switch (item.getItemId()) {
+        int numOfTask = 0;
 
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
+        // Vengono scelti soltanto i task relativi all'anno corrente dal mese corrente in poi
+        SimpleDateFormat sdf_data_ora = new SimpleDateFormat("EEEE d M yyyy HH mm", Locale.ITALIAN);
+        String strDataOra = sdf_data_ora.format(dataCorrente);  // es: "venerdì 30 8 2019 15 30"
+        String[] dataOraTokens = strDataOra.split(" ");
+        int annoCorr = Integer.parseInt(dataOraTokens[3]);
+        int meseCorr = Integer.parseInt(dataOraTokens[2]);
+
+        if(mese >= meseCorr) {
+            for (Task t : myTaskSet.getElements()) {
+                if ((t.getMonth_int() == mese) && (t.getYear() == annoCorr))
+                    numOfTask = numOfTask + 1;
+            }
         }
 
-        return super.onOptionsItemSelected(item);
+        return numOfTask;
+    }
+
+    public int getNumTaskOfClass(int classe) {
+
+        int numOfTask = 0;
+
+        for (Task t : myTaskSet.getElements()) {
+            if (t.getClasse() == classe)
+                numOfTask = numOfTask + 1;
+        }
+
+        return numOfTask;
     }
 }

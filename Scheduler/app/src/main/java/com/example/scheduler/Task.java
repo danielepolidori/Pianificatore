@@ -97,6 +97,15 @@ public class Task extends RealmObject {
         return dataOraTokens[2].toUpperCase();
     }
 
+    public int getMonth_int() {
+
+        SimpleDateFormat sdf_data_ora = new SimpleDateFormat("EEEE d M yyyy HH mm", Locale.ITALIAN);
+        String strDataOra = sdf_data_ora.format(data_ora);  // es: "venerdì 30 8 2019 15 30"
+        String[] dataOraTokens = strDataOra.split(" ");
+
+        return Integer.parseInt(dataOraTokens[2]);
+    }
+
     public String getDay() {
 
         SimpleDateFormat sdf_data_ora = new SimpleDateFormat("EEEE d MMM yyyy HH mm", Locale.ITALIAN);
