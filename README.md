@@ -4,12 +4,6 @@
 
 ### TODO:
 
-- Inserisci il simbolo della PERCENTUALE nel PieChart
-
-- Grafico a TORTA per visualizzare i vari stati dei task (pending, ongoing, completed)
-
-- La LEGENDA del PieChart non corrisponde ai colori se le sezioni sono meno di quattro
-
 
 
 ### MANCA:
@@ -17,8 +11,6 @@
 - Visualizzare la home con filtri
 
 - Visualizzare le notifiche con filtri
-
-- Grafici
 
 - Relazione + slides
 
@@ -46,7 +38,13 @@
 
 - Fare in modo che le activity non si SOVRAPPONGANO le une sulle altre durante la navigazione (ma quelle precedenti dovrebbero venire cancellate, così che tornando indietro non compaiano nuovamente le precedenti activity visualizzate)
 
-- Se serve utilizzare anche GraphView per i grafici
+
+
+### SE HO TEMPO:
+
+- Nell'activity dei grafici quando si GIRA LO SCHERMO in orizzontale l'activity viene ricaricata da zero (e non semplicemente girata) e quindi dalla torta passa all'istogramma
+
+- Grafico a TORTA per visualizzare i vari stati dei task (pending, ongoing, completed)
 
 
 

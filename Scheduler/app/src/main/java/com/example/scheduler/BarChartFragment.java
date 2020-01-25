@@ -102,6 +102,7 @@ public class BarChartFragment extends Fragment {
             barChart.setData(data);
 
         barChart.getDescription().setText("Attività da svolgere in ogni mese (dell'anno corrente)");
+        barChart.getDescription().setTextSize(13f);     // sets the size of the label text in density pixels min = 6f, max = 24f, default is 10f, font size will be in dp
 
         barChart.setNoDataText("Non è ancora presente nessuna attività da analizzare.");
 
@@ -120,6 +121,7 @@ public class BarChartFragment extends Fragment {
         yAxisLeft.setDrawGridLines(false);                      // Rimuove la griglia retrostante
         barChart.animateY(1500);                    // Aggiunge l'animazione alle barre del grafico
         barChart.setFitBars(true);                              // make the x-axis fit exactly all bars
+        data.setValueTextSize(10f);                             // this increases the values text size
 
 
         return view;

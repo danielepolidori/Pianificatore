@@ -85,30 +85,102 @@ public class PieChartFragment extends Fragment {
         pieChart.setNoDataText("Non è ancora presente nessuna attività da analizzare.");
 
 
-        Legend legend = pieChart.getLegend();
+        ArrayList<LegendEntry> legend_entries = new ArrayList<>();
 
         LegendEntry entry_fam = new LegendEntry();
-        entry_fam.formColor = ColorTemplate.COLORFUL_COLORS[0];
-        entry_fam.label = "Famiglia";
-
         LegendEntry entry_lav = new LegendEntry();
-        entry_lav.formColor = ColorTemplate.COLORFUL_COLORS[1];
-        entry_lav.label = "Lavoro";
-
         LegendEntry entry_tempLib = new LegendEntry();
-        entry_tempLib.formColor = ColorTemplate.COLORFUL_COLORS[2];
-        entry_tempLib.label = "Tempo libero";
+        LegendEntry entry_altro = new LegendEntry();
 
-        LegendEntry entry_altro= new LegendEntry();
-        entry_altro.formColor = ColorTemplate.COLORFUL_COLORS[3];
+        entry_fam.label = "Famiglia";
+        entry_lav.label = "Lavoro";
+        entry_tempLib.label = "Tempo libero";
         entry_altro.label = "Altro";
 
-        ArrayList<LegendEntry> legend_entries = new ArrayList<>();
-        legend_entries.add(entry_fam);
-        legend_entries.add(entry_lav);
-        legend_entries.add(entry_tempLib);
-        legend_entries.add(entry_altro);
+        if(fam_numTask > 0) {
 
+            entry_fam.formColor = ColorTemplate.COLORFUL_COLORS[0];
+            legend_entries.add(entry_fam);
+
+            if(lav_numTask > 0) {
+
+                entry_lav.formColor = ColorTemplate.COLORFUL_COLORS[1];
+                legend_entries.add(entry_lav);
+
+                if (tempLib_numTask > 0) {
+
+                    entry_tempLib.formColor = ColorTemplate.COLORFUL_COLORS[2];
+                    legend_entries.add(entry_tempLib);
+
+                    if(altro_numTask > 0) {
+
+                        entry_altro.formColor = ColorTemplate.COLORFUL_COLORS[3];
+                        legend_entries.add(entry_altro);
+                    }
+                }
+                else if(altro_numTask > 0) {
+
+                    entry_altro.formColor = ColorTemplate.COLORFUL_COLORS[2];
+                    legend_entries.add(entry_altro);
+                }
+            }
+            else if (tempLib_numTask > 0) {
+
+                entry_tempLib.formColor = ColorTemplate.COLORFUL_COLORS[1];
+                legend_entries.add(entry_tempLib);
+
+                if(altro_numTask > 0) {
+
+                    entry_altro.formColor = ColorTemplate.COLORFUL_COLORS[2];
+                    legend_entries.add(entry_altro);
+                }
+            }
+            else if(altro_numTask > 0) {
+
+                entry_altro.formColor = ColorTemplate.COLORFUL_COLORS[1];
+                legend_entries.add(entry_altro);
+            }
+        }
+        else if(lav_numTask > 0) {
+
+            entry_lav.formColor = ColorTemplate.COLORFUL_COLORS[0];
+            legend_entries.add(entry_lav);
+
+            if (tempLib_numTask > 0) {
+
+                entry_tempLib.formColor = ColorTemplate.COLORFUL_COLORS[1];
+                legend_entries.add(entry_tempLib);
+
+                if(altro_numTask > 0) {
+
+                    entry_altro.formColor = ColorTemplate.COLORFUL_COLORS[2];
+                    legend_entries.add(entry_altro);
+                }
+            }
+            else if(altro_numTask > 0) {
+
+                entry_altro.formColor = ColorTemplate.COLORFUL_COLORS[1];
+                legend_entries.add(entry_altro);
+            }
+        }
+        else if(tempLib_numTask > 0) {
+
+            entry_tempLib.formColor = ColorTemplate.COLORFUL_COLORS[0];
+            legend_entries.add(entry_tempLib);
+
+            if(altro_numTask > 0) {
+
+                entry_altro.formColor = ColorTemplate.COLORFUL_COLORS[1];
+                legend_entries.add(entry_altro);
+            }
+        }
+        else if(altro_numTask > 0) {
+
+            entry_altro.formColor = ColorTemplate.COLORFUL_COLORS[0];
+            legend_entries.add(entry_altro);
+        }
+
+        Legend legend = pieChart.getLegend();
         legend.setCustom(legend_entries);
 
 
