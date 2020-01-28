@@ -1,18 +1,22 @@
 package com.example.scheduler;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.appcompat.widget.Toolbar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 
 public class DetailTaskActivity extends AppCompatActivity implements View.OnClickListener {
 
     int idTask_ret = -1;
     int indClick_ret = -1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,17 @@ public class DetailTaskActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_detail_task);
+
+
+        // Toolbar
+
+        Toolbar toolbar = findViewById(R.id.toolbar_det);
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        setSupportActionBar(toolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
 
         if (!(getIntent().hasExtra("descTask") &&
@@ -100,5 +115,20 @@ public class DetailTaskActivity extends AppCompatActivity implements View.OnClic
 
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+
+                finish();
+
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -14,10 +15,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
 
 public class FormActivity extends AppCompatActivity implements OnClickListener, DatePickerDialog.OnDateSetListener {
 
@@ -59,6 +63,17 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_form);
+
+
+        // Toolbar
+
+        Toolbar toolbar = findViewById(R.id.toolbar_form);
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        setSupportActionBar(toolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
 
 
         is_newTask = getIntent().getIntExtra("is_new_task", -1);
@@ -255,5 +270,20 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
     public void onDateSet(DatePicker view, int anno, int mese, int giorno) {
 
         data_setted = giorno + " " + (mese+1) + " " + anno;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+
+                finish();
+
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

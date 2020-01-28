@@ -4,6 +4,20 @@
 
 ### TODO:
 
+- Bottone OPZIONI aggiuntive home
+
+- FILTRI della home (si potrebbe fare una nuova activity con le varie opzioni da scegliere e la freccia per tornare indietro alla home)
+
+- Prova ad aggiustare le NOTIFICHE
+
+- FILTRI delle notifiche
+
+- Rendi la HOME più carina
+
+- CRONOLOGIA
+
+- Nuovo GRAFICO che comprenda sia le attivià passate che quelle in programma
+
 
 
 ### MANCA:

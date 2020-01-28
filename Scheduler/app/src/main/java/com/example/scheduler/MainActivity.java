@@ -62,11 +62,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         // Toolbar
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(toolbar);
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_48dp);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
 
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -150,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                         case R.id.item_crono:
 
-                            //~ ...
+                            // ~ ...
 
                             break;
 
@@ -197,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                             break;
 
                         default:
-                            //~ ...
+                            // ~ ...
                     }
 
                     return true;
