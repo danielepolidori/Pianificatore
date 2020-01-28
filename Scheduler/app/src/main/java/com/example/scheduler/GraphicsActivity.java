@@ -42,7 +42,6 @@ public class GraphicsActivity extends AppCompatActivity {
         // Toolbar
 
         Toolbar toolbar = findViewById(R.id.toolbar_graf);
-        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(toolbar);
 
         ActionBar actionbar = getSupportActionBar();

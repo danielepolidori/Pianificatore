@@ -19,7 +19,6 @@ public class CreditsActivity extends AppCompatActivity {
         // Toolbar
 
         Toolbar toolbar = findViewById(R.id.toolbar_cred);
-        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(toolbar);
 
         ActionBar actionbar = getSupportActionBar();

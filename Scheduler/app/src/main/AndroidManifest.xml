@@ -29,11 +29,11 @@
 
         <activity
             android:name=".GraphicsActivity"
-            android:label="@string/menuNav_graf" />
+            android:label="@string/menu_nav_graf" />
 
         <activity
             android:name=".CreditsActivity"
-            android:label="@string/menuNav_credits" />
+            android:label="@string/menu_nav_credits" />
 
         <receiver
             android:name=".MyReceiver"

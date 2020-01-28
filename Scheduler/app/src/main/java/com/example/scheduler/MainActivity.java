@@ -9,6 +9,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -62,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         // Toolbar
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(toolbar);
 
         ActionBar actionbar = getSupportActionBar();
@@ -145,10 +146,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     Intent i;
                     switch (menuItem.getItemId()) {
 
-                        case R.id.item_home:
-
-                            break;
-
                         case R.id.item_crono:
 
                             // ~ ...
@@ -198,7 +195,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                             break;
 
                         default:
-                            // ~ ...
+
+                            System.out.println("ERRORE_NAVIGATION_DRAWER");
                     }
 
                     return true;
@@ -349,11 +347,30 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         switch (item.getItemId()) {
 
             case android.R.id.home:
+
                 mDrawerLayout.openDrawer(GravityCompat.START);
+
+                return true;
+
+            case R.id.menu_home:
+
+                // ~ ...
+
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        super.onCreateOptionsMenu(menu);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home_menu, menu);
+
+        return true;
+
     }
 
     public void storeTask(final Task t) {

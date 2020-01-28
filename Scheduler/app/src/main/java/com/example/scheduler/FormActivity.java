@@ -68,7 +68,6 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
         // Toolbar
 
         Toolbar toolbar = findViewById(R.id.toolbar_form);
-        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(toolbar);
 
         ActionBar actionbar = getSupportActionBar();

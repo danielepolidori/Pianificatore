@@ -29,12 +29,13 @@
     <string name="title_home">Attività da svolgere</string>
     <string name="title_det_task">Dettagli dell\'attività selezionata</string>
 
-    <string name="headNav">Pianificatore</string>
+    <string name="head_nav">Pianificatore</string>
+    <string name="menu_nav_home">Home</string>
+    <string name="menu_nav_graf">Grafici</string>
+    <string name="menu_nav_crono">Cronologia</string>
+    <string name="menu_nav_credits">Informazioni sull\'app</string>
 
-    <string name="menuNav_home">Home</string>
-    <string name="menuNav_graf">Grafici</string>
-    <string name="menuNav_crono">Cronologia</string>
-    <string name="menuNav_credits">Informazioni sull\'app</string>
+    <string name="item_menu_home">Visualizza con filtri</string>
 
     <string name="bottom_nav_bar">Mensile</string>
     <string name="bottom_nav_pie">Classi</string>
