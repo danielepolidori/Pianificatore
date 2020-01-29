@@ -38,6 +38,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private TaskSet myTaskSet = new TaskSet();
     private VisualizeSet myVisSet = new VisualizeSet();
 
+    private RecyclerView.Adapter filteredAdapter;
+    private TaskSet filteredTaskSet = new TaskSet();
+    private VisualizeSet filteredVisSet = new VisualizeSet();
+
     private Date dataCorrente = new Date();
 
     private static final int REQ_CODE_FORM_NEW = 0;
@@ -64,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         // Toolbar
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(toolbar);
 
         ActionBar actionbar = getSupportActionBar();
@@ -81,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+
+        // Recupera i dati dallo storage
 
         realm = Realm.getDefaultInstance();
 
@@ -113,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         recyclerView.setAdapter(mAdapter);
 
 
+        // Bottone per la creazione di un nuovo task
         FloatingActionButton fabNewTask = findViewById(R.id.fab);
         fabNewTask.setOnClickListener(new View.OnClickListener() {
 
@@ -346,15 +354,30 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         switch (item.getItemId()) {
 
+
             case android.R.id.home:
 
                 mDrawerLayout.openDrawer(GravityCompat.START);
 
                 return true;
 
+
             case R.id.menu_home:
 
-                // ~ ...
+                for (Task t : myTaskSet.getElements()) {
+
+                    if (t.getClasse() == 0) {
+
+                        filteredTaskSet.addTask(t, filteredVisSet);
+                    }
+                }
+
+                // Nuovo adapter
+                filteredAdapter = new MyAdapter(filteredVisSet, this);
+                recyclerView.setAdapter(filteredAdapter);
+
+                // Aggiorna la visualizzazione della home
+                //filteredAdapter.notifyDataSetChanged();
 
                 return true;
         }
@@ -709,5 +732,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         }
 
         return numOfTask;
+    }
+
+    public void getFilteredTasks(TaskSet t, VisualizeSet v) {
+
+
     }
 }

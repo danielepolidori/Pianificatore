@@ -8,12 +8,15 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <item name="actionOverflowButtonStyle">@style/OverFlow</item>
+
     </style>
 
-    <style name="AppTheme.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
 
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="actionMenuTextColor">@android:color/white</item>
+    <!-- Three vertical dots -->
+    <style name="OverFlow" parent="@style/Widget.AppCompat.Light.ActionButton.Overflow">
+
+        <item name="android:src">@drawable/ic_more_vert</item>
 
     </style>
 

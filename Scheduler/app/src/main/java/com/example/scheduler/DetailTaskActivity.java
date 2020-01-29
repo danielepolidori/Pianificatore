@@ -29,6 +29,7 @@ public class DetailTaskActivity extends AppCompatActivity implements View.OnClic
         // Toolbar
 
         Toolbar toolbar = findViewById(R.id.toolbar_det);
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(toolbar);
 
         ActionBar actionbar = getSupportActionBar();
