@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private TaskSet myTaskSet = new TaskSet();
     private VisualizeSet myVisSet = new VisualizeSet();
 
+    private boolean filtro_home_attivo = false;
     private RecyclerView.Adapter filteredAdapter;
     private TaskSet filteredTaskSet = new TaskSet();
     private VisualizeSet filteredVisSet = new VisualizeSet();
@@ -154,11 +155,13 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     Intent i;
                     switch (menuItem.getItemId()) {
 
+
                         case R.id.item_crono:
 
                             // ~ ...
 
                             break;
+
 
                         case R.id.item_graf:
 
@@ -195,12 +198,15 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                             break;
 
+
                         case R.id.item_cred:
 
                             i = new Intent(MainActivity.this, CreditsActivity.class);
+
                             startActivity(i);
 
                             break;
+
 
                         default:
 
@@ -316,7 +322,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     @Override
     public void onListItemClick(int clickedItemIndex) {
 
-        Vis visElemClicked = myVisSet.getElement(clickedItemIndex);
+        Vis visElemClicked;
+        if (filtro_home_attivo)
+            visElemClicked = filteredVisSet.getElement(clickedItemIndex);
+        else
+            visElemClicked = myVisSet.getElement(clickedItemIndex);
+
         int idTask = visElemClicked.getIdTask();
         Task taskClicked = myTaskSet.getTask(idTask);
 
@@ -362,7 +373,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 return true;
 
 
-            case R.id.menu_home:
+            case R.id.aggiungi_filtri_home:
+
+                filteredTaskSet.deleteAll();
+                filteredVisSet.deleteAll();
 
                 for (Task t : myTaskSet.getElements()) {
 
@@ -376,8 +390,20 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 filteredAdapter = new MyAdapter(filteredVisSet, this);
                 recyclerView.setAdapter(filteredAdapter);
 
+                filtro_home_attivo = true;
+
+                // Verrà chiamato 'onPrepareOptionsMenu' che rende il bottone 'Azzera filtri' cliccabile
+                invalidateOptionsMenu();
+
                 // Aggiorna la visualizzazione della home
                 //filteredAdapter.notifyDataSetChanged();
+
+                return true;
+
+
+            case R.id.azzera_filtri_home:
+
+                // ~ ...
 
                 return true;
         }
@@ -394,6 +420,15 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         return true;
 
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
+
+        if (filtro_home_attivo)
+            menu.findItem(R.id.azzera_filtri_home).setEnabled(true);
+
+        return true;
     }
 
     public void storeTask(final Task t) {

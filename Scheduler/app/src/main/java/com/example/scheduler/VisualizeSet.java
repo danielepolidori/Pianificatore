@@ -1,8 +1,11 @@
 package com.example.scheduler;
 
-public class VisualizeSet extends DataSet<Vis> {
+import java.io.Serializable;
+
+public class VisualizeSet extends DataSet<Vis> implements Serializable {
 
     public enum tipoDel {
+
         SINGOLO_TASK,
         GIORNO,
         ULTIMO_TASK,

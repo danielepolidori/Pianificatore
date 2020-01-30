@@ -4,9 +4,9 @@
 
 ### TODO:
 
-- FILTRI della home (si potrebbe fare una nuova activity con le varie opzioni da scegliere e la freccia per tornare indietro alla home)
+- Ottenere in INPUT i filtri voluti
 
-- Visualizzando la home con i filtri non funziona più correttamente la visualizzazione dei DETTAGLI dei task (viene confuso un task con un altro)
+- AZZERARE i filtri in uso
 
 - Prova ad aggiustare le NOTIFICHE
 

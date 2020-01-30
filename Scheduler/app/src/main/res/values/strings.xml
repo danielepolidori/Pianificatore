@@ -35,7 +35,8 @@
     <string name="menu_nav_crono">Cronologia</string>
     <string name="menu_nav_credits">Informazioni sull\'app</string>
 
-    <string name="item_menu_home">Visualizza con filtri</string>
+    <string name="add_filter_menu_home">Aggiungi filtri alla visualizzazione</string>
+    <string name="rem_filter_menu_home">Azzera i filtri</string>
 
     <string name="bottom_nav_bar">Mensile</string>
     <string name="bottom_nav_pie">Classi</string>
