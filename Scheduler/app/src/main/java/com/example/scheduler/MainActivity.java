@@ -4,9 +4,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private RecyclerView.Adapter filteredAdapter;
     private TaskSet filteredTaskSet = new TaskSet();
     private VisualizeSet filteredVisSet = new VisualizeSet();
+    private final CharSequence[] filterItems = {"Classe - Famiglia", "Classe - Lavoro", "Classe - Tempo libero", "Classe - Altro"};
+    private final boolean[] itemsFilterChecked = new boolean[filterItems.length];
 
     private Date dataCorrente = new Date();
 
@@ -375,28 +379,85 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             case R.id.aggiungi_filtri_home:
 
-                filteredTaskSet.deleteAll();
-                filteredVisSet.deleteAll();
-
-                for (Task t : myTaskSet.getElements()) {
-
-                    if (t.getClasse() == 0) {
-
-                        filteredTaskSet.addTask(t, filteredVisSet);
-                    }
-                }
+                filtro_home_attivo = true;
 
                 // Nuovo adapter
                 filteredAdapter = new MyAdapter(filteredVisSet, this);
                 recyclerView.setAdapter(filteredAdapter);
 
-                filtro_home_attivo = true;
 
-                // Verrà chiamato 'onPrepareOptionsMenu' che rende il bottone 'Azzera filtri' cliccabile
-                invalidateOptionsMenu();
+                // Raccolgo i dati
 
-                // Aggiorna la visualizzazione della home
-                //filteredAdapter.notifyDataSetChanged();
+                final AlertDialog.Builder builderClasse = new AlertDialog.Builder(this);
+                builderClasse.setTitle("Verranno visualizzate solo le attività con gli attributi selezionati");
+
+                builderClasse.setMultiChoiceItems(filterItems, itemsFilterChecked, new DialogInterface.OnMultiChoiceClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+
+                        if (isChecked)
+                            itemsFilterChecked[indexSelected] = true;
+                        else
+                            itemsFilterChecked[indexSelected] = false;
+                    }
+                });
+
+                builderClasse.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Setto la nuova visualizzazione della home
+
+                        filteredTaskSet.deleteAll();
+                        filteredVisSet.deleteAll();
+
+                        for (Task t : myTaskSet.getElements()) {
+
+                            if (itemsFilterChecked[0]) {
+
+                                if (t.getClasse() == 0)
+                                    filteredTaskSet.addTask(t, filteredVisSet);
+                            }
+
+                            if (itemsFilterChecked[1]) {
+
+                                if (t.getClasse() == 1)
+                                    filteredTaskSet.addTask(t, filteredVisSet);
+                            }
+
+                            if (itemsFilterChecked[2]) {
+
+                                if (t.getClasse() == 2)
+                                    filteredTaskSet.addTask(t, filteredVisSet);
+                            }
+
+                            if (itemsFilterChecked[3]) {
+
+                                if (t.getClasse() == 3)
+                                    filteredTaskSet.addTask(t, filteredVisSet);
+                            }
+                        }
+
+                        // Aggiorna la visualizzazione della home
+                        mAdapter.notifyDataSetChanged();
+
+                        // Verrà chiamato 'onPrepareOptionsMenu' che rende il bottone 'Azzera filtri' cliccabile
+                        invalidateOptionsMenu();
+                    }
+                });
+
+                builderClasse.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.dismiss();
+                    }
+                });
+
+                builderClasse.show();
 
                 return true;
 
@@ -404,6 +465,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             case R.id.azzera_filtri_home:
 
                 // ~ ...
+
+                filtro_home_attivo = false;
 
                 return true;
         }

@@ -153,6 +153,15 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
                     public void onClick(DialogInterface dialog, int which) {}
                 });
 
+                builderPrior.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.dismiss();
+                    }
+                });
+
                 builderPrior.show();
 
                 break;
@@ -175,6 +184,15 @@ public class FormActivity extends AppCompatActivity implements OnClickListener, 
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {}
+                });
+
+                builderClasse.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.dismiss();
+                    }
                 });
 
                 builderClasse.show();

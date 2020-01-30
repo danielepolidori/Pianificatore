@@ -30,7 +30,6 @@
     <string name="title_det_task">Dettagli dell\'attività selezionata</string>
 
     <string name="head_nav">Pianificatore</string>
-    <string name="menu_nav_home">Home</string>
     <string name="menu_nav_graf">Grafici</string>
     <string name="menu_nav_crono">Cronologia</string>
     <string name="menu_nav_credits">Informazioni sull\'app</string>
