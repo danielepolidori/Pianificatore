@@ -4,9 +4,9 @@
 
 ### TODO:
 
-- Ottenere in INPUT i filtri voluti
+- AZZERARE i filtri in uso (cioè tornare alla visualizzazione classica)
 
-- AZZERARE i filtri in uso
+- CAMBIA titolo e icona del menu (in freccia) quando si attivano i filtri
 
 - Prova ad aggiustare le NOTIFICHE
 

@@ -289,6 +289,56 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 }
             }
         }
+
+
+        if (filtro_home_attivo) {
+
+            // Ricalcola i task da mostrare (se ci sono state modifiche o eliminazioni in questo modo viene aggiornata la visualizzazione)
+
+            // Svuoti le variabili
+            filteredTaskSet.deleteAll();
+            filteredVisSet.deleteAll();
+
+            for (Task t : myTaskSet.getElements()) {
+
+                if (itemsFilterChecked[0]) {
+
+                    if (t.getClasse() == 0)
+                        filteredTaskSet.addTask(t, filteredVisSet);
+                }
+
+                if (itemsFilterChecked[1]) {
+
+                    if (t.getClasse() == 1)
+                        filteredTaskSet.addTask(t, filteredVisSet);
+                }
+
+                if (itemsFilterChecked[2]) {
+
+                    if (t.getClasse() == 2)
+                        filteredTaskSet.addTask(t, filteredVisSet);
+                }
+
+                if (itemsFilterChecked[3]) {
+
+                    if (t.getClasse() == 3)
+                        filteredTaskSet.addTask(t, filteredVisSet);
+                }
+            }
+
+            if (filteredVisSet.getElement(0).getType() != Vis.tipoVis.RIGA_VUOTA) {
+
+                Vis rigaVuotaIniziale = new Vis("", Vis.tipoVis.RIGA_VUOTA);
+                filteredVisSet.addIn(rigaVuotaIniziale, 0);
+            }
+
+            // Nuovo adapter
+            filteredAdapter = new MyAdapter(filteredVisSet, this);
+            recyclerView.setAdapter(filteredAdapter);
+
+            // Verrà chiamato 'onPrepareOptionsMenu' che rende il bottone 'Azzera filtri' cliccabile
+            invalidateOptionsMenu();
+        }
     }
 
     @Override
@@ -350,7 +400,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             intent.putExtra("classeTask", taskClicked.getClasse_string());
             intent.putExtra("statoTask", taskClicked.getStato_string());
             intent.putExtra("idTask", idTask);
-            intent.putExtra("indClick", clickedItemIndex);
+            intent.putExtra("indClick", myVisSet.getIndOfTask(idTask));
 
             startActivityForResult(intent, REQ_CODE_DET_TASK);
         }
@@ -379,11 +429,18 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             case R.id.aggiungi_filtri_home:
 
-                filtro_home_attivo = true;
+                if (!filtro_home_attivo) {
+
+                    // Azzera le vecchie variabili
+                    for (int i = 0; i < itemsFilterChecked.length; i = i + 1)
+                        itemsFilterChecked[i] = false;
+                }
+
+                filteredTaskSet.deleteAll();
+                filteredVisSet.deleteAll();
 
                 // Nuovo adapter
                 filteredAdapter = new MyAdapter(filteredVisSet, this);
-                recyclerView.setAdapter(filteredAdapter);
 
 
                 // Raccolgo i dati
@@ -408,10 +465,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // Setto la nuova visualizzazione della home
+                        filtro_home_attivo = true;
 
-                        filteredTaskSet.deleteAll();
-                        filteredVisSet.deleteAll();
+                        // Setto la nuova visualizzazione della home
 
                         for (Task t : myTaskSet.getElements()) {
 
@@ -440,8 +496,18 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                             }
                         }
 
-                        // Aggiorna la visualizzazione della home
-                        mAdapter.notifyDataSetChanged();
+                        if (filteredVisSet.getNumberOfElements() < 1)
+                            filteredVisSet.init();
+                        else {
+
+                            if (filteredVisSet.getElement(0).getType() != Vis.tipoVis.RIGA_VUOTA) {
+
+                                Vis rigaVuotaIniziale = new Vis("", Vis.tipoVis.RIGA_VUOTA);
+                                filteredVisSet.addIn(rigaVuotaIniziale, 0);
+                            }
+                        }
+
+                        recyclerView.setAdapter(filteredAdapter);
 
                         // Verrà chiamato 'onPrepareOptionsMenu' che rende il bottone 'Azzera filtri' cliccabile
                         invalidateOptionsMenu();
@@ -755,6 +821,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                 break;
 
+
             case 1:     // Cliccato su 'elimina'
 
                 deleteTask(id_ret, indClicked_ret);
@@ -762,6 +829,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 Toast.makeText(this, "L'attività è stata eliminata.", Toast.LENGTH_LONG).show();
 
                 break;
+
 
             case 2:     // Cliccato su 'Completato'
 
