@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private TaskSet filteredTaskSet = new TaskSet();
     private VisualizeSet filteredVisSet = new VisualizeSet();
     private final CharSequence[] filterItems = {"Classe - Famiglia", "Classe - Lavoro", "Classe - Tempo libero", "Classe - Altro"};
-    private final boolean[] itemsFilterChecked = new boolean[filterItems.length];
+    private boolean[] itemsFilterChecked = new boolean[filterItems.length];
+    private boolean[] itemsFilterChecked_tmp = new boolean[filterItems.length];
 
     private Date dataCorrente = new Date();
 
@@ -59,7 +60,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private RealmResults<Task> resultsTask;
     private RealmResults<Id> resultsId;
 
+    private FloatingActionButton fabNewTask;
     private DrawerLayout mDrawerLayout;
+    private ActionBar actionbar;
 
 
     @Override
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         setSupportActionBar(toolbar);
 
-        ActionBar actionbar = getSupportActionBar();
+        actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
@@ -126,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
 
         // Bottone per la creazione di un nuovo task
-        FloatingActionButton fabNewTask = findViewById(R.id.fab);
+        fabNewTask = findViewById(R.id.fab);
         fabNewTask.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -153,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 @Override
                 public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                    menuItem.setChecked(true);
+                    menuItem.setCheckable(false);
                     mDrawerLayout.closeDrawers();
 
                     Intent i;
@@ -326,11 +329,18 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 }
             }
 
-            if (filteredVisSet.getElement(0).getType() != Vis.tipoVis.RIGA_VUOTA) {
 
-                Vis rigaVuotaIniziale = new Vis("", Vis.tipoVis.RIGA_VUOTA);
-                filteredVisSet.addIn(rigaVuotaIniziale, 0);
+            if (filteredVisSet.getNumberOfElements() < 1)
+                filteredVisSet.init();
+            else {
+
+                if (filteredVisSet.getElement(0).getType() != Vis.tipoVis.RIGA_VUOTA) {
+
+                    Vis rigaVuotaIniziale = new Vis("", Vis.tipoVis.RIGA_VUOTA);
+                    filteredVisSet.addIn(rigaVuotaIniziale, 0);
+                }
             }
+
 
             // Nuovo adapter
             filteredAdapter = new MyAdapter(filteredVisSet, this);
@@ -422,12 +432,32 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             case android.R.id.home:
 
-                mDrawerLayout.openDrawer(GravityCompat.START);
+                if (!filtro_home_attivo)
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                else {
+
+                    // Rimuovi la visualizzazione con filtri, cioè torna alla home classica
+
+                    setTitle("Pianificatore");
+                    actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+                    fabNewTask.show();
+
+                    filtro_home_attivo = false;
+
+                    //aggiorna visset
+                    recyclerView.setAdapter(mAdapter);
+                }
 
                 return true;
 
 
             case R.id.aggiungi_filtri_home:
+
+                filteredTaskSet.deleteAll();
+                filteredVisSet.deleteAll();
+
+                // Nuovo adapter
+                filteredAdapter = new MyAdapter(filteredVisSet, this);
 
                 if (!filtro_home_attivo) {
 
@@ -436,14 +466,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                         itemsFilterChecked[i] = false;
                 }
 
-                filteredTaskSet.deleteAll();
-                filteredVisSet.deleteAll();
-
-                // Nuovo adapter
-                filteredAdapter = new MyAdapter(filteredVisSet, this);
-
 
                 // Raccolgo i dati
+
+                itemsFilterChecked_tmp = itemsFilterChecked.clone();
 
                 final AlertDialog.Builder builderClasse = new AlertDialog.Builder(this);
                 builderClasse.setTitle("Verranno visualizzate solo le attività con gli attributi selezionati");
@@ -454,9 +480,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
 
                         if (isChecked)
-                            itemsFilterChecked[indexSelected] = true;
+                            itemsFilterChecked_tmp[indexSelected] = true;
                         else
-                            itemsFilterChecked[indexSelected] = false;
+                            itemsFilterChecked_tmp[indexSelected] = false;
                     }
                 });
 
@@ -465,7 +491,18 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        filtro_home_attivo = true;
+                        if (!filtro_home_attivo) {
+
+                            // Modifica la grafica dell'activity
+                            setTitle("Visualizzazione con filtri");
+                            actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+                            fabNewTask.hide();
+
+                            filtro_home_attivo = true;
+                        }
+
+                        itemsFilterChecked = itemsFilterChecked_tmp.clone();
+
 
                         // Setto la nuova visualizzazione della home
 
@@ -526,15 +563,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 builderClasse.show();
 
                 return true;
-
-
-            case R.id.azzera_filtri_home:
-
-                // ~ ...
-
-                filtro_home_attivo = false;
-
-                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -549,15 +577,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         return true;
 
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu (Menu menu) {
-
-        if (filtro_home_attivo)
-            menu.findItem(R.id.azzera_filtri_home).setEnabled(true);
-
-        return true;
     }
 
     public void storeTask(final Task t) {
