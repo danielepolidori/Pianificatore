@@ -2,11 +2,19 @@
 
 
 
-### TODO:
+### DA FARE:
+
+- Quando dalla notifica fai una delle due azioni le activity vengono SOVRAPPOSTE invece di fare finish()
+
+- Cosa succede se si cliccano le azioni delle notifiche mentre la home è in visualizzazione con FILTRI?
 
 - Prova ad aggiustare le NOTIFICHE
 
 - FILTRI delle notifiche
+
+
+
+### SUCCESSIVAMENTE:
 
 - Rendi la HOME più carina
 
@@ -17,8 +25,6 @@
 
 
 ### MANCA:
-
-- Visualizzare la home con filtri
 
 - Visualizzare le notifiche con filtri
 
@@ -41,12 +47,6 @@
 - CRONOLOGIA attività completate
 
 - Use le CARD nella home (e magari anche nelle altre activity), al posto di una semplice serie di stringhe
-
-- Bottoni 'annulla' o frecce per tornare indietro nella NAVIGAZIONE dell'app (form, detailTask, ecc)
-
-- Inserire in tutte le activity (quindi anche in dettaglio_task, in crea_nuovo_task e in modifica_task) BARRA superiore con titolo dell'activity corrente
-
-- Fare in modo che le activity non si SOVRAPPONGANO le une sulle altre durante la navigazione (ma quelle precedenti dovrebbero venire cancellate, così che tornando indietro non compaiano nuovamente le precedenti activity visualizzate)
 
 
 

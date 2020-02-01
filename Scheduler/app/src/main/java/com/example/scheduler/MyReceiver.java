@@ -4,7 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+
 public class MyReceiver extends BroadcastReceiver {
+
 
     public MyReceiver() {
     }
@@ -16,6 +18,10 @@ public class MyReceiver extends BroadcastReceiver {
 
         if (intent.hasExtra("cmd_notif")) {                             // È stato invocato dal bottone premuto sulla notifica
 
+            if (!intent.hasExtra("id"))
+                System.out.println("ERRORE_DATI_INTENT");
+
+
             String comando = intent.getStringExtra("cmd_notif");
             int id_ret = intent.getIntExtra("id", -1);
 
@@ -23,6 +29,10 @@ public class MyReceiver extends BroadcastReceiver {
             intentToIntentService.putExtra("id", id_ret);
         }
         else{                                                             // È stato chiamato dalla MainActivity per la creazione di una notifica
+
+            if (!intent.hasExtra("id") && !intent.hasExtra("descTask"))
+                System.out.println("ERRORE_DATI_INTENT");
+
 
             int id_ret = intent.getIntExtra("id", -1);
             String descTask_ret = intent.getStringExtra("descTask");

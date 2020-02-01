@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 
+
 public class MyNewIntentService extends IntentService {
 
     private Uri soundNotif;
+
 
     public MyNewIntentService() {
 
@@ -48,7 +50,8 @@ public class MyNewIntentService extends IntentService {
 
             // Costruzione notifica
 
-            Intent ongoingIntent = new Intent(this, MyReceiver.class);       // ~ Non deve portare da nessuna parte ma deve modificare lo stato del task in ongoing
+            // Non porta da nessuna parte, ma modifica lo stato del task in ongoing
+            Intent ongoingIntent = new Intent(this, MyReceiver.class);
             ongoingIntent.putExtra("cmd_notif", "ongoing_notif");
             ongoingIntent.putExtra("id", id_ret);
             PendingIntent ongoingPendingIntent = PendingIntent.getBroadcast(this, 0, ongoingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -61,12 +64,12 @@ public class MyNewIntentService extends IntentService {
 
             Notification.Builder builder = new Notification.Builder(this);
             builder.setContentTitle(descTask_ret);
-            builder.setContentText("E' ora di svolgere l'attività!");
+            builder.setContentText("È ora di svolgere l'attività!");
             builder.setSmallIcon(android.R.drawable.ic_dialog_email);
             builder.setAutoCancel(true);
             builder.setSound(soundNotif);
-            builder.addAction(R.drawable.ic_launcher_background, "In corso", ongoingPendingIntent);
-            builder.addAction(R.drawable.ic_launcher_background, "Posticipa", postponePendingIntent);
+            builder.addAction(android.R.drawable.ic_media_play, "In corso", ongoingPendingIntent);
+            builder.addAction(android.R.drawable.ic_menu_edit, "Posticipa", postponePendingIntent);
 
 
             // Pubblicazione notifica

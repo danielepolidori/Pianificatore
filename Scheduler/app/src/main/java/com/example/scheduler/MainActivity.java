@@ -890,18 +890,16 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         int numOfTask = 0;
 
-        // Vengono scelti soltanto i task relativi all'anno corrente dal mese corrente in poi
+        // Vengono scelti soltanto i task relativi all'anno corrente
         SimpleDateFormat sdf_data_ora = new SimpleDateFormat("EEEE d M yyyy HH mm", Locale.ITALIAN);
         String strDataOra = sdf_data_ora.format(dataCorrente);  // es: "venerdì 30 8 2019 15 30"
         String[] dataOraTokens = strDataOra.split(" ");
         int annoCorr = Integer.parseInt(dataOraTokens[3]);
-        int meseCorr = Integer.parseInt(dataOraTokens[2]);
 
-        if(mese >= meseCorr) {
-            for (Task t : myTaskSet.getElements()) {
-                if ((t.getMonth_int() == mese) && (t.getYear() == annoCorr))
-                    numOfTask = numOfTask + 1;
-            }
+
+        for (Task t : myTaskSet.getElements()) {
+            if ((t.getMonth_int() == mese) && (t.getYear() == annoCorr))
+                numOfTask = numOfTask + 1;
         }
 
         return numOfTask;

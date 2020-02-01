@@ -184,10 +184,12 @@ public class PieChartFragment extends Fragment {
         legend.setCustom(legend_entries);
 
 
+        // Abbellimenti grafici
         pieChart.setUsePercentValues(true);
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieChart.animateXY(1500, 1500);
         data.setValueTextSize(15f);                                 // this increases the values text size
+        pieChart.setDrawHoleEnabled(false);                         // Rimuove il buco centrale del grafico (anziché donut diventa un cerchio completo)
 
 
         return view;

@@ -53,6 +53,9 @@ public class GraphicsActivity extends AppCompatActivity {
 
         // Raccolta dei dati
 
+        if (!getIntent().hasExtra("num_task_gen") && !getIntent().hasExtra("num_task_feb") && !getIntent().hasExtra("num_task_mar") && !getIntent().hasExtra("num_task_apr") && !getIntent().hasExtra("num_task_mag") && !getIntent().hasExtra("num_task_giu") && !getIntent().hasExtra("num_task_lug") && !getIntent().hasExtra("num_task_ago") && !getIntent().hasExtra("num_task_set") && !getIntent().hasExtra("num_task_ott") && !getIntent().hasExtra("num_task_nov") && !getIntent().hasExtra("num_task_dic") && !getIntent().hasExtra("num_task_fam") && !getIntent().hasExtra("num_task_lav") && !getIntent().hasExtra("num_task_templib") && !getIntent().hasExtra("num_task_altro"))
+            System.out.println("ERRORE_DATI_INTENT");
+
         genNumTask = getIntent().getIntExtra("num_task_gen", -1);
         febNumTask = getIntent().getIntExtra("num_task_feb", -1);
         marNumTask = getIntent().getIntExtra("num_task_mar", -1);
