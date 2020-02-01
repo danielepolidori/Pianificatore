@@ -5,16 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 
 
-public class MyReceiver extends BroadcastReceiver {
+public class NotificationAlarmReceiver extends BroadcastReceiver {
 
 
-    public MyReceiver() {
+    public NotificationAlarmReceiver() {
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Intent intentToIntentService = new Intent(context, MyNewIntentService.class);
+        Intent intentToIntentService = new Intent(context, NotificationIntentService.class);
 
         if (intent.hasExtra("cmd_notif")) {                             // È stato invocato dal bottone premuto sulla notifica
 

@@ -604,14 +604,14 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     public void creaNotifica(int idTask, long time) {
 
-        Intent notifyIntent = new Intent(this, MyReceiver.class);
+        Intent notifyIntent = new Intent(this, NotificationAlarmReceiver.class);
         notifyIntent.putExtra("id", idTask);
         notifyIntent.putExtra("descTask", myTaskSet.getTask(idTask).getDescription());
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, idTask, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
     }
 
     public void creazioneTask(Task t) {
@@ -642,7 +642,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         VisualizeSet.tipoDel td;
 
         // Cancella notifica (non ancora mostrata) relativa al task
-        Intent notifyIntent = new Intent(this, MyReceiver.class);
+        Intent notifyIntent = new Intent(this, NotificationAlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         manager.cancel(pendingIntent);

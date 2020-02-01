@@ -8,6 +8,8 @@
 
 - Cosa succede se si cliccano le azioni delle notifiche mentre la home è in visualizzazione con FILTRI?
 
+- Cosa succede se il telefono è SPENTO quando arriva la notifica? (Dovrebbe mostrarla quando si accende, anche se in ritardo)
+
 - Prova ad aggiustare le NOTIFICHE
 
 - FILTRI delle notifiche

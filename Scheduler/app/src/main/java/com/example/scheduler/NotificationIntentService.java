@@ -9,14 +9,14 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 
 
-public class MyNewIntentService extends IntentService {
+public class NotificationIntentService extends IntentService {
 
     private Uri soundNotif;
 
 
-    public MyNewIntentService() {
+    public NotificationIntentService() {
 
-        super("MyNewIntentService");
+        super("NotificationIntentService");
 
         soundNotif = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     }
@@ -51,13 +51,13 @@ public class MyNewIntentService extends IntentService {
             // Costruzione notifica
 
             // Non porta da nessuna parte, ma modifica lo stato del task in ongoing
-            Intent ongoingIntent = new Intent(this, MyReceiver.class);
+            Intent ongoingIntent = new Intent(this, NotificationAlarmReceiver.class);
             ongoingIntent.putExtra("cmd_notif", "ongoing_notif");
             ongoingIntent.putExtra("id", id_ret);
             PendingIntent ongoingPendingIntent = PendingIntent.getBroadcast(this, 0, ongoingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             // Porta nel form di modifica di un task
-            Intent postponeIntent = new Intent(this, MyReceiver.class);
+            Intent postponeIntent = new Intent(this, NotificationAlarmReceiver.class);
             postponeIntent.putExtra("cmd_notif", "postpone_notif");
             postponeIntent.putExtra("id", id_ret);
             PendingIntent postponePendingIntent = PendingIntent.getBroadcast(this, 1, postponeIntent, PendingIntent.FLAG_UPDATE_CURRENT);

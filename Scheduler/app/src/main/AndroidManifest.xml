@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.scheduler">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".MyApplication"
@@ -20,9 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".FormActivity"
             android:label="@string/vuota" />
+
         <activity
             android:name=".DetailTaskActivity"
             android:label="@string/title_det_task" />
@@ -35,14 +41,22 @@
             android:name=".CreditsActivity"
             android:label="@string/menu_nav_credits" />
 
+        <receiver android:name=".DeviceBootReceiver">
+            <intent-filter>
+                <!-- REGISTER TO RECEIVE BOOT_COMPLETED EVENTS -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <receiver
-            android:name=".MyReceiver"
+            android:name=".NotificationAlarmReceiver"
             android:enabled="true"
             android:exported="false" />
 
         <service
-            android:name=".MyNewIntentService"
+            android:name=".NotificationIntentService"
             android:exported="false" />
+
     </application>
 
 </manifest>
