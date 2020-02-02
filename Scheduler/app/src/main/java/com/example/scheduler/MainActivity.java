@@ -916,9 +916,4 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         return numOfTask;
     }
-
-    public void getFilteredTasks(TaskSet t, VisualizeSet v) {
-
-
-    }
 }

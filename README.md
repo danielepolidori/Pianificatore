@@ -4,13 +4,13 @@
 
 ### DA FARE:
 
+- Prova ad aggiustare le NOTIFICHE
+
 - Quando dalla notifica fai una delle due azioni le activity vengono SOVRAPPOSTE invece di fare finish()
 
 - Cosa succede se si cliccano le azioni delle notifiche mentre la home è in visualizzazione con FILTRI?
 
-- Cosa succede se il telefono è SPENTO quando arriva la notifica? (Dovrebbe mostrarla quando si accende, anche se in ritardo)
-
-- Prova ad aggiustare le NOTIFICHE
+- Se si clicca su 'Postponi' nella notifica poi non si può annullare, l'unico modo è segnare un nuovo orario
 
 - FILTRI delle notifiche
 
@@ -60,7 +60,7 @@
 
 
 
-### BOZZE:
+### TEST:
 
 Test controllo mostrare NOTIFICA:
 
@@ -68,7 +68,7 @@ Test controllo mostrare NOTIFICA:
   + andato nella home e poi tornato nell'app
   + andato nella home
   + app chiusa e poi riaperta
-  - app chiusa
+  + app chiusa
   + telefono bloccato (con l'app ancora aperta)
   - telefono spento e poi app riaperta
   - telefono spento e riacceso (ma senza aprire l'app)

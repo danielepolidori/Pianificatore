@@ -16,7 +16,7 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
 
         Intent intentToIntentService = new Intent(context, NotificationIntentService.class);
 
-        if (intent.hasExtra("cmd_notif")) {                             // È stato invocato dal bottone premuto sulla notifica
+        if (intent.hasExtra("cmd_notif")) {                                 // È stato invocato dal bottone premuto sulla notifica
 
             if (!intent.hasExtra("id"))
                 System.out.println("ERRORE_DATI_INTENT");
@@ -28,7 +28,7 @@ public class NotificationAlarmReceiver extends BroadcastReceiver {
             intentToIntentService.putExtra("cmd_notif", comando);
             intentToIntentService.putExtra("id", id_ret);
         }
-        else{                                                             // È stato chiamato dalla MainActivity per la creazione di una notifica
+        else{                                                                   // È stato chiamato per la creazione di una notifica
 
             if (!intent.hasExtra("id") && !intent.hasExtra("descTask"))
                 System.out.println("ERRORE_DATI_INTENT");

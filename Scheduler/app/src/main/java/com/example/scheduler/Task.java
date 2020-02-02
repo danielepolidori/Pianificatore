@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 import io.realm.RealmObject;
 
+
 public class Task extends RealmObject {
 
     private int id;
@@ -14,6 +15,7 @@ public class Task extends RealmObject {
     private int priorita;
     private int classe;
     private int stato;
+
 
     public Task(String des, Date dat_ora, int p, int c, int s, int nIdentificativo){
 

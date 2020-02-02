@@ -5,9 +5,15 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 
 public class DeviceBootReceiver extends BroadcastReceiver {
+
+    private Realm realm;
+    private RealmResults<Task> resultsTask;
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -19,18 +25,29 @@ public class DeviceBootReceiver extends BroadcastReceiver {
             // on device boot compelete, reset the alarm
             if (action.equals("android.intent.action.BOOT_COMPLETED")) {
 
-                Intent notifyIntent = new Intent(context, NotificationAlarmReceiver.class);
-                //notifyIntent.putExtra("id", idTask);
-                //notifyIntent.putExtra("descTask", myTaskSet.getTask(idTask).getDescription());
-                notifyIntent.putExtra("id", 10500);
-                notifyIntent.putExtra("descTask", "DEVICE BOOT NOTIF");
+                realm = Realm.getDefaultInstance();
 
-                //PendingIntent pendingIntent = PendingIntent.getBroadcast(this, idTask, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 10500, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                resultsTask = realm.where(Task.class).findAll();
 
-                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+                if (!resultsTask.isEmpty()) {
+
+                    for (Task t_stored : resultsTask) {
+
+                        if (t_stored.getStato() == 0) {
+
+                            int idTask = t_stored.getId();
+
+                            Intent notifyIntent = new Intent(context, NotificationAlarmReceiver.class);
+                            notifyIntent.putExtra("id", idTask);
+                            notifyIntent.putExtra("descTask", t_stored.getDescription());
+
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, idTask, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, t_stored.getDateHour().getTime(), pendingIntent);
+                        }
+                    }
+                }
             }
         }
     }
