@@ -1,17 +1,19 @@
 package com.example.scheduler;
 
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import androidx.core.app.NotificationCompat;
 
 
 public class NotificationIntentService extends IntentService {
 
     private Uri soundNotif;
+
+    private static final String CHANNEL_ID = "Pianificatore";
 
 
     public NotificationIntentService() {
@@ -62,12 +64,13 @@ public class NotificationIntentService extends IntentService {
             postponeIntent.putExtra("id", id_ret);
             PendingIntent postponePendingIntent = PendingIntent.getBroadcast(this, 1, postponeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            Notification.Builder builder = new Notification.Builder(this);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
             builder.setContentTitle(descTask_ret);
             builder.setContentText("È ora di svolgere l'attività!");
             builder.setSmallIcon(android.R.drawable.ic_dialog_email);
-            builder.setAutoCancel(true);
             builder.setSound(soundNotif);
+            builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            builder.setAutoCancel(true);
             builder.addAction(android.R.drawable.ic_media_play, "In corso", ongoingPendingIntent);
             builder.addAction(android.R.drawable.ic_menu_edit, "Posticipa", postponePendingIntent);
 

@@ -4,8 +4,6 @@
 
 ### DA FARE:
 
-- Prova ad aggiustare le NOTIFICHE
-
 - Quando dalla notifica fai una delle due azioni le activity vengono SOVRAPPOSTE invece di fare finish()
 
 - Cosa succede se si cliccano le azioni delle notifiche mentre la home è in visualizzazione con FILTRI?
@@ -20,7 +18,7 @@
 
 - Rendi la HOME più carina
 
-- CRONOLOGIA
+- CRONOLOGIA (a quel punto non possono più essere modificate)
 
 - Nuovo GRAFICO che comprenda sia le attivià passate che quelle in programma
 
@@ -54,9 +52,15 @@
 
 ### SE HO TEMPO:
 
+- Passa da Notification a NOTIFICATION COMPAT
+
 - Nell'activity dei grafici quando si GIRA LO SCHERMO in orizzontale l'activity viene ricaricata da zero (e non semplicemente girata) e quindi dalla torta passa all'istogramma
 
+- Quando si inseriscono i dati del FORM di creazione o modifica task fare in modo che vengano visualizzati (altrimenti sembra che non si riesca ad impostare nulla)
+
 - Grafico a TORTA per visualizzare i vari stati dei task (pending, ongoing, completed)
+
+- Sostituisci tutte le STRINGHE nei file java con 'getString(R.string.string_name)'
 
 
 
@@ -70,6 +74,6 @@ Test controllo mostrare NOTIFICA:
   + app chiusa e poi riaperta
   + app chiusa
   + telefono bloccato (con l'app ancora aperta)
-  - telefono spento e poi app riaperta
-  - telefono spento e riacceso (ma senza aprire l'app)
-  - telefono spento
+  + telefono spento e poi app riaperta
+  + telefono spento e riacceso (ma senza aprire l'app)
+  + telefono spento

@@ -2,6 +2,16 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item android:id="@+id/aggiungi_filtri_home" android:title="@string/add_filter_menu_home" />
+    <item android:id="@+id/imposta_filtri" android:title="@string/imp_filter">
+
+        <menu>
+
+            <item android:id="@+id/aggiungi_filtri_home" android:title="@string/add_filter_home"/>
+
+            <item android:id="@+id/aggiungi_filtri_notif" android:title="@string/add_filter_notif"/>
+
+        </menu>
+
+    </item>
 
 </menu>

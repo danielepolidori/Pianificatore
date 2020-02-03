@@ -34,13 +34,17 @@
     <string name="menu_nav_crono">Cronologia</string>
     <string name="menu_nav_credits">Informazioni sull\'app</string>
 
-    <string name="add_filter_menu_home">Aggiungi filtri alla visualizzazione</string>
-    <string name="rem_filter_menu_home">Azzera i filtri</string>
+    <string name="imp_filter">Imposta filtri</string>
+    <string name="add_filter_home">Aggiungi filtri alla visualizzazione</string>
+    <string name="add_filter_notif">Aggiungi filtri alle notifiche</string>
 
     <string name="bottom_nav_bar">Mensile</string>
     <string name="bottom_nav_pie">Classi</string>
 
     <string name="credits">Daniele Polidori</string>
+
+    <string name="channel_name">Notifiche Pianificatore</string>
+    <string name="channel_description">Notifiche relative all\'app Pianificatore</string>
 
 </resources>
 

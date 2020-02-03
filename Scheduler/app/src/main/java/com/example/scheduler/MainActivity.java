@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,9 +46,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private RecyclerView.Adapter filteredAdapter;
     private TaskSet filteredTaskSet = new TaskSet();
     private VisualizeSet filteredVisSet = new VisualizeSet();
-    private final CharSequence[] filterItems = {"Classe - Famiglia", "Classe - Lavoro", "Classe - Tempo libero", "Classe - Altro"};
-    private boolean[] itemsFilterChecked = new boolean[filterItems.length];
-    private boolean[] itemsFilterChecked_tmp = new boolean[filterItems.length];
+    private final CharSequence[] filterHomeItems = {"Classe - Famiglia", "Classe - Lavoro", "Classe - Tempo libero", "Classe - Altro"};
+    private boolean[] itemsFilterHomeChecked = new boolean[filterHomeItems.length];
+    private boolean[] itemsFilterHomeChecked_tmp = new boolean[filterHomeItems.length];
+
+    private final CharSequence[] filterNotifItems = {"Priorità - Alta", "Priorità - Media", "Priorità - Bassa"};
+    private boolean[] itemsFilterNotifChecked = new boolean[filterNotifItems.length];
 
     private Date dataCorrente = new Date();
 
@@ -64,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private DrawerLayout mDrawerLayout;
     private ActionBar actionbar;
 
+    private static final String CHANNEL_ID = "Pianificatore";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +78,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+
+        // Canale delle notifiche
+        createNotificationChannel();
 
 
         // Toolbar
@@ -304,25 +315,25 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             for (Task t : myTaskSet.getElements()) {
 
-                if (itemsFilterChecked[0]) {
+                if (itemsFilterHomeChecked[0]) {
 
                     if (t.getClasse() == 0)
                         filteredTaskSet.addTask(t, filteredVisSet);
                 }
 
-                if (itemsFilterChecked[1]) {
+                if (itemsFilterHomeChecked[1]) {
 
                     if (t.getClasse() == 1)
                         filteredTaskSet.addTask(t, filteredVisSet);
                 }
 
-                if (itemsFilterChecked[2]) {
+                if (itemsFilterHomeChecked[2]) {
 
                     if (t.getClasse() == 2)
                         filteredTaskSet.addTask(t, filteredVisSet);
                 }
 
-                if (itemsFilterChecked[3]) {
+                if (itemsFilterHomeChecked[3]) {
 
                     if (t.getClasse() == 3)
                         filteredTaskSet.addTask(t, filteredVisSet);
@@ -345,9 +356,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             // Nuovo adapter
             filteredAdapter = new MyAdapter(filteredVisSet, this);
             recyclerView.setAdapter(filteredAdapter);
-
-            // Verrà chiamato 'onPrepareOptionsMenu' che rende il bottone 'Azzera filtri' cliccabile
-            invalidateOptionsMenu();
         }
     }
 
@@ -453,40 +461,37 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             case R.id.aggiungi_filtri_home:
 
-                filteredTaskSet.deleteAll();
-                filteredVisSet.deleteAll();
-
                 // Nuovo adapter
                 filteredAdapter = new MyAdapter(filteredVisSet, this);
 
                 if (!filtro_home_attivo) {
 
                     // Azzera le vecchie variabili
-                    for (int i = 0; i < itemsFilterChecked.length; i = i + 1)
-                        itemsFilterChecked[i] = false;
+                    for (int i = 0; i < itemsFilterHomeChecked.length; i = i + 1)
+                        itemsFilterHomeChecked[i] = false;
                 }
 
 
                 // Raccolgo i dati
 
-                itemsFilterChecked_tmp = itemsFilterChecked.clone();
+                itemsFilterHomeChecked_tmp = itemsFilterHomeChecked.clone();
 
-                final AlertDialog.Builder builderClasse = new AlertDialog.Builder(this);
-                builderClasse.setTitle("Verranno visualizzate solo le attività con gli attributi selezionati");
+                final AlertDialog.Builder builderFiltriHome = new AlertDialog.Builder(this);
+                builderFiltriHome.setTitle("Verranno visualizzate solo le attività con gli attributi selezionati");
 
-                builderClasse.setMultiChoiceItems(filterItems, itemsFilterChecked, new DialogInterface.OnMultiChoiceClickListener() {
+                builderFiltriHome.setMultiChoiceItems(filterHomeItems, itemsFilterHomeChecked, new DialogInterface.OnMultiChoiceClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
 
                         if (isChecked)
-                            itemsFilterChecked_tmp[indexSelected] = true;
+                            itemsFilterHomeChecked_tmp[indexSelected] = true;
                         else
-                            itemsFilterChecked_tmp[indexSelected] = false;
+                            itemsFilterHomeChecked_tmp[indexSelected] = false;
                     }
                 });
 
-                builderClasse.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builderFiltriHome.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -501,40 +506,50 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                             filtro_home_attivo = true;
                         }
 
-                        itemsFilterChecked = itemsFilterChecked_tmp.clone();
+
+                        filteredTaskSet.deleteAll();
+                        filteredVisSet.deleteAll();
+
+                        itemsFilterHomeChecked = itemsFilterHomeChecked_tmp.clone();
 
 
                         // Setto la nuova visualizzazione della home
 
                         for (Task t : myTaskSet.getElements()) {
 
-                            if (itemsFilterChecked[0]) {
+                            // Famiglia
+                            if (itemsFilterHomeChecked[0]) {
 
                                 if (t.getClasse() == 0)
                                     filteredTaskSet.addTask(t, filteredVisSet);
                             }
 
-                            if (itemsFilterChecked[1]) {
+                            // Lavoro
+                            if (itemsFilterHomeChecked[1]) {
 
                                 if (t.getClasse() == 1)
                                     filteredTaskSet.addTask(t, filteredVisSet);
                             }
 
-                            if (itemsFilterChecked[2]) {
+                            // Tempo libero
+                            if (itemsFilterHomeChecked[2]) {
 
                                 if (t.getClasse() == 2)
                                     filteredTaskSet.addTask(t, filteredVisSet);
                             }
 
-                            if (itemsFilterChecked[3]) {
+                            // Altro
+                            if (itemsFilterHomeChecked[3]) {
 
                                 if (t.getClasse() == 3)
                                     filteredTaskSet.addTask(t, filteredVisSet);
                             }
                         }
 
-                        if (filteredVisSet.getNumberOfElements() < 1)
+                        if (filteredVisSet.getNumberOfElements() < 1) {
+
                             filteredVisSet.init();
+                        }
                         else {
 
                             if (filteredVisSet.getElement(0).getType() != Vis.tipoVis.RIGA_VUOTA) {
@@ -545,13 +560,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                         }
 
                         recyclerView.setAdapter(filteredAdapter);
-
-                        // Verrà chiamato 'onPrepareOptionsMenu' che rende il bottone 'Azzera filtri' cliccabile
-                        invalidateOptionsMenu();
                     }
                 });
 
-                builderClasse.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                builderFiltriHome.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -560,7 +572,78 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     }
                 });
 
-                builderClasse.show();
+                builderFiltriHome.show();
+
+                return true;
+
+
+            case R.id.aggiungi_filtri_notif:
+
+                // Raccolgo i dati
+
+                final AlertDialog.Builder builderFiltriNotif = new AlertDialog.Builder(this);
+                builderFiltriNotif.setTitle("Verranno visualizzate solo le notifiche delle attività con la priorità corrispondente ai valori selezionati");
+
+                builderFiltriNotif.setMultiChoiceItems(filterNotifItems, itemsFilterNotifChecked, new DialogInterface.OnMultiChoiceClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+
+                        if (isChecked)
+                            itemsFilterNotifChecked[indexSelected] = true;
+                        else
+                            itemsFilterNotifChecked[indexSelected] = false;
+                    }
+                });
+
+                builderFiltriNotif.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        for (Task t : myTaskSet.getElements()) {
+
+                            int idTask = t.getId();
+                            long time = t.getDateHour().getTime();
+
+                            if (t.getStato() == 0) {        // Pending
+
+                                if (t.getPrior() == 0) {                // Alta
+
+                                    if (itemsFilterNotifChecked[0])
+                                        creaNotifica(idTask, time);
+                                    else
+                                        eliminaNotifica(idTask);
+                                }
+                                else if (t.getPrior() == 1) {         // Media
+
+                                    if (itemsFilterNotifChecked[1])
+                                        creaNotifica(idTask, time);
+                                    else
+                                        eliminaNotifica(idTask);
+                                }
+                                else if (t.getPrior() == 2) {         // Bassa
+
+                                    if (itemsFilterNotifChecked[2])
+                                        creaNotifica(idTask, time);
+                                    else
+                                        eliminaNotifica(idTask);
+                                }
+                            }
+                        }
+                    }
+                });
+
+                builderFiltriNotif.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.dismiss();
+                    }
+                });
+
+                builderFiltriNotif.show();
 
                 return true;
         }
@@ -602,6 +685,24 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         });
     }
 
+    private void createNotificationChannel() {
+
+        // Create the NotificationChannel, but only on API 26+ because the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            // Register the channel with the system; you can't change the importance or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+
     public void creaNotifica(int idTask, long time) {
 
         Intent notifyIntent = new Intent(this, NotificationAlarmReceiver.class);
@@ -612,6 +713,16 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+    }
+
+    public void eliminaNotifica(int id) {
+
+        Intent notifyIntent = new Intent(this, NotificationAlarmReceiver.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        manager.cancel(pendingIntent);
     }
 
     public void creazioneTask(Task t) {
@@ -642,10 +753,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         VisualizeSet.tipoDel td;
 
         // Cancella notifica (non ancora mostrata) relativa al task
-        Intent notifyIntent = new Intent(this, NotificationAlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        manager.cancel(pendingIntent);
+        eliminaNotifica(id);
 
         td = myTaskSet.delTask(visElemClicked.getIdTask(), myVisSet);
 

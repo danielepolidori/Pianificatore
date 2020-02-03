@@ -18,11 +18,15 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name=".MainActivity">
+
             <intent-filter>
+
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
+
         </activity>
 
         <activity
@@ -42,10 +46,14 @@
             android:label="@string/menu_nav_credits" />
 
         <receiver android:name=".DeviceBootReceiver">
+
             <intent-filter>
+
                 <!-- REGISTER TO RECEIVE BOOT_COMPLETED EVENTS -->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
             </intent-filter>
+
         </receiver>
 
         <receiver
