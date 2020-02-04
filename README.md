@@ -12,8 +12,6 @@
 
 - Pulsante AZZERA filtri delle notifiche nell'alert
 
-- DESCRIZIONE aggiunta filtri notifiche nell'alert più corta
-
 - Le notifiche delle attività create DOPO l'impostazione del filtro notifiche non vengono filtrate (non rispettano il filtro)
 
 

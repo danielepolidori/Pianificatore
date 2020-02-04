@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -582,7 +583,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 // Raccolgo i dati
 
                 final AlertDialog.Builder builderFiltriNotif = new AlertDialog.Builder(this);
-                builderFiltriNotif.setTitle("Verranno visualizzate solo le notifiche delle attività con la priorità corrispondente ai valori selezionati");
+                builderFiltriNotif.setTitle("Ricevi le notifiche solo delle attività con le priorità selezionate");
 
                 builderFiltriNotif.setMultiChoiceItems(filterNotifItems, itemsFilterNotifChecked, new DialogInterface.OnMultiChoiceClickListener() {
 
