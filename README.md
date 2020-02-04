@@ -8,9 +8,13 @@
 
 - Cosa succede se si cliccano le azioni delle notifiche mentre la home è in visualizzazione con FILTRI?
 
-- Se si clicca su 'Postponi' nella notifica poi non si può annullare, l'unico modo è segnare un nuovo orario
+- Se si clicca su 'POSPONI' nella notifica poi non si può annullare, l'unico modo è segnare un nuovo orario
 
-- FILTRI delle notifiche
+- Pulsante AZZERA filtri delle notifiche nell'alert
+
+- DESCRIZIONE aggiunta filtri notifiche nell'alert più corta
+
+- Le notifiche delle attività create DOPO l'impostazione del filtro notifiche non vengono filtrate (non rispettano il filtro)
 
 
 
@@ -52,8 +56,6 @@
 
 ### SE HO TEMPO:
 
-- Passa da Notification a NOTIFICATION COMPAT
-
 - Nell'activity dei grafici quando si GIRA LO SCHERMO in orizzontale l'activity viene ricaricata da zero (e non semplicemente girata) e quindi dalla torta passa all'istogramma
 
 - Quando si inseriscono i dati del FORM di creazione o modifica task fare in modo che vengano visualizzati (altrimenti sembra che non si riesca ad impostare nulla)
@@ -61,6 +63,9 @@
 - Grafico a TORTA per visualizzare i vari stati dei task (pending, ongoing, completed)
 
 - Sostituisci tutte le STRINGHE nei file java con 'getString(R.string.string_name)'
+
+- I FILTRI delle notifiche funzionano con cellulare acceso (app chiusa o aperta), ma non se il cellulare viene riavviato (i filtri vengono così azzerati).
+  Soluzione: Aggiungere campo 'bool notif_on' ai task per capire se vanno notificati o meno
 
 
 
