@@ -17,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -80,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         setContentView(R.layout.activity_main);
 
+
+        for (int i = 0; i < filterNotifItems.length; i = i + 1)
+            itemsFilterNotifChecked[i] = true;
 
         // Canale delle notifiche
         createNotificationChannel();
@@ -732,7 +734,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         storeTask(t);
 
-        creaNotifica(t.getId(), t.getDateHour().getTime());     // Crea la notifica del task
+        if (itemsFilterNotifChecked[t.getPrior()])
+            creaNotifica(t.getId(), t.getDateHour().getTime());     // Crea la notifica del task
 
         // Aggiorna la visualizzazione della home dopo l'aggiunta di un task
         mAdapter.notifyDataSetChanged();
