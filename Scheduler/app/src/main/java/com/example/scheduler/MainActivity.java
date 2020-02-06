@@ -39,12 +39,17 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    private TaskSet myTaskSet = new TaskSet();
-    private VisualizeSet myVisSet = new VisualizeSet();
+    private TaskSet principalTaskSet = new TaskSet();    // Insieme dei task pending e ongoing
+    private VisualizeSet principalVisSet = new VisualizeSet();
+
+    private boolean is_viewing_crono = false;
+    private RecyclerView.Adapter completedAdapter;
+    private TaskSet completedTaskSet = new TaskSet();    // Insieme dei task completati
+    private VisualizeSet completedVisSet = new VisualizeSet();
 
     private boolean filtro_home_attivo = false;
     private RecyclerView.Adapter filteredAdapter;
-    private TaskSet filteredTaskSet = new TaskSet();
+    private TaskSet filteredTaskSet = new TaskSet();    // Insieme dei task filtrati
     private VisualizeSet filteredVisSet = new VisualizeSet();
     private final CharSequence[] filterHomeItems = {"Classe - Famiglia", "Classe - Lavoro", "Classe - Tempo libero", "Classe - Altro"};
     private boolean[] itemsFilterHomeChecked = new boolean[filterHomeItems.length];
@@ -117,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         if (resultsTask.isEmpty()){
 
-            myVisSet.init();
+            principalVisSet.init();
         }
         else{
 
@@ -125,7 +130,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                 Task t = new Task(t_stored.getDescription(), t_stored.getDateHour(), t_stored.getPrior(), t_stored.getClasse(), t_stored.getStato(), t_stored.getId());
 
-                myTaskSet.addTask(t, myVisSet);
+                if (t.getStato() < 2)
+                    principalTaskSet.addTask(t, principalVisSet);
+                else
+                    completedTaskSet.addTask(t, completedVisSet);
             }
         }
 
@@ -138,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
 
         // specify an adapter
-        mAdapter = new MyAdapter(myVisSet, this);
+        mAdapter = new MyAdapter(principalVisSet, this);
         recyclerView.setAdapter(mAdapter);
 
 
@@ -156,6 +164,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             }
         });
 
+
+        // Nuovo adapter
+        completedAdapter = new MyAdapter(completedVisSet, this);
 
         // Navigation Drawer
 
@@ -179,7 +190,40 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                         case R.id.item_crono:
 
-                            // ~ ...
+                            // Modifica la grafica dell'activity
+                            setTitle("Cronologia");
+                            actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+                            fabNewTask.hide();
+
+                            is_viewing_crono = true;
+
+
+                            /*
+                            // Svuoti le variabili
+                            completedTaskSet.deleteAll();
+                            completedVisSet.deleteAll();
+
+                            for (Task t : principalTaskSet.getElements()) {
+
+                                if (t.getStato() == 2)
+                                    completedTaskSet.addTask(t, completedVisSet);
+                            }
+                             */
+
+                            if (completedVisSet.getNumberOfElements() < 1) {
+
+                                completedVisSet.init();
+                            }
+                            else {
+
+                                if (completedVisSet.getElement(0).getType() != Vis.tipoVis.RIGA_VUOTA) {
+
+                                    Vis rigaVuotaIniziale = new Vis("", Vis.tipoVis.RIGA_VUOTA);
+                                    completedVisSet.addIn(rigaVuotaIniziale, 0);
+                                }
+                            }
+
+                            recyclerView.setAdapter(completedAdapter);
 
                             break;
 
@@ -253,19 +297,19 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             String comando = getIntent().getStringExtra("cmd_notif");
             int idTask_ret = getIntent().getIntExtra("id", -1);
 
-            if (myTaskSet.containsTask(idTask_ret)) {
+            if (principalTaskSet.containsTask(idTask_ret)) {
 
                 if (comando.equals("ongoing_notif")) {
 
                     // Setta lo stato del task su 'In corso'
 
-                    Task taskCorrente = myTaskSet.getTask(idTask_ret);
+                    Task taskCorrente = principalTaskSet.getTask(idTask_ret);
 
                     if (taskCorrente.getStato() == 0) {
 
                         Task taskModStato = new Task(taskCorrente.getDescription(), taskCorrente.getDateHour(), taskCorrente.getPrior(), taskCorrente.getClasse(), 1, idTask_ret);
 
-                        deleteTask(idTask_ret, myVisSet.getIndOfTask(idTask_ret));
+                        deleteTask(idTask_ret, principalVisSet.getIndOfTask(idTask_ret));
                         creazioneTask_senzaNotif(taskModStato);
 
 
@@ -280,7 +324,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                         intent.putExtra("classeTask", taskModStato.getClasse_string());
                         intent.putExtra("statoTask", taskModStato.getStato_string());
                         intent.putExtra("idTask", idTask_ret);
-                        intent.putExtra("indClick", myVisSet.getIndOfTask(idTask_ret));
+                        intent.putExtra("indClick", principalVisSet.getIndOfTask(idTask_ret));
 
                         // Cancella la notifica appena cliccata
                         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -296,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     Intent notifIntent = new Intent(this, FormActivity.class);
                     notifIntent.putExtra("is_new_task", 0);
                     notifIntent.putExtra("id", idTask_ret);
-                    notifIntent.putExtra("indClick", myVisSet.getIndOfTask(idTask_ret));
+                    notifIntent.putExtra("indClick", principalVisSet.getIndOfTask(idTask_ret));
 
                     // Cancella la notifica appena cliccata
                     NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -316,7 +360,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             filteredTaskSet.deleteAll();
             filteredVisSet.deleteAll();
 
-            for (Task t : myTaskSet.getElements()) {
+            for (Task t : principalTaskSet.getElements()) {
 
                 if (itemsFilterHomeChecked[0]) {
 
@@ -360,6 +404,36 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             filteredAdapter = new MyAdapter(filteredVisSet, this);
             recyclerView.setAdapter(filteredAdapter);
         }
+        else if (is_viewing_crono) {
+
+            // Ricalcola i task da mostrare (se ci sono state modifiche o eliminazioni in questo modo viene aggiornata la visualizzazione)
+
+            // Svuoti le variabili
+            completedTaskSet.deleteAll();
+            completedVisSet.deleteAll();
+
+            for (Task t : principalTaskSet.getElements()) {
+
+                if (t.getStato() == 2)
+                    completedTaskSet.addTask(t, completedVisSet);
+            }
+
+            if (completedVisSet.getNumberOfElements() < 1)
+                completedVisSet.init();
+            else {
+
+                if (completedVisSet.getElement(0).getType() != Vis.tipoVis.RIGA_VUOTA) {
+
+                    Vis rigaVuotaIniziale = new Vis("", Vis.tipoVis.RIGA_VUOTA);
+                    completedVisSet.addIn(rigaVuotaIniziale, 0);
+                }
+            }
+
+
+            // Nuovo adapter
+            completedAdapter = new MyAdapter(completedVisSet, this);
+            recyclerView.setAdapter(completedAdapter);
+        }
     }
 
     @Override
@@ -400,11 +474,13 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         Vis visElemClicked;
         if (filtro_home_attivo)
             visElemClicked = filteredVisSet.getElement(clickedItemIndex);
+        else if (is_viewing_crono)
+            visElemClicked = completedVisSet.getElement(clickedItemIndex);
         else
-            visElemClicked = myVisSet.getElement(clickedItemIndex);
+            visElemClicked = principalVisSet.getElement(clickedItemIndex);
 
         int idTask = visElemClicked.getIdTask();
-        Task taskClicked = myTaskSet.getTask(idTask);
+        Task taskClicked = principalTaskSet.getTask(idTask);
 
         if (visElemClicked.getType() == Vis.tipoVis.ATTIVITA){
 
@@ -421,7 +497,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             intent.putExtra("classeTask", taskClicked.getClasse_string());
             intent.putExtra("statoTask", taskClicked.getStato_string());
             intent.putExtra("idTask", idTask);
-            intent.putExtra("indClick", myVisSet.getIndOfTask(idTask));
+            intent.putExtra("indClick", principalVisSet.getIndOfTask(idTask));
 
             startActivityForResult(intent, REQ_CODE_DET_TASK);
         }
@@ -443,21 +519,21 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             case android.R.id.home:
 
-                if (!filtro_home_attivo)
-                    mDrawerLayout.openDrawer(GravityCompat.START);
-                else {
+                if (filtro_home_attivo || is_viewing_crono) {       // Ha cliccato sulla freccia indietro
 
-                    // Rimuovi la visualizzazione con filtri, cioè torna alla home classica
+                    // Rimuovi la visualizzazione con filtri o la cronologia e torna alla home classica
 
                     setTitle("Pianificatore");
                     actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
                     fabNewTask.show();
 
                     filtro_home_attivo = false;
+                    is_viewing_crono = false;
 
-                    //aggiorna visset
                     recyclerView.setAdapter(mAdapter);
                 }
+                else                                                // Ha cliccato sul simbolo del panino
+                    mDrawerLayout.openDrawer(GravityCompat.START);
 
                 return true;
 
@@ -518,7 +594,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                         // Setto la nuova visualizzazione della home
 
-                        for (Task t : myTaskSet.getElements()) {
+                        for (Task t : principalTaskSet.getElements()) {
 
                             // Famiglia
                             if (itemsFilterHomeChecked[0]) {
@@ -604,7 +680,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        for (Task t : myTaskSet.getElements()) {
+                        for (Task t : principalTaskSet.getElements()) {
 
                             int idTask = t.getId();
                             long time = t.getDateHour().getTime();
@@ -710,7 +786,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         Intent notifyIntent = new Intent(this, NotificationAlarmReceiver.class);
         notifyIntent.putExtra("id", idTask);
-        notifyIntent.putExtra("descTask", myTaskSet.getTask(idTask).getDescription());
+        notifyIntent.putExtra("descTask", principalTaskSet.getTask(idTask).getDescription());
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, idTask, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -730,7 +806,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     public void creazioneTask(Task t) {
 
-        myTaskSet.addTask(t, myVisSet);
+        principalTaskSet.addTask(t, principalVisSet);
 
         storeTask(t);
 
@@ -743,7 +819,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     public void creazioneTask_senzaNotif(Task t) {
 
-        myTaskSet.addTask(t, myVisSet);
+        principalTaskSet.addTask(t, principalVisSet);
 
         storeTask(t);
 
@@ -753,13 +829,13 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     public void deleteTask(int id, int indClicked) {
 
-        Vis visElemClicked = myVisSet.getElement(indClicked);
+        Vis visElemClicked = principalVisSet.getElement(indClicked);
         VisualizeSet.tipoDel td;
 
         // Cancella notifica (non ancora mostrata) relativa al task
         eliminaNotifica(id);
 
-        td = myTaskSet.delTask(visElemClicked.getIdTask(), myVisSet);
+        td = principalTaskSet.delTask(visElemClicked.getIdTask(), principalVisSet);
 
         delTaskFromStore(visElemClicked.getIdTask());
 
@@ -790,6 +866,15 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 eliminato = true;
             }
         }
+    }
+
+    public void spostaTaskInCronologia(Task t, int indClickedTask) {
+
+        deleteTask(t.getId(), indClickedTask);
+
+        completedTaskSet.addTask(t, completedVisSet);
+
+        storeTask(t);
     }
 
     // Aggiorna la visualizzazione della home dopo la rimozione di un task
@@ -838,7 +923,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     public void gestisciFormMod(Intent data) {
 
         int idTask = data.getIntExtra("id", -1);
-        Task taskToMod = myTaskSet.getTask(idTask);
+        Task taskToMod = principalTaskSet.getTask(idTask);
 
         if (!data.hasExtra("id"))
             System.out.println("ERRORE_DATI_INTENT");
@@ -861,7 +946,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 resultDataStr = data.getStringExtra("data");
             else{
 
-                Date data_notMod = myTaskSet.getTask(idTask).getOnlyDate();
+                Date data_notMod = principalTaskSet.getTask(idTask).getOnlyDate();
 
                 SimpleDateFormat sdf_only_data = new SimpleDateFormat("d M yyyy", Locale.ITALIAN);
                 resultDataStr = sdf_only_data.format(data_notMod);  // es: "30 8 2019"
@@ -872,7 +957,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 resultOraStr = data.getStringExtra("ora");
             else{
 
-                Date ora_notMod = myTaskSet.getTask(idTask).getOnlyOra();
+                Date ora_notMod = principalTaskSet.getTask(idTask).getOnlyOra();
 
                 SimpleDateFormat sdf_only_ora = new SimpleDateFormat("HH mm", Locale.ITALIAN);
                 resultOraStr = sdf_only_ora.format(ora_notMod);
@@ -934,7 +1019,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             case 0:     // Cliccato su 'modifica'
 
-                if (myTaskSet.getTask(id_ret).getStato() == 0) {    // Lo stato del task è 'pending'
+                if (principalTaskSet.getTask(id_ret).getStato() == 0) {    // Lo stato del task è 'pending'
 
                     Intent intent = new Intent(MainActivity.this, FormActivity.class);
                     intent.putExtra("is_new_task", 0);      // false (perché non è la creazione di un nuovo task, ma la modifica di uno già esistente)
@@ -943,9 +1028,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                     startActivityForResult(intent, REQ_CODE_FORM_MOD);
                 }
-                else if (myTaskSet.getTask(id_ret).getStato() == 1)     // Lo stato del task è 'ongoing'
+                else if (principalTaskSet.getTask(id_ret).getStato() == 1)     // Lo stato del task è 'ongoing'
                     Toast.makeText(this, "L'attività non può più essere modificata perché è già in corso di svolgimento.", Toast.LENGTH_LONG).show();
-                else if (myTaskSet.getTask(id_ret).getStato() == 2)     // Lo stato del task è 'completed'
+                else if (principalTaskSet.getTask(id_ret).getStato() == 2)     // Lo stato del task è 'completed'
                     Toast.makeText(this, "L'attività non può più essere modificata perché è già stata completata.", Toast.LENGTH_LONG).show();
                 else
                     System.out.println("ERRORE_STATO_TASK");
@@ -966,20 +1051,14 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                 // Setta lo stato del task su 'Completato'
 
-                Task taskCorrente = myTaskSet.getTask(id_ret);
+                Task taskCorrente = principalTaskSet.getTask(id_ret);
 
                 if (taskCorrente.getStato() == 1) {     // Se il task è nello stato 'ongoing'
 
                     Task taskModStato = new Task(taskCorrente.getDescription(), taskCorrente.getDateHour(), taskCorrente.getPrior(), taskCorrente.getClasse(), 2, id_ret);
 
-                    deleteTask(id_ret, myVisSet.getIndOfTask(id_ret));
-                    creazioneTask_senzaNotif(taskModStato);
-
-
-                    // ~ Inserimento del task nella cronologia
-                    // ~ copiare il task nella lista di quelli in cronologia
-                    // deleteTask(id_ret, indClicked_ret);
-                    // ...
+                    // Sposto il task nella lista di quelli in cronologia
+                    spostaTaskInCronologia(taskModStato, principalVisSet.getIndOfTask(id_ret));
 
                     Toast.makeText(this, "L'attività è stata completata.", Toast.LENGTH_LONG).show();
                 }
@@ -1009,7 +1088,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         int annoCorr = Integer.parseInt(dataOraTokens[3]);
 
 
-        for (Task t : myTaskSet.getElements()) {
+        for (Task t : principalTaskSet.getElements()) {
             if ((t.getMonth_int() == mese) && (t.getYear() == annoCorr))
                 numOfTask = numOfTask + 1;
         }
@@ -1021,7 +1100,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         int numOfTask = 0;
 
-        for (Task t : myTaskSet.getElements()) {
+        for (Task t : principalTaskSet.getElements()) {
             if (t.getClasse() == classe)
                 numOfTask = numOfTask + 1;
         }

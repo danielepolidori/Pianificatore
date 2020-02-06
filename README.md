@@ -8,7 +8,13 @@
 
 - Aggiungi il mio NOME alla relazione
 
-- CRONOLOGIA (a quel punto i task non possono più essere modificati)
+- click item crono
+
+- Quando viene visualizzata la cronologia non devono comparire i TRE PUNTINI del menu a comparsa
+
+- I task quando vengono spostati nella cronologia subiscono modifiche
+
+- completedTaskSet o usato come appoggio (ogni volta svuotato e riempito) oppure usato come vero e proprio insieme (quando vengono modificati o cliccati task ci si deve allora riferire a quell'insieme e non al principale)
 
 
 
