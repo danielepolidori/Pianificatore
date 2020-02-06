@@ -3,9 +3,11 @@ package com.example.scheduler;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public abstract class DataSet<T> {
 
     protected List<T> elements;
+
 
     public DataSet(){
 

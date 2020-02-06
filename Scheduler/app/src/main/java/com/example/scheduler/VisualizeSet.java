@@ -2,6 +2,7 @@ package com.example.scheduler;
 
 import java.io.Serializable;
 
+
 public class VisualizeSet extends DataSet<Vis> implements Serializable {
 
     public enum tipoDel {
@@ -14,6 +15,7 @@ public class VisualizeSet extends DataSet<Vis> implements Serializable {
 
     private boolean is_msgNoTask;
     private String msgNoTask;
+
 
     public VisualizeSet(){
 
@@ -142,8 +144,8 @@ public class VisualizeSet extends DataSet<Vis> implements Serializable {
         // stesso indice, perché dopo la rimozione di un elemento il successivo occupa il suo posto
 
         elements.remove(ind-2);       // prec_prec		DATA		j-2
-        elements.remove(ind-2);       // prec	        VUOTA		j-1
-        elements.remove(ind-2);       // curr		    ATT		    j
+        elements.remove(ind-2);       // prec	            VUOTA		j-1
+        elements.remove(ind-2);       // curr		        ATT		    j
         elements.remove(ind-2);       // suc			    VUOTA		j+1
         elements.remove(ind-2);       // suc_suc			VUOTA		j+2
         elements.remove(ind-2);       // suc_suc_suc		VUOTA		j+3

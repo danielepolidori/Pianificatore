@@ -5,9 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+
 public class Vis {
 
     public enum tipoVis {
+
         DATA,           // 0
         ATTIVITA,       // 1
         RIGA_VUOTA,     // 2
@@ -24,6 +26,7 @@ public class Vis {
     private SimpleDateFormat sdf_only_data;
     private String strData_tmp;
     private Date only_data;
+
 
     // Costruttore per RIGA_VUOTA e MSG_NO_TASK
     public Vis(String text, tipoVis type) {

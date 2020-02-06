@@ -734,7 +734,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         storeTask(t);
 
-        if (itemsFilterNotifChecked[t.getPrior()])
+        if (itemsFilterNotifChecked[t.getPrior()])      // Controlla il filtro delle notifiche
             creaNotifica(t.getId(), t.getDateHour().getTime());     // Crea la notifica del task
 
         // Aggiorna la visualizzazione della home dopo l'aggiunta di un task

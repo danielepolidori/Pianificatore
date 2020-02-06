@@ -4,6 +4,8 @@
 
 ### DA FARE:
 
+- Fai SCREENSHOT dell'app da inserire nella relazione
+
 - Aggiungi il mio NOME alla relazione
 
 - CRONOLOGIA (a quel punto i task non possono più essere modificati)
@@ -50,6 +52,8 @@
 - I PULSANTI delle notifiche non funzionano se l'app è chiusa
 
 - Nuovo GRAFICO che comprenda sia le attivià passate che quelle in programma
+
+- Prima di usare la funzione getTask(id) dovrei sempre fare if(containsTask(id)) per essere sicuro di non incappare in un errore a runtime
 
 
 

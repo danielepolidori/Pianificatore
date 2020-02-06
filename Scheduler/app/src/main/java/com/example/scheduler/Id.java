@@ -2,9 +2,11 @@ package com.example.scheduler;
 
 import io.realm.RealmObject;
 
+
 public class Id extends RealmObject {
 
     private int val;
+
 
     public Id() {
 
