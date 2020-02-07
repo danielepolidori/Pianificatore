@@ -8,10 +8,6 @@
 
 - Aggiungi il mio NOME alla relazione
 
-- Prova a visualizzare tanti elementi in cronologia
-
-- Quando si clicca sui bottoni delle notifiche non avviene l'azione ma si blocca sulla home
-
 
 
 ### MANCA:
@@ -32,8 +28,6 @@
 
 ### SE HO TEMPO:
 
-- CRONOLOGIA attività completate
-
 - Use le CARD nella home (e magari anche nelle altre activity), al posto di una semplice serie di stringhe
 
 - Quando si GIRA LO SCHERMO in orizzontale l'activity corrente viene ricaricata da zero (e non semplicemente girata) e quindi: dalla torta passa all'istogramma, dai filtri home passa alla home normale, altro?
@@ -50,8 +44,6 @@
 - Quando dalla notifica fai una delle due azioni le activity vengono SOVRAPPOSTE
 
 - Se si clicca su 'POSPONI' nella notifica poi non si può annullare, l'unico modo è segnare un nuovo orario
-
-- I PULSANTI delle notifiche non funzionano se l'app è chiusa
 
 - Nuovo GRAFICO che comprenda sia le attivià passate che quelle in programma
 
