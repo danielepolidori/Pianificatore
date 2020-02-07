@@ -8,13 +8,9 @@
 
 - Aggiungi il mio NOME alla relazione
 
-- click item crono
+- Prova a visualizzare tanti elementi in cronologia
 
-- Quando viene visualizzata la cronologia non devono comparire i TRE PUNTINI del menu a comparsa
-
-- I task quando vengono spostati nella cronologia subiscono modifiche
-
-- completedTaskSet o usato come appoggio (ogni volta svuotato e riempito) oppure usato come vero e proprio insieme (quando vengono modificati o cliccati task ci si deve allora riferire a quell'insieme e non al principale)
+- Quando si clicca sui bottoni delle notifiche non avviene l'azione ma si blocca sulla home
 
 
 

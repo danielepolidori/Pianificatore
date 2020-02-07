@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         setContentView(R.layout.activity_main);
 
 
+        // Imposta il valore di default del filtro delle notifiche
         for (int i = 0; i < filterNotifItems.length; i = i + 1)
             itemsFilterNotifChecked[i] = true;
 
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
         resultsTask = realm.where(Task.class).findAll();
 
-        if (resultsTask.isEmpty()){
+        if (resultsTask.isEmpty()) {
 
             principalVisSet.init();
         }
@@ -135,6 +136,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                 else
                     completedTaskSet.addTask(t, completedVisSet);
             }
+
+            if (principalTaskSet.isEmpty())
+                principalVisSet.init();
         }
 
         resultsId = realm.where(Id.class).findAll();
@@ -191,24 +195,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                         case R.id.item_crono:
 
                             // Modifica la grafica dell'activity
-                            setTitle("Cronologia");
+                            setTitle(getString(R.string.menu_nav_crono));
                             actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
                             fabNewTask.hide();
+                            invalidateOptionsMenu();    // Verrà chiamato 'onPrepareOptionsMenu'
 
                             is_viewing_crono = true;
-
-
-                            /*
-                            // Svuoti le variabili
-                            completedTaskSet.deleteAll();
-                            completedVisSet.deleteAll();
-
-                            for (Task t : principalTaskSet.getElements()) {
-
-                                if (t.getStato() == 2)
-                                    completedTaskSet.addTask(t, completedVisSet);
-                            }
-                             */
 
                             if (completedVisSet.getNumberOfElements() < 1) {
 
@@ -408,18 +400,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
             // Ricalcola i task da mostrare (se ci sono state modifiche o eliminazioni in questo modo viene aggiornata la visualizzazione)
 
-            // Svuoti le variabili
-            completedTaskSet.deleteAll();
-            completedVisSet.deleteAll();
+            if (completedVisSet.getNumberOfElements() < 1) {
 
-            for (Task t : principalTaskSet.getElements()) {
-
-                if (t.getStato() == 2)
-                    completedTaskSet.addTask(t, completedVisSet);
-            }
-
-            if (completedVisSet.getNumberOfElements() < 1)
                 completedVisSet.init();
+            }
             else {
 
                 if (completedVisSet.getElement(0).getType() != Vis.tipoVis.RIGA_VUOTA) {
@@ -428,7 +412,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                     completedVisSet.addIn(rigaVuotaIniziale, 0);
                 }
             }
-
 
             // Nuovo adapter
             completedAdapter = new MyAdapter(completedVisSet, this);
@@ -472,15 +455,37 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
     public void onListItemClick(int clickedItemIndex) {
 
         Vis visElemClicked;
-        if (filtro_home_attivo)
+
+        if (filtro_home_attivo) {
+
             visElemClicked = filteredVisSet.getElement(clickedItemIndex);
-        else if (is_viewing_crono)
+        }
+        else if (is_viewing_crono) {
+
             visElemClicked = completedVisSet.getElement(clickedItemIndex);
-        else
+        }
+        else {
+
             visElemClicked = principalVisSet.getElement(clickedItemIndex);
+        }
 
         int idTask = visElemClicked.getIdTask();
-        Task taskClicked = principalTaskSet.getTask(idTask);
+
+
+        Task taskClicked;
+        int indClicked;
+
+        if (is_viewing_crono) {
+
+            taskClicked = completedTaskSet.getTask(idTask);
+            indClicked = completedVisSet.getIndOfTask(idTask);
+        }
+        else {
+
+            taskClicked = principalTaskSet.getTask(idTask);
+            indClicked = principalVisSet.getIndOfTask(idTask);
+        }
+
 
         if (visElemClicked.getType() == Vis.tipoVis.ATTIVITA){
 
@@ -497,7 +502,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             intent.putExtra("classeTask", taskClicked.getClasse_string());
             intent.putExtra("statoTask", taskClicked.getStato_string());
             intent.putExtra("idTask", idTask);
-            intent.putExtra("indClick", principalVisSet.getIndOfTask(idTask));
+            intent.putExtra("indClick", indClicked);
 
             startActivityForResult(intent, REQ_CODE_DET_TASK);
         }
@@ -523,9 +528,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                     // Rimuovi la visualizzazione con filtri o la cronologia e torna alla home classica
 
-                    setTitle("Pianificatore");
+                    setTitle(getString(R.string.app_name));
                     actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
                     fabNewTask.show();
+                    invalidateOptionsMenu();    // Verrà chiamato 'onPrepareOptionsMenu'
 
                     filtro_home_attivo = false;
                     is_viewing_crono = false;
@@ -581,6 +587,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
                             setTitle("Visualizzazione con filtri");
                             actionbar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
                             fabNewTask.hide();
+                            invalidateOptionsMenu();    // Verrà chiamato 'onPrepareOptionsMenu'
 
                             filtro_home_attivo = true;
                         }
@@ -741,6 +748,23 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
+
+        if (filtro_home_attivo)
+            menu.findItem(R.id.aggiungi_filtri_notif).setEnabled(false);
+        else if (is_viewing_crono)
+            menu.findItem(R.id.imposta_filtri).setEnabled(false);
+        else {
+
+            menu.findItem(R.id.imposta_filtri).setEnabled(true);
+            menu.findItem(R.id.aggiungi_filtri_home).setEnabled(true);
+            menu.findItem(R.id.aggiungi_filtri_notif).setEnabled(true);
+        }
+
+        return true;
+    }
+
     public void storeTask(final Task t) {
 
         realm.executeTransaction(new Realm.Transaction() {
@@ -829,18 +853,29 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
     public void deleteTask(int id, int indClicked) {
 
-        Vis visElemClicked = principalVisSet.getElement(indClicked);
-        VisualizeSet.tipoDel td;
+        Vis visElemClicked;
+
+        if (is_viewing_crono)
+            visElemClicked = completedVisSet.getElement(indClicked);
+        else
+            visElemClicked = principalVisSet.getElement(indClicked);
+
 
         // Cancella notifica (non ancora mostrata) relativa al task
         eliminaNotifica(id);
 
-        td = principalTaskSet.delTask(visElemClicked.getIdTask(), principalVisSet);
+
+        VisualizeSet.tipoDel td;
+
+        if (is_viewing_crono)
+            td = completedTaskSet.delTask(visElemClicked.getIdTask(), completedVisSet);
+        else
+            td = principalTaskSet.delTask(visElemClicked.getIdTask(), principalVisSet);
+
 
         delTaskFromStore(visElemClicked.getIdTask());
 
         aggiornaHome_del(indClicked, td);
-
     }
 
     public void delTaskFromStore(int id_t) {
@@ -1015,11 +1050,18 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
         if (!(data.hasExtra("comando") && data.hasExtra("idTask") && data.hasExtra("indClick")))
             System.out.println("ERRORE_DATI_INTENT");
 
+
+        Task taskCorrente;
+        if (is_viewing_crono)
+            taskCorrente = completedTaskSet.getTask(id_ret);
+        else
+            taskCorrente = principalTaskSet.getTask(id_ret);
+
         switch (cmd_ret) {
 
             case 0:     // Cliccato su 'modifica'
 
-                if (principalTaskSet.getTask(id_ret).getStato() == 0) {    // Lo stato del task è 'pending'
+                if (taskCorrente.getStato() == 0) {    // Lo stato del task è 'pending'
 
                     Intent intent = new Intent(MainActivity.this, FormActivity.class);
                     intent.putExtra("is_new_task", 0);      // false (perché non è la creazione di un nuovo task, ma la modifica di uno già esistente)
@@ -1028,9 +1070,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
                     startActivityForResult(intent, REQ_CODE_FORM_MOD);
                 }
-                else if (principalTaskSet.getTask(id_ret).getStato() == 1)     // Lo stato del task è 'ongoing'
+                else if (taskCorrente.getStato() == 1)     // Lo stato del task è 'ongoing'
                     Toast.makeText(this, "L'attività non può più essere modificata perché è già in corso di svolgimento.", Toast.LENGTH_LONG).show();
-                else if (principalTaskSet.getTask(id_ret).getStato() == 2)     // Lo stato del task è 'completed'
+                else if (taskCorrente.getStato() == 2)     // Lo stato del task è 'completed'
                     Toast.makeText(this, "L'attività non può più essere modificata perché è già stata completata.", Toast.LENGTH_LONG).show();
                 else
                     System.out.println("ERRORE_STATO_TASK");
@@ -1050,8 +1092,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             case 2:     // Cliccato su 'Completato'
 
                 // Setta lo stato del task su 'Completato'
-
-                Task taskCorrente = principalTaskSet.getTask(id_ret);
 
                 if (taskCorrente.getStato() == 1) {     // Se il task è nello stato 'ongoing'
 
