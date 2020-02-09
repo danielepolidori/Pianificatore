@@ -4,6 +4,8 @@
 
 ### DA FARE:
 
+- Abbellire la home facendo in modo che i GIORNI cambino colore o size?
+
 - Fai SCREENSHOT dell'app da inserire nella relazione
 
 - Aggiungi il mio NOME alla relazione

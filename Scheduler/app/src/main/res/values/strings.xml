@@ -41,7 +41,11 @@
     <string name="bottom_nav_bar">Mensile</string>
     <string name="bottom_nav_pie">Classi</string>
 
-    <string name="credits">Daniele Polidori</string>
+    <string name="credits_nome">Daniele Polidori</string>
+    <string name="credits_email">daniele.polidori2@studio.unibo.it</string>
+    <string name="credits__unibo">Alma Mater Studiorum - Università di Bologna</string>
+    <string name="credits__informatica">Corso di Laurea triennale in Informatica</string>
+    <string name="credits_lam">Corso di Laboratorio di applicazioni mobili\na.a. 2018/2019</string>
 
     <string name="channel_name">Notifiche Pianificatore</string>
     <string name="channel_description">Notifiche relative all\'app Pianificatore</string>

@@ -32,8 +32,34 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/credits"
+                android:text="@string/credits_nome"
                 android:textStyle="bold"
+                android:textSize="@dimen/myfont"
+                android:layout_marginTop="25dip" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/credits_email"
+                android:textStyle="bold"
+                android:layout_marginTop="25dip" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/credits__unibo"
+                android:layout_marginTop="75dip" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/credits__informatica"
+                android:layout_marginTop="25dip" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/credits_lam"
                 android:layout_marginTop="25dip" />
 
         </LinearLayout>
