@@ -33,7 +33,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 
-public class MainActivity extends AppCompatActivity implements MyAdapter.ItemClickListener {
+public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
 
         // specify an adapter
-        mAdapter = new MyAdapter(principalVisSet, this);
+        mAdapter = new RecyclerViewAdapter(principalVisSet, this);
         recyclerView.setAdapter(mAdapter);
 
 
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
 
         // Nuovo adapter
-        completedAdapter = new MyAdapter(completedVisSet, this);
+        completedAdapter = new RecyclerViewAdapter(completedVisSet, this);
 
         // Navigation Drawer
 
@@ -393,7 +393,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
 
 
             // Nuovo adapter
-            filteredAdapter = new MyAdapter(filteredVisSet, this);
+            filteredAdapter = new RecyclerViewAdapter(filteredVisSet, this);
             recyclerView.setAdapter(filteredAdapter);
         }
         else if (is_viewing_crono) {
@@ -414,7 +414,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             }
 
             // Nuovo adapter
-            completedAdapter = new MyAdapter(completedVisSet, this);
+            completedAdapter = new RecyclerViewAdapter(completedVisSet, this);
             recyclerView.setAdapter(completedAdapter);
         }
     }
@@ -547,7 +547,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.ItemCli
             case R.id.aggiungi_filtri_home:
 
                 // Nuovo adapter
-                filteredAdapter = new MyAdapter(filteredVisSet, this);
+                filteredAdapter = new RecyclerViewAdapter(filteredVisSet, this);
 
                 if (!filtro_home_attivo) {
 

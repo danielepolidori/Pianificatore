@@ -2,33 +2,21 @@
 
 
 
-### DA FARE:
-
-- Abbellire la home facendo in modo che i GIORNI cambino colore o size?
-
-- Fai SCREENSHOT dell'app da inserire nella relazione
-
-- Aggiungi il mio NOME alla relazione
-
-
-
 ### MANCA:
 
-- Relazione + slides
-
-- (Credits del progetto)
+- POWERPOINT per la discussione
 
 
 
 ### CONTROLLARE:
 
-- Se si gira il cellulare in orizzontale l'app funziona ugualmente?
-
-- Tutti i task relativi a giorni/ore passate non devono essere mostrati nella home
+- Se si GIRA il cellulare in orizzontale l'app funziona ugualmente?
 
 
 
 ### SE HO TEMPO:
+
+- Tutti i task relativi a giorni/ore passate non devono essere mostrati nella home
 
 - Use le CARD nella home (e magari anche nelle altre activity), al posto di una semplice serie di stringhe
 
